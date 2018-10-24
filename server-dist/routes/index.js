@@ -29,6 +29,8 @@ var _help = _interopRequireDefault(require("./help"));
 
 var _term = _interopRequireDefault(require("./term"));
 
+var _admin = _interopRequireDefault(require("./admin"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const app = _express.default.Router();
@@ -44,5 +46,6 @@ app.use(_about.default);
 app.use(_manage.default);
 app.use(_help.default);
 app.use(_term.default);
+app.use(_admin.default);
 var _default = app;
 exports.default = _default;

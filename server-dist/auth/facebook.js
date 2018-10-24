@@ -18,8 +18,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const app = _express.default.Router();
 
 _passport.default.use(new _passportFacebook.default({
-  clientID: '301189910477524',
-  clientSecret: '57834b06c058689a09df7bf6c34f0cb5',
+  clientID: process.env.FACEBOOK_CLIENT_ID,
+  clientSecret: process.env.FACEOOK_CLIENT_KEY,
   callbackURL: process.env.FACEBOOK_CALLBACK
 }, async (accessToken, refreshToken, profile, cb) => {
   try {

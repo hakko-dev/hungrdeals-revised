@@ -29,6 +29,10 @@
                         i.os-icon.os-icon-wallet-loaded
                     ul
                         li
+                            a(href='/sell')
+                                i.os-icon.os-icon-user-male-circle2
+                                span Post Ad
+                        li
                             a(href='/profile')
                                 i.os-icon.os-icon-user-male-circle2
                                 span Profile Settings
@@ -174,6 +178,24 @@
                                 strong.badge.badge-danger New
                         li
                             a(href='/Menus/Cafe') ☕ Cafe
+
+        if isAdmin
+            li.has-sub-menu
+                a(href='/admin')
+                    //.icon-w
+                    //    .os-icon.os-icon-life-buoy
+                    span.emoji
+                    span Admin
+                .sub-menu-w
+                    .sub-menu-header
+                        |
+                    .sub-menu-icon
+                        i.os-icon.os-icon-life-buoy
+                    .sub-menu-i
+                        ul.sub-menu
+                            li
+                                a(href='/admin/unverified') Unverified Ads
+
 
     .side-menu-magic
         h4

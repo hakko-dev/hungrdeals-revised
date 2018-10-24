@@ -1,0 +1,131 @@
+include common/head
+.all-wrapper.with-side-panel.solid-bg-all
+    .layout-w
+        include common/mobile-menu
+        include common/main-menu
+        .content-w
+            .content-i
+                .content-box
+                    .row
+                        .col-12
+                            .element-wrapper.pb-1
+                                h5.element-header
+                                    | Unverified Ads
+                    .support-index
+                        .support-tickets
+
+
+        include common/footer
+    .display-type
+include common/scripts
+script.
+    var emojiList = {
+        'Thai': '🇹🇭',
+        'Korean': '🇰🇷',
+        'Japanese': '🇯🇵',
+        'Chinese': '🇨🇳',
+        'Indian': '🇮🇳',
+        'Western': '🍔',
+        'Mediterraean': '🥙',
+        'Mexican': '🇲🇽',
+        'Italian': '🇮🇹',
+        'French': '🇫🇷',
+        'Vietnamese': '🇻🇳',
+        'Fusion': '🥘',
+        'Greek': '🇬🇷',
+        'Others': '🍽️',
+    }
+    var placeholder = '<div class="row">\n' +
+        '<div class="col-12">\n' +
+        '    <div class="ph-item">\n' +
+        '        <div class="ph-col-1">\n' +
+        '            <div class="ph-avatar"></div>\n' +
+        '        </div>\n' +
+        '        <div class="ph-temp"></div>\n' +
+        '        <div class="ph-col-10">\n' +
+        '            <div class="ph-row">\n' +
+        '                <div class="ph-col-10 big"></div>\n' +
+        '                <div class="ph-col-2 empty big"></div>\n' +
+        '                <div class="ph-col-4"></div>\n' +
+        '                <div class="ph-col-8 empty"></div>\n' +
+        '                <div class="ph-col-6"></div>\n' +
+        '                <div class="ph-col-6 empty"></div>\n' +
+        '                <div class="ph-col-12"></div>\n' +
+        '            </div>\n' +
+        '        </div>\n' +
+        '    </div>\n' +
+        '</div>\n' +
+        '</div>'
+    var noPost = '<div class="row justify-content-center"><img class="my-5" src="/assets/img/salad.svg" />\n' +
+        '    <div class="col-12 text-center my-3">\n' +
+        '        <h6>No unverified Ads</h6>\n' +
+        '    </div>\n' +
+        '</div>'
+    $('.support-tickets').append([placeholder, placeholder, placeholder])
+    var initialLoad = function () {
+        $.ajax({
+            url: '/api/admin/unverified',
+            cache: false,
+            contentType: 'application/json',
+            processData: false,
+            type: 'POST',
+            success: function (data) {
+                console.log(data)
+                $('.support-tickets').html('')
+                if (data.list.length !== 0) {
+                    data.list.forEach(function (item) {
+                        var html = '<div class="support-ticket" data-id="' + item._id + '">' +
+                            '<div class="st-body">' +
+                            '<div class="avatar">' + emojiList[item.cuisineType] + '</div>' +
+                            '<div class="ticket-content">' +
+                            '<h6 class="ticket-title">' + item.title +
+                            '</h6>' +
+                            '<div class="ticket-description">' + item.description + '</div>' +
+                            '</div>';
+                        if (item.cheapestItem) {
+                            html = html + '<div class="price">' +
+                                '<div class="was">$' + item.cheapestItem.prevPrice + '</div>' +
+                                '<strong>$' + item.cheapestItem.nowPrice + '</strong>' +
+                                '</div>';
+                        }
+                        html = html + '</div>' +
+                            '<div class="st-foot"><span class="label"><div class="os-icon os-icon-ui-74"></div></span>' +
+                            '<span class="value text-truncate" style="max-width: 80%">' + item.address + '</span>'
+
+                        $('.support-tickets').append(
+                            html
+                        )
+                    })
+                } else {
+                    $('.support-tickets').append(
+                        noPost
+                    )
+                }
+                $('.support-ticket').click(function () {
+                    location.href = '/deal/' + $(this).data('id')
+                })
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        });
+    }
+    $(function () {
+        initialLoad()
+    })
+
+    if (!String.prototype.padStart) {
+        String.prototype.padStart = function padStart(targetLength, padString) {
+            targetLength = targetLength >> 0; //truncate if number, or convert non-number to 0;
+            padString = String(typeof padString !== 'undefined' ? padString : ' ');
+            if (this.length >= targetLength) {
+                return String(this);
+            } else {
+                targetLength = targetLength - this.length;
+                if (targetLength > padString.length) {
+                    padString += padString.repeat(targetLength / padString.length); //append to original to ensure we are longer than needed
+                }
+                return padString.slice(0, targetLength) + String(this);
+            }
+        };
+    }

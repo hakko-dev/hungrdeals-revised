@@ -18,7 +18,6 @@ app.get('/deal/:dealId', async (req, res) => {
     const deal = await _Deal.default.findOne({
       _id: req.params.dealId
     }).exec();
-    console.log(deal);
 
     if (!deal) {
       res.redirect('/');

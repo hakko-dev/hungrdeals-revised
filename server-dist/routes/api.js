@@ -7,6 +7,8 @@ exports.default = void 0;
 
 var _ensure_logined = _interopRequireDefault(require("../util/ensure_logined"));
 
+var _ensure_admin = _interopRequireDefault(require("../util/ensure_admin"));
+
 var _s = require("../util/s3");
 
 var _profile = _interopRequireDefault(require("./profile"));
@@ -14,6 +16,8 @@ var _profile = _interopRequireDefault(require("./profile"));
 var _mongoose = require("../config/mongoose");
 
 var _Deal = _interopRequireDefault(require("../models/Deal"));
+
+var _email = require("../util/email");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -84,10 +88,32 @@ _profile.default.get('/api/postcode2geo', async (req, res) => {
 });
 
 _profile.default.post('/api/search', async (req, res) => {
-  console.log(req.body);
   const result = await _Deal.default.search(req.body);
   res.json({
     list: result
+  });
+});
+
+_profile.default.post('/api/admin/unverified', _ensure_logined.default, async (req, res) => {
+  const result = await _Deal.default.find({
+    verified: false
+  });
+  res.json({
+    list: result
+  });
+});
+
+_profile.default.post('/api/admin/verify', _ensure_admin.default, async (req, res) => {
+  const {
+    _id
+  } = req.query;
+  await _Deal.default.update({
+    _id
+  }, {
+    verified: true
+  });
+  res.json({
+    result: true
   });
 });
 
@@ -98,37 +124,25 @@ _profile.default.post('/api/mail', async (req, res) => {
     lastName,
     message
   } = req.body;
-  var api_key = 'key-b14ad97b37f1eff6b7047353efdc9fc5';
-  var domain = 'mail.hungrdeals.com';
 
-  var mailgun = require('mailgun-js')({
-    apiKey: api_key,
-    domain: domain
-  });
-
-  const data = {
-    from: `${firstName} ${lastName} <helpdesk@${domain}>`,
-    to: 'Kartikoow@gmail.com',
-    subject: 'User contact message has arrived!',
-    html: `
-        <h1>${email}</h1>
-        <p>${message}</p>
-        `
-  };
-  mailgun.messages().send(data, function (error, body) {});
-  const data2 = {
-    from: `${firstName} ${lastName} <helpdesk@${domain}>`,
-    to: 'r54r45r54@gmail.com',
-    subject: 'User contact message has arrived!',
-    html: `
-        <h1>${email}</h1>
-        <p>${message}</p>
-        `
-  };
-  mailgun.messages().send(data2, function (error, body) {});
-  res.json({
-    result: true
-  });
+  try {
+    const template = await (0, _email.getTemplate)('validateDeals');
+    await (0, _email.sendEmail)({
+      to: 'r54r45r54@gmail.com',
+      subject: 'welcome to our site',
+      template: template({
+        name: "Woohyunkim"
+      })
+    });
+    res.json({
+      result: true
+    });
+  } catch (e) {
+    console.log(e);
+    res.json({
+      result: false
+    });
+  }
 });
 
 var _default = _profile.default;

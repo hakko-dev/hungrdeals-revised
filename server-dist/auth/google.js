@@ -18,8 +18,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const app = _express.default.Router();
 
 _passport.default.use(new _passportGoogleOauth.default({
-  clientID: '1071149374337-c2hveca4v49j79fc6gc6m3itb6nljjn7.apps.googleusercontent.com',
-  clientSecret: 'IQFvw3wtFggeSC9ppCwjnHP1',
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_KEY,
   callbackURL: process.env.GOOGLE_CALLBACK
 }, async (accessToken, refreshToken, profile, cb) => {
   try {

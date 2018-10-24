@@ -23,7 +23,8 @@ app.use(async (req, res, next) => {
     res.renderLogined = (route, data) => {
       res.render(route, { ...data,
         ...{
-          user: req.user.getProfile()
+          user: req.user.getProfile(),
+          isAdmin: req.user.isAdmin
         }
       });
     };
