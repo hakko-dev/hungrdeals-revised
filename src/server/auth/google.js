@@ -6,8 +6,8 @@ import User from '../models/User'
 const app = express.Router();
 
 passport.use(new GoogleStrategy({
-        clientID: '1071149374337-c2hveca4v49j79fc6gc6m3itb6nljjn7.apps.googleusercontent.com',
-        clientSecret: 'IQFvw3wtFggeSC9ppCwjnHP1',
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_KEY,
         callbackURL: process.env.GOOGLE_CALLBACK
     },
     async (accessToken, refreshToken, profile, cb) => {
