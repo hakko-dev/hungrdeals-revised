@@ -129,4 +129,29 @@ script.
         $('#b-edit').click(function(){
             location.href = '/sell/edit/'+$(this).data('id')
         })
+        $('#b-verify').click(function () {
+            var btn = $(this)
+            btn.buttonLoader('stop')
+            $.ajax({
+                url: '/api/admin/verify?_id='+$(this).data('id'),
+                cache: false,
+                contentType: 'application/json',
+                processData: false,
+                type: 'POST',
+                success: function (data) {
+                    btn.buttonLoader('stop')
+                    $.iaoAlert({
+                        msg: 'Changed to verified',
+                        type: "success"
+                    })
+                    btn.hide()
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            });
+        })
+        $('#b-delete').click(function () {
+            // location.href = '/sell/edit/' + $(this).data('id')
+        })
     })
