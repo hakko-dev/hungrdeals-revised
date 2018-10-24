@@ -12,6 +12,7 @@ import about from './about';
 import manage from './manage';
 import help from './help';
 import term from './term';
+import admin from './admin'
 
 app.use(profile);
 app.use(register);
@@ -24,5 +25,6 @@ app.use(about);
 app.use(manage);
 app.use(help);
 app.use(term);
+app.use(admin);
 
 export default app;

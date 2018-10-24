@@ -6,7 +6,6 @@ const app = express.Router();
 app.get('/deal/:dealId', async (req, res) => {
     try {
         const deal = await Deal.findOne({_id: req.params.dealId}).exec()
-        console.log(deal)
         if (!deal) {
             res.redirect('/')
             return;

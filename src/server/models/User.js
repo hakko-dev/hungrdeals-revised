@@ -11,6 +11,11 @@ const userSchema = new Schema({
     password: String,
     profileImage: String,
     gender: String,
+    emailVerified: {
+        type: Boolean,
+        default: false
+    },
+    isAdmin: Boolean,
     createdAt: {type: Date, default: Date.now},
 });
 userSchema.plugin(plugin)
@@ -26,6 +31,7 @@ userSchema.methods.getRegisterType = function() {
 };
 userSchema.methods.getProfile = function() {
   return {
+      userId: this._id,
       userName: this.userName,
       email: this.email,
       profileImage: this.profileImage || 'https://i0.wp.com/ebus.ca/wp-content/uploads/2017/08/profile-placeholder.jpg?ssl=1'

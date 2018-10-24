@@ -19,9 +19,15 @@ app.post('/sell', ensureLogined, async (req, res) => {
 
 app.post('/sell/edit/:dealId', ensureLogined, async (req, res) => {
     const {dealId} = req.params
-    const deal = await Deal.updateDeal({...req.body, dealId})
+    const deal = await Deal.findById(dealId)
+    if(deal.author.toString() !== req.user._id.toString() && !req.user.isAdmin){
+        return res.json({
+            fail: 'Unauthorized Call'
+        })
+    }
+    const result = await Deal.updateDeal({...req.body, dealId})
     res.json({
-        _id: deal._id
+        _id: result._id
     })
 });
 
@@ -40,7 +46,9 @@ app.get('/sell/delete/:postId', ensureLogined, async (req, res) => {
 app.get('/sell/edit/:postId', ensureLogined, async (req, res) => {
     const {postId} = req.params
     const deal = await Deal.findById(postId)
-    console.log(deal.getDealEditInfo())
+    if(deal.author.toString() !== req.user._id.toString() && !req.user.isAdmin){
+        return res.redirect('/')
+    }
     res.renderLogined('edit', {deal: deal.getDealEditInfo()})
 });
 

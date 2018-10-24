@@ -20,7 +20,10 @@ const dealSchema = new Schema({
     opening: [{day: String, open: Number, close: Number}],
     deleteAuto: Date,
     createdAt: {type: Date, default: Date.now},
-
+    verified:{
+        type: Boolean,
+        default: false
+    },
     // 업데이트시 변하는 것들
     cheapestItem: {
         itemName: String, prevPrice: Number, nowPrice: Number
@@ -81,7 +84,6 @@ dealSchema.methods.getDealInfo = function () {
         newRow.close = `${row.close.toString().slice(0, -2)}:${row.close.toString().slice(-2)}`
         return newRow
     })
-    console.log(this.happyHour)
     const happyHour = this.happyHour.start? {
         start: `${this.happyHour.start.toString().slice(0, -2)}:${this.happyHour.start.toString().slice(-2)}`,
         end: `${this.happyHour.end.toString().slice(0, -2)}:${this.happyHour.end.toString().slice(-2)}`
@@ -113,7 +115,10 @@ dealSchema.methods.getDealInfo = function () {
                 }
             }
         }),
+        _id: this._id,
+        author: this.author,
         happyHour,
+        verified: this.verified,
         createdAt: this.createdAt
     }
 };
@@ -251,6 +256,7 @@ dealSchema.statics.search = async function ({search = '', sort = 'RECENT', filte
         $match: {
             $and: [
                 {deletedAt: {$exists: false}},
+                {verified: {$eq: true}},
                 {$or: [{'title': {'$regex': search, '$options': 'i'}}, {
                     'description': {
                         '$regex': search,
