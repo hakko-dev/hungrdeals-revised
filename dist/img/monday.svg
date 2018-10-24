@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="89px" height="89px" viewBox="0 0 89 89" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-33.000000, -25.000000)">
+            <g id="Group" transform="translate(33.000000, 25.000000)">
+                <circle id="Oval" fill="#98C7FF" cx="44.5" cy="44.5" r="44.5"></circle>
+                <g id="weekly-calendar" transform="translate(15.000000, 17.000000)">
+                    <path d="M56.9655371,54 L2.03446289,54 C0.9108125,54 0,53.0688093 0,51.9200189 L0,4.07998115 C0,2.93119065 0.9108125,2 2.03446289,2 L56.9655371,2 C58.0891875,2 59,2.93119065 59,4.07998115 L59,51.9200189 C59,53.0686915 58.0890723,54 56.9655371,54 Z" id="Path" fill="#EFF2FA"></path>
+                    <path d="M59,13 L0,13 L0,4.19997508 C0,2.98491096 0.9108125,2 2.03446289,2 L56.9655371,2 C58.0891875,2 59,2.98491096 59,4.19997508 L59,13 Z" id="Path" fill="#FF6464"></path>
+                    <rect id="Rectangle" fill="#E4EAF6" x="0" y="12" width="59" height="2"></rect>
+                    <circle id="Oval" fill="#D2555A" cx="9.5" cy="7.5" r="2.5"></circle>
+                    <path d="M8.5,9 C7.67155049,9 7,8.24439252 7,7.31253186 L7,1.68746814 C7,0.755480034 7.67166377,0 8.5,0 C9.32844951,0 10,0.755607477 10,1.68746814 L10,7.31253186 C10.0001133,8.24451997 9.32844951,9 8.5,9 Z" id="Path" fill="#C7CFE2"></path>
+                    <path d="M8.5,5.3333669 C7.67155049,5.3333669 7,4.73636249 7,4.00010069 L7,6.66673379 C7,7.40309629 7.67166377,8 8.5,8 C9.32844951,8 10,7.40299559 10,6.66673379 L10,4 C10.0001133,4.73636249 9.32844951,5.3333669 8.5,5.3333669 Z" id="Path" fill="#AFB9D2"></path>
+                    <circle id="Oval" fill="#D2555A" cx="49.5" cy="7.5" r="2.5"></circle>
+                    <path d="M50.5,9 C49.6715505,9 49,8.24439252 49,7.31253186 L49,1.68746814 C49,0.755480034 49.6716638,0 50.5,0 C51.3284495,0 52,0.755607477 52,1.68746814 L52,7.31253186 C52,8.24451997 51.3283362,9 50.5,9 Z" id="Path" fill="#C7CFE2"></path>
+                    <path d="M50.5,5.3333669 C49.6715505,5.3333669 49,4.73636249 49,4.00010069 L49,6.66673379 C49,7.40309629 49.6716638,8 50.5,8 C51.3283362,8 52,7.40299559 52,6.66673379 L52,4 C52,4.73636249 51.3283362,5.3333669 50.5,5.3333669 Z" id="Path" fill="#AFB9D2"></path>
+                </g>
+                <text id="MON" font-family="ChalkboardSE-Regular, Chalkboard SE" font-size="19" font-weight="normal" fill="#330303">
+                    <tspan x="24" y="55">MON</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

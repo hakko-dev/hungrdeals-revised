@@ -1,0 +1,203 @@
+.logo-label{
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.search-with-suggestions-w.over-search-field{
+  width: 550px !important;
+}
+.logged-user-info-w{
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+.menu-w.color-scheme-dark .logged-user-w .logged-user-role{
+  color: white !important;
+}
+.menu-w.menu-layout-compact ul.main-menu > li span{
+  padding-left: 0 !important;
+  &.emoji{
+    padding-right: 0 !important;
+    font-size: 1.2rem !important;
+  }
+}
+.toggled-buttons{
+  .btn-toggled{
+    text-transform: none !important;
+  }
+}
+.search-with-suggestions-w .search-suggestions-group + .search-suggestions-group{
+  margin-top: 40px !important;
+}
+
+.footer-w .footer-i ul.social-links.more-links li{
+  display: block !important;
+  margin-top: 10px !important;
+  a{
+    color: grey !important;
+  }
+}
+.support-ticket .avatar{
+  font-size: 2.4rem;
+}
+.support-ticket .price{
+  color: #047bf8 !important;
+  width: 50px !important;
+  font-size: 1.3rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 0.8rem !important;
+  flex: 1 0 50px;
+  text-align: right;
+  .was{
+    position: relative;
+    width: fit-content;
+    margin-left: auto;
+    bottom: -8px;
+    font-size: 65%;
+    color: #636c72 !important;
+    font-weight: 400;
+  }
+  .was:before{
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 50%;
+    right: 0;
+    border-top: 1px solid;
+    border-color: inherit;
+    -webkit-transform: rotate(-5deg);
+    -moz-transform: rotate(-5deg);
+    -ms-transform: rotate(-5deg);
+    -o-transform: rotate(-5deg);
+    transform: rotate(-5deg);
+  }
+}
+.element-info-icon{
+  display: flex;
+  align-items: center !important;
+  .profile-pic{
+    display: inline-block;
+
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.7) !important;
+    border-radius: 50%;
+    img{
+      width: 50px;
+      height: auto;
+    }
+  }
+}
+.timed-activity .ta-activity a{
+  &.text-danger{
+    border-bottom: 1px solid #e65252 !important;
+  }
+  &.text-success{
+    border-bottom: 1px solid #24b314 !important;
+  }
+}
+
+.search-bar{
+  font-weight: 500;
+  &:focus {
+    border-color: #dde2ec;
+  }
+}
+.toggled-buttons{
+  .row{
+    justify-content: center;
+  }
+}
+.toggled-buttons.solid .btn-toggled{
+  font-size: 0.7rem;
+
+}
+
+// editable table
+tr{
+  &.hide{
+    display: none;
+  }
+}
+
+.form-check-input{
+  margin-top: 0.1rem;
+}
+
+.input-group-text.day{
+  min-width: 70px;
+  justify-content: center;
+}
+
+// loading
+.ph-avatar{
+  min-width: 100% !important;
+}
+@media (max-width: 768px){
+  .ph-temp{
+    display: none;
+  }
+}
+
+// manage
+@media (max-width: 1024px){
+  .timed-activity .ta-record{
+    border-bottom: none;
+  }
+  .timed-activities.compact .timed-activity .ta-activity{
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+}
+
+.timed-activity .ta-activity a{
+  &.text-faded{
+    border-bottom: 1px solid rgba(90, 99, 126, 0.49);
+  }
+}
+
+.footer-i .padded{
+  padding: 2rem !important;
+}
+
+//mobile menu
+.menu-mobile ul.sub-menu{
+  padding-left:1rem;
+  padding-right:1rem;
+  .col-4{
+    padding: 0 1rem !important;
+  }
+  img{
+    width: 100%;
+    height: auto;
+  }
+  .sub-menu-name{
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 0.7rem;
+    padding: none;
+    padding-top: 0.5rem;
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 1rem;
+  }
+}
+.search-query{
+  display: none;
+  font-size: 1rem;
+  margin-left: 0.3rem;
+  font-weight: 300;
+}
+
+//carousel
+.carousel-control-prev-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23bbb' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+}
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23bbb' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+}
+
+// logo
+.menu-mobile .mm-logo-buttons-w .mm-logo img{
+  width: 30px !important;
+}

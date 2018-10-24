@@ -1,0 +1,373 @@
+include common/head
+.all-wrapper.solid-bg-all
+    .layout-w
+        include common/mobile-menu
+        include common/main-menu
+        .content-w
+            .content-i
+                .property-single(style='flex: 1')
+                    form#formValidate(novalidate='true')
+                        .property-info-w.row
+                            .col-12.col-lg-7
+                                .property-info-main
+                                    .property-content
+                                        h1.form-header Let's Sell Food
+                                        .form-desc
+                                            | What is your special offer? Please fill in the from below. And start selling your food on Hungrdeals. You can edit your post anytime you want.
+                                        .row
+                                            .col-sm-6
+                                                .form-group
+                                                    label(for='i-category')  Category
+                                                    select#i-category.form-control
+                                                        optgroup(label='Weekday Specials')
+                                                            option(value='Weekday Specials-Monday') Monday
+                                                            option(value='Weekday Specials-Tuesday') Tuesday
+                                                            option(value='Weekday Specials-Wednesday') Wednesday
+                                                            option(value='Weekday Specials-Thursday') Thursday
+                                                            option(value='Weekday Specials-Friday') Friday
+                                                        optgroup(label='Weekend Deals')
+                                                            option(value='Weekend Deals-Saturday') Saturday
+                                                            option(value='Weekend Deals-Sunday') Sunday
+                                                        optgroup(label='Happy Hour')
+                                                            option(value='Happy Hour') Happy Hour
+                                                        optgroup(label='Combo')
+                                                            option(value='Combo') Combo
+                                                        optgroup(label='Miscellaneous')
+                                                            option(value='Miscellaneous-Grand Openings') Grand Openings
+                                                            option(value='Miscellaneous-Homemade Deals') Homemade Deals
+                                                            option(value='Miscellaneous-Volunteer') Volunteer
+                                                            option(value='Miscellaneous-Giveaway') Giveaway
+                                                            option(value='Miscellaneous-Buffet') Buffet
+                                                        optgroup(label='Menus')
+                                                            option(value='Menus-Restaurant') Restaurant
+                                                            option(value='Menus-Bar') Bar
+                                                            option(value='Menus-Cafe') Cafe
+                                            .col-sm-6
+                                                .form-group
+                                                    label(for='i-cuisine-type')  Cuisine Type
+                                                    select#i-cuisine-type.form-control
+                                                        option(value='Thai') Thai
+                                                        option(value='Korean') Korean
+                                                        option(value='Indian') Indian
+                                                        option(value='Japanese') Japanese
+                                                        option(value='Italian') Italian
+                                                        option(value='Fusion') Fusion
+                                                        option(value='Chinese') Chinese
+                                                        option(value='Vietnamese') Vietnamese
+                                                        option(value='Mexican') Mexican
+                                                        option(value='Western') Western
+                                                        option(value='French') French
+                                                        option(value='Mediterranean') Mediterranean
+                                                        option(value='Others') Others
+                                        .form-group
+                                            label(for='i-title')  Title
+                                            input#i-title.form-control(data-error='Please write the title' placeholder="Enter post title." required='required' type='text')
+                                            .help-block.form-text.with-errors.form-control-feedback
+                                        .form-group
+                                            label(for='i-description')  Description
+                                            textarea#i-description.form-control(rows='4' required='required')
+                                            .help-block.form-text.with-errors.form-control-feedback
+                                        .form-group#a-happy-hour(style="display: none;")
+                                            label(for='')  Happy Hour Time Range
+                                            .input-group.mb-3
+                                                input#i-happyhour-start-time.form-control(type='time' value="08:30")
+                                                input#i-happyhour-end-time.form-control(type='time' value="22:00")
+                                        .form-group#items-wrapper
+                                            label  Items
+                                            .card
+                                                .card-body
+                                                    #table.table-editable
+                                                        table.table.table-bordered.table-responsive-xs.text-center
+                                                            tr.th
+                                                                th.text-center Item Name
+                                                                th.text-center Price Was ($)
+                                                                th.text-center Price Now ($)
+                                                                th.text-center Remove
+                                                            tr
+                                                                td.item-name.pt-3-half(contenteditable='true') Enter Item
+                                                                td.item-prev-price.pt-3-half(contenteditable='true') 0
+                                                                td.item-now-price.pt-3-half(contenteditable='true') 0
+                                                                td
+                                                                    span.table-remove
+                                                                        button.btn.btn-danger.btn-rounded.btn-sm.my-0.disabled(type='button' disabled='') Remove
+                                                            // clonable table line
+                                                            tr.hide
+                                                                td.item-name.pt-3-half(contenteditable='true') Enter Item
+                                                                td.item-prev-price.pt-3-half(contenteditable='true') 0
+                                                                td.item-now-price.pt-3-half(contenteditable='true') 0
+                                                                td
+                                                                    span.table-remove
+                                                                        button.btn.btn-danger.btn-rounded.btn-sm.my-0(type='button') Remove
+                                            .row.justify-content-end
+                                                span.table-add.mb-3.mr-2
+                                                    a.btn.btn-outline-primary.btn-sm.btn-rounded(href='#!')
+                                                        i.fa.fa-plus(aria-hidden='true')
+                                                        span &ensp;Add Item
+                                    .property-section.px-3.px-lg-0
+                                        .property-section-header
+                                            | Images
+                                        #dropzone.dropzone.dz-clickable
+                                            .dz-message
+                                                div
+                                                    h6 Upload images
+                                                    .text-muted Drop Image files here or click to upload.
+                            .col-12.col-lg-5
+                                .property-info-side
+                                    .side-section
+                                        .side-section-header
+                                            | Info
+                                        .side-section-content
+                                            .property-side-features
+                                                .feature
+                                                    .form-group
+                                                        label(for='i-phone') Phone Number
+                                                        input#i-phone.form-control(data-match-error="Please enter valid phone number" placeholder="Please enter without '-'" required='required' type='tel')
+                                                        .help-block.form-text.with-errors.form-control-feedback
+                                                    .form-group
+                                                        label(for='i-address') Address
+                                                        input#i-address.form-control(data-match-error="Please enter valid address" placeholder="" required='required' type='text')
+                                                        .help-block.form-text.with-errors.form-control-feedback
+                                                    .details.d-none
+                                                        input#i-lat(data-geo='lat' type='text')
+                                                        input#i-lng(data-geo='lng' type='text')
+                                                    .form-group
+                                                        label.form-check-label
+                                                            input#i-delete-auto.form-check-input(type='checkbox')
+                                                            | Close Automatically
+
+                                                        input#i-delete-date.form-control(placeholder="" type='date')
+                                                        .help-block.form-text.with-errors.form-control-feedback
+                                    .side-section
+                                        .side-section-header
+                                            | Opening Hours
+                                        .side-section-content
+                                            .property-side-features
+                                                .feature
+                                                    .input-group.mb-3
+                                                        .input-group-prepend
+                                                            .input-group-text
+                                                                input(type='checkbox')
+                                                            .input-group-text.day
+                                                                | Mon
+                                                        input.i-start-time.form-control(type='time' value="08:30")
+                                                        input.i-end-time.form-control(type='time' value="22:00")
+                                                    .input-group.mb-3
+                                                        .input-group-prepend
+                                                            .input-group-text
+                                                                input(type='checkbox')
+                                                            .input-group-text.day
+                                                                | Tue
+                                                        input.i-start-time.form-control(type='time' value="08:30")
+                                                        input.i-end-time.form-control(type='time' value="22:00")
+                                                    .input-group.mb-3
+                                                        .input-group-prepend
+                                                            .input-group-text
+                                                                input(type='checkbox')
+                                                            .input-group-text.day
+                                                                | Wed
+                                                        input.i-start-time.form-control(type='time' value="08:30")
+                                                        input.i-end-time.form-control(type='time' value="22:00")
+                                                    .input-group.mb-3
+                                                        .input-group-prepend
+                                                            .input-group-text
+                                                                input(type='checkbox')
+                                                            .input-group-text.day
+                                                                | Thu
+                                                        input.i-start-time.form-control(type='time' value="08:30")
+                                                        input.i-end-time.form-control(type='time' value="22:00")
+                                                    .input-group.mb-3
+                                                        .input-group-prepend
+                                                            .input-group-text
+                                                                input(type='checkbox')
+                                                            .input-group-text.day
+                                                                | Fri
+                                                        input.i-start-time.form-control(type='time' value="08:30")
+                                                        input.i-end-time.form-control(type='time' value="22:00")
+                                                    .input-group.mb-3
+                                                        .input-group-prepend
+                                                            .input-group-text
+                                                                input(type='checkbox')
+                                                            .input-group-text.day
+                                                                | Sat
+                                                        input.i-start-time.form-control(type='time' value="08:30")
+                                                        input.i-end-time.form-control(type='time' value="22:00")
+                                                    .input-group.mb-3
+                                                        .input-group-prepend
+                                                            .input-group-text
+                                                                input(type='checkbox')
+                                                            .input-group-text.day
+                                                                | Sun
+                                                        input.i-start-time.form-control(type='time' value="08:30")
+                                                        input.i-end-time.form-control(type='time' value="22:00")
+                                .row.justify-content-center.p-3
+                                    button.btn.btn-lg.btn-primary.w-100(type='submit')  Submit 👍
+        include common/footer
+    .display-type
+include common/scripts
+script.
+    function openingHourSetup() {
+        $('.feature').find('.input-group').each(function (index, value) {
+            var checked = $(this).find('input[type="checkbox"]').is(':checked')
+            if (!checked) {
+                $(this).find('input[type="time"]').attr('disabled', true)
+            } else {
+                $(this).find('input[type="time"]').attr('disabled', false)
+            }
+        })
+    }
+    function deleteAutoSetup() {
+        if ($('#i-delete-auto').is(':checked')) {
+            $('#i-delete-date').show()
+        } else {
+            $('#i-delete-date').hide()
+        }
+    }
+    var uploaded = []
+    function dropzoneSetup() {
+        var dz = new Dropzone("#dropzone", {
+            url: "/api/image",
+            resizeWidth: 1000,
+            acceptedFiles: 'image/*',
+            addRemoveLinks: true
+        });
+        dz.on("complete", function (file, response) {
+            uploaded.push(JSON.parse(file.xhr.response).url)
+        });
+        dz.on('removedfile', function (file) {
+            var url = JSON.parse(file.xhr.response).url
+            uploaded = uploaded.filter(function (item) {
+                return url !== item
+            })
+        })
+    }
+    function getOpeningHours() {
+        var result = []
+        $('.feature').find('.input-group').each(function (index, value) {
+            var checked = $(this).find('input[type="checkbox"]').is(':checked')
+            var day = $(this).find('.day').html().trim().toUpperCase()
+            if (!checked) {
+                $(this).find('input[type="time"]').attr('disabled', true)
+            } else {
+                $(this).find('input[type="time"]').attr('disabled', false)
+                result.push({
+                    day: day,
+                    open: $(this).find('.i-start-time').val(),
+                    close: $(this).find('.i-end-time').val()
+                })
+            }
+        })
+        return result
+    }
+    function getItemsList() {
+        var itemList = []
+        $('#table').find('tr:not(.th):not(.hide)').each(function (index, row) {
+            var itemName = $(this).find('.item-name').html().trim()
+            var prevPrice = $(this).find('.item-prev-price').html().trim()
+            var nowPrice = $(this).find('.item-now-price').html().trim()
+            itemList.push({
+                itemName: itemName,
+                prevPrice: parseFloat(prevPrice),
+                nowPrice: parseFloat(nowPrice)
+            })
+        })
+        for (var i = 0; i < itemList.length; i++) {
+            if (itemList[i].itemName === 'Enter Item' || itemList[i].itemName === '' || (itemList[i].prevPrice !== 0 && !itemList[i].prevPrice) || (itemList[i].nowPrice !== 0 && !itemList[i].nowPrice)) {
+                return false
+            }
+        }
+        return itemList
+    }
+    function uodateFlexbleCategoryAreas(){
+        if (['Menus-Restaurant', 'Menus-Bar', 'Menus-Cafe'].indexOf($('#i-category').val()) !== -1) {
+            $('#items-wrapper').hide()
+        } else {
+            $('#items-wrapper').show()
+        }
+        if ($('#i-category').val() === 'Happy Hour') {
+            $('#a-happy-hour').show()
+        } else {
+            $('#a-happy-hour').hide()
+        }
+    }
+    function getHappyHour(){
+        return {
+            start: $('#i-happyhour-start-time').val(),
+            end: $('#i-happyhour-end-time').val()
+        }
+    }
+    $(function () {
+        openingHourSetup()
+        deleteAutoSetup()
+        dropzoneSetup()
+        uodateFlexbleCategoryAreas()
+        $("#i-address").geocomplete({
+            details: ".details",
+            detailsAttribute: "data-geo",
+        });
+        $('.feature').find('.input-group').each(function (index, value) {
+            $(this).find('input[type="checkbox"]').change(function () {
+                openingHourSetup()
+            })
+        })
+        $('#i-delete-auto').change(function () {
+            deleteAutoSetup()
+        })
+        $('#i-category').change(function () {
+            uodateFlexbleCategoryAreas()
+        })
+        $('.table-editable td').focus(function () {
+            if (['Enter Item', '$0'].indexOf($(this).html()) !== -1) {
+                $(this).html('')
+            }
+        })
+        $('#formValidate').submit(function (e) {
+            e.preventDefault()
+            var data = {}
+            data.category = $('#i-category').val()
+            data.cuisineType = $('#i-cuisine-type').val()
+            data.title = $('#i-title').val()
+            data.description = $('#i-description').val()
+            if($('#i-category').val() === 'Happy Hour'){
+                data.happyHour = getHappyHour()
+            }
+            var excludeItems = ['Menus-Restaurant', 'Menus-Bar', 'Menus-Cafe'].indexOf($('#i-category').val()) !== -1
+            if (!excludeItems) {
+                var items = getItemsList()
+                if (!items) {
+                    alert('Please fill in items list')
+                    return;
+                } else {
+                    data.items = items
+                }
+            }
+            data.images = uploaded
+            data.phone = $('#i-phone').val()
+            data.address = $('#i-address').val()
+            data.lat = $('#i-lat').val()
+            data.lng = $('#i-lng').val()
+
+            if ($('#i-delete-auto').is(':checked')) {
+                data.deleteAuto = $('#i-delete-date').val()
+            }
+            data.opening = getOpeningHours()
+
+            $('button[type="submit"]').buttonLoader('start')
+            $.ajax({
+                url: '/sell',
+                data: JSON.stringify(data),
+                cache: false,
+                contentType: 'application/json',
+                processData: false,
+                type: 'POST',
+                success: function (data) {
+                    location.href='/deal/'+data._id
+                    $('button[type="submit"]').buttonLoader('stop')
+                },
+                error: function (data) {
+                    console.log(data)
+                    $('button[type="submit"]').buttonLoader('stop')
+                }
+            });
+
+        })
+    })

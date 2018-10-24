@@ -1,0 +1,59 @@
+include common/head
+.all-wrapper.solid-bg-all
+    .layout-w
+        include common/mobile-menu
+        include common/main-menu
+        .content-w
+            .content-i
+                .content-box
+                    .row
+
+                        .col-sm-7.mt-3.mt-lg-0.mx-auto.my-lg-5
+                            .element-wrapper
+                                .element-box
+                                    h6.element-header
+                                        | Manage Your Posts
+                                    if dealList.length === 0
+                                        .row.justify-content-center
+                                            img.my-5(src='/assets/img/salad.svg')
+
+                                            .col-12.text-center.my-3
+                                                h6 No posts yet! Sell food for the first time.
+                                            .col-12.text-center.mb-5
+                                                a.btn.btn.btn-primary.btn-rounded(href='/sell') Let's sell food
+                                    if dealList.length !== 0
+                                        .timed-activities.compact
+                                            - var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+                                            each time in dealList
+                                                .timed-activity
+                                                    .ta-date
+                                                        - var month = months[parseInt(time.time.split('-')[0])-1]
+                                                        - var year = parseInt(time.time.split('-')[1])
+                                                        span #{month} #{year}
+                                                    .ta-record-w
+                                                        each deal in time.items
+                                                            - var createdAt = new Date(deal.createdAt)
+                                                            - var timeType = createdAt.getHours() >= 12 ? 'pm' : 'am'
+                                                            .ta-record
+                                                                .ta-timestamp
+                                                                    strong #{createdAt.getDate()}th
+                                                                    |  #{timeType === 'am'?createdAt.getHours():createdAt.getHours()-12}:#{createdAt.getMinutes()} #{timeType}
+                                                                    strong.badge.ml-1(class=(!deal.deleteAuto || new Date(deal.deleteAuto) >= new Date()) ? 'badge-success text-white': 'badge-light') #{(!deal.deleteAuto || new Date(deal.deleteAuto) >= new Date()) ? 'live': 'closed'}
+                                                                .ta-activity.d-flex.justify-content-between
+                                                                    span=deal.title
+                                                                    div
+                                                                        if new Date(deal.deleteAuto) >= new Date() || !deal.deleteAuto
+                                                                            a.mr-1.text-faded(href='/sell/close/'+deal._id) Close
+                                                                        if new Date(deal.deleteAuto) < new Date() && deal.deleteAuto
+                                                                            a.mr-1.text-danger(href='/sell/delete/'+deal._id) Delete
+                                                                        a(href='/sell/edit/'+deal._id) Edit
+
+                                            //.row
+                                            //    a.mx-auto(href='#' style='border-bottom: 1px solid #047bf8') Load More
+
+        include common/footer
+    .display-type
+include common/scripts
+script.
+
+

@@ -1,0 +1,8 @@
+node_modules
+.cache
+.DS_Store
+.idea/
+.env
+.env/
+.env.prod
+.env.prod/

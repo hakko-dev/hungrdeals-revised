@@ -1,0 +1,233 @@
+include common/head
+.all-wrapper.with-side-panel.solid-bg-all
+    .layout-w
+        include common/mobile-menu
+        include common/main-menu
+        .content-w
+            .content-i
+                .content-box
+                    .row.pb-5
+                        .col-12
+                            .input-group
+                                input#i-search.form-control.search-bar(type='text' placeholder="I'm looking for ..." )
+                                .input-group-append
+                                    button#f-search.btn.btn-grey.px-3.px-lg-5(type='button' style="color: #495057;z-index: 1;")
+                                        i.fas.fa-search
+                    .row
+                        .col-12
+                            .element-wrapper.pb-1
+                                h5.element-header
+                                    if path
+                                        | #{path.sub}
+                                        span.search-query (Search result for
+                                            | &nbsp
+                                            span#search-query
+                                            | )
+                                    else
+                                        | All Deals
+                                        span.search-query (Search result for
+                                            | &nbsp
+                                            span#search-query
+                                            | )
+                    .support-index
+                        .support-tickets
+
+
+
+
+
+
+
+                            //.load-more-tickets
+                            //    a(href='#')
+                            //        span Load More Items...
+                include common/side-bar
+        include common/footer
+    .display-type
+include common/scripts
+script.
+    var emojiList = {
+        'Thai': '🇹🇭',
+        'Korean': '🇰🇷',
+        'Japanese': '🇯🇵',
+        'Chinese': '🇨🇳',
+        'Indian': '🇮🇳',
+        'Western': '🍔',
+        'Mediterraean': '🥙',
+        'Mexican': '🇲🇽',
+        'Italian': '🇮🇹',
+        'French': '🇫🇷',
+        'Vietnamese': '🇻🇳',
+        'Fusion': '🥘',
+        'Greek': '🇬🇷',
+        'Others': '🍽️',
+    }
+    var placeholder = '<div class="row">\n' +
+        '<div class="col-12">\n' +
+        '    <div class="ph-item">\n' +
+        '        <div class="ph-col-1">\n' +
+        '            <div class="ph-avatar"></div>\n' +
+        '        </div>\n' +
+        '        <div class="ph-temp"></div>\n' +
+        '        <div class="ph-col-10">\n' +
+        '            <div class="ph-row">\n' +
+        '                <div class="ph-col-10 big"></div>\n' +
+        '                <div class="ph-col-2 empty big"></div>\n' +
+        '                <div class="ph-col-4"></div>\n' +
+        '                <div class="ph-col-8 empty"></div>\n' +
+        '                <div class="ph-col-6"></div>\n' +
+        '                <div class="ph-col-6 empty"></div>\n' +
+        '                <div class="ph-col-12"></div>\n' +
+        '            </div>\n' +
+        '        </div>\n' +
+        '    </div>\n' +
+        '</div>\n' +
+        '</div>'
+    var noPost = '<div class="row justify-content-center"><img class="my-5" src="/assets/img/salad.svg" />\n' +
+        '    <div class="col-12 text-center my-3">\n' +
+        '        <h6>No posts yet!</h6>\n' +
+        '    </div>\n' +
+        '</div>'
+    $('.support-tickets').append([placeholder, placeholder, placeholder])
+    var path = !{JSON.stringify(path)}
+    var initialLoad = $.debounce(function () {
+        $('.support-tickets').html([placeholder, placeholder, placeholder])
+        var sort = $('#i-sort').val()
+        var search = $('#i-search').val()
+        var filter = $('#i-filter').val()
+        var lat = $('#i-lat').val()
+        var lng = $('#i-lng').val()
+        var distance = $('#i-distance').val()
+        var cuisineType = getCuisineType()
+        var priceRangeStart = $('#price-range').val().split(';')[0]
+        var priceRangeEnd = $('#price-range').val().split(';')[1]
+        var timeRangeStart = parseInt($('#time-range').val().split(';')[0])
+        timeRangeStart = parseInt(new Date(timeRangeStart).getHours() + '' + new Date(timeRangeStart).getMinutes().toString().padStart(2, 0))
+        var timeRangeEnd = parseInt($('#time-range').val().split(';')[1])
+        timeRangeEnd = parseInt(new Date(timeRangeEnd).getHours() + '' + new Date(timeRangeEnd).getMinutes().toString().padStart(2, 0))
+
+        var category = null
+        if (path) {
+            if (path.sub.indexOf('All') !== -1) {
+                category = path.big
+            } else {
+                category = path.big + '-' + path.sub
+            }
+        }
+        if (search !== '') {
+            $('.search-query').show()
+            $('#search-query').text(search)
+        } else {
+            $('.search-query').hide()
+        }
+        var serverCallStartTime = new Date().getTime()
+        $.ajax({
+            url: '/api/search',
+            data: JSON.stringify({
+                sort,
+                search,
+                filter,
+                openHourStart: timeRangeStart,
+                openHourEnd: timeRangeEnd,
+                currentLocationLat: lat,
+                currentLocationLng: lng,
+                distance: distance,
+                priceRangeStart,
+                priceRangeEnd,
+                cuisineType,
+                category: category
+            }),
+            cache: false,
+            contentType: 'application/json',
+            processData: false,
+            type: 'POST',
+            success: function (data) {
+                console.log(data)
+                var serverCallEndTime = new Date().getTime()
+
+                function modifySearchReslts() {
+                    $('.support-tickets').html('')
+                    var currentTime = new Date()
+                    currentTime = parseInt(currentTime.getHours().toString().padStart(2, 0) + currentTime.getMinutes().toString().padStart(2, 0))
+                    if (data.list.length !== 0) {
+                        data.list.forEach(function (item) {
+                            var opened = true
+                            if (item.opening.length === 0) {
+                                opened = false
+                            } else if (item.opening[0].open > currentTime || item.opening[0].close < currentTime) {
+                                opened = false
+                            }
+                            var html = '<div class="support-ticket" data-id="' + item._id + '">' +
+                                '<div class="st-meta">' +
+                                '<div class="status-pill ' + (opened ? "green" : "red") + '">' +
+                                '</div>' +
+                                '<div class="badge ' + (opened ? "badge-success-inverted" : "badge-danger-inverted") + '">' +
+                                (opened ? "open" : "close") +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="st-body">' +
+                                '<div class="avatar">' + emojiList[item.cuisineType] + '</div>' +
+                                '<div class="ticket-content">' +
+                                '<h6 class="ticket-title">' + item.title +
+                                '</h6>' +
+                                '<div class="ticket-description">' + item.description + '</div>' +
+                                '</div>';
+                            if (item.cheapestItem) {
+                                html = html + '<div class="price">' +
+                                    '<div class="was">$' + item.cheapestItem.prevPrice + '</div>' +
+                                    '<strong>$' + item.cheapestItem.nowPrice + '</strong>' +
+                                    '</div>';
+                            }
+                            html = html + '</div>' +
+                                '<div class="st-foot"><span class="label"><div class="os-icon os-icon-ui-74"></div></span>' +
+                                '<span class="value text-truncate" style="max-width: 80%">' + item.address + '</span>' +
+                                '<span class="label"><div class="os-icon os-icon-box"></div></span>' +
+                                '<span class="value">' + item.itemSize + ' items</span></div></div>'
+
+                            $('.support-tickets').append(
+                                html
+                            )
+                        })
+                    } else {
+                        $('.support-tickets').append(
+                            noPost
+                        )
+                    }
+                    $('.support-ticket').click(function () {
+                        location.href = '/deal/' + $(this).data('id')
+                    })
+                }
+
+                if (serverCallEndTime - serverCallStartTime < 500) {
+                    setTimeout(function () {
+                        modifySearchReslts()
+                    }, 500 - (serverCallEndTime - serverCallEndTime))
+                } else {
+                    modifySearchReslts()
+                }
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        });
+
+    }, 400)
+    $(function () {
+        initialLoad()
+    })
+
+    if (!String.prototype.padStart) {
+        String.prototype.padStart = function padStart(targetLength, padString) {
+            targetLength = targetLength >> 0; //truncate if number, or convert non-number to 0;
+            padString = String(typeof padString !== 'undefined' ? padString : ' ');
+            if (this.length >= targetLength) {
+                return String(this);
+            } else {
+                targetLength = targetLength - this.length;
+                if (targetLength > padString.length) {
+                    padString += padString.repeat(targetLength / padString.length); //append to original to ensure we are longer than needed
+                }
+                return padString.slice(0, targetLength) + String(this);
+            }
+        };
+    }

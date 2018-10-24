@@ -1,0 +1,77 @@
+include common/head
+.all-wrapper.solid-bg-all
+    .layout-w
+        include common/mobile-menu
+        include common/main-menu
+        .content-w
+            .content-i
+                .auth-box-w.wider.my-5
+                    .logo-w(style='padding: 10%')
+                        a(href='index.html')
+                            //img(alt='' src='/assets/img/logo-big.png')
+                    h4.auth-header
+                        | Register
+                    form#f-email.needs-validation(action='/register/email' method='post')
+                        .form-group
+                            label(for='i-email')  Email address
+                                .d-inline.form-text.with-errors.form-control-feedback.ml-2=errorMessage
+                            input#i-email.form-control(placeholder='Enter email' type='email' name='email')
+                            .valid-feedback Test
+                            .pre-icon.os-icon.os-icon-email-2-at2
+                        .form-group
+                            label(for='i-username')  Username
+                            input#i-username.form-control(placeholder='Enter username' type='text' name='username')
+                            .pre-icon.os-icon.os-icon-user-male-circle
+                        .row
+                            .col-sm-6
+                                .form-group
+                                    label(for='i-password')  Password
+                                    input#i-password.form-control(placeholder='Password' type='password' name='password')
+                                    .pre-icon.os-icon.os-icon-fingerprint
+                            .col-sm-6
+                                .form-group
+                                    label(for='i-password-check') Confirm Password
+                                    input#i-password-check.form-control(placeholder='Password' type='password')
+                        .row.justify-content-center
+                            p.text-center.text-muted.small.mb-1
+                                | * By registering you agree to the
+                                br
+                                a(href='/term') Terms and Conditions
+                                | &ensp;and&ensp;
+                                a(href='/term') Privacy Policy
+                        .buttons-w.d-flex.justify-content-end
+                            button.btn.btn-success(type='submit') Register Now
+                        .row.justify-content-center.my-4
+                            button#facebookLogin.btn.btn-primary.d-flex.justify-content-start(type="button" style='width: 235px')
+                                i.fab.fa-facebook-f.mr-1
+                                span.ml-4 Register with Facebook
+                        .row.justify-content-center
+                            button#googleLogin.btn.btn-danger.d-flex.justify-content-start(type="button" style='width: 235px')
+                                i.fab.fa-google.mr-1
+                                span.ml-4 Register with Google
+        include common/footer
+    .display-type
+include common/scripts
+script.
+    $(function(){
+        $("#facebookLogin").click(function(){
+            location.href='/auth/facebook'
+        })
+        $("#googleLogin").click(function () {
+            location.href = '/auth/google'
+        })
+        $('#f-email').submit(function(event){
+            var password = $("#i-password").val()
+            var reg = /^(?=.*[a-z])[a-z]{8,}$/;
+
+            if (password.match(reg)) {
+            }
+            else {
+                alert('Please enter stronger password.');
+            }
+            if($('#i-password').val() !== $('#i-password-check').val()){
+                event.preventDefault();
+                alert('please check password again')
+            }
+        })
+    })

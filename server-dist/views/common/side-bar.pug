@@ -1,0 +1,244 @@
+.content-panel
+    .content-panel-close
+        i.os-icon.os-icon-close
+    .element-wrapper.pb-3
+        h6.element-header
+            | Quick Links
+        .element-box-tp
+            .el-buttons-list.full-width
+                a.btn.btn-primary(href='/sell')
+                    | 🤑
+                    span Let's Sell Food
+                a.btn.btn-warning(href='/manage')
+                    | ✔️
+                    span Manage My Posts
+
+    //
+      ------------------
+      START - Support Agents
+      ------------------
+    .element-wrapper.px-3.px-lg-0
+        h6.element-header
+            | Filter & Refine
+        .element-box-tp(style='')
+            form(action='')
+                .row
+                    .col-6
+                        .form-group
+                            label(for='i-sort') Sort
+                            select#i-sort.form-control
+                                option(value="Recent") Recent
+                                option(value="Lowest") Lowest Price
+                                option(value="Highest") Highest Price
+                                option(value="High Discount") High Discount
+                                option(value="Nearest") Nearest
+                                option(value="Many Items") Many Items
+                    .col-6
+                        .form-group
+                            label(for='i-filter') Filter
+                            select#i-filter.form-control
+                                option(value='ALL') All
+                                option(value='OPEN') Only Open
+                .row#a-open-hour
+                    .col-12
+                        .form-group
+                            label(for='time-range') Open Hour
+                            .filter-body
+                                input#time-range.ion-range-slider(type='text')
+                .row.mb-4
+                    .col-6
+                        label(for='i-postcode') Location
+                        .input-group
+                            .input-group-prepend
+                                .input-group-text ZIP
+                            input#i-postcode.form-control(placeholder='HERE' type='text' maxlength="4")
+                            input#i-lat(type="hidden")
+                            input#i-lng(type="hidden")
+                    .col-6
+                        label(for='i-distance') Distance
+                        .input-group
+                            //.input-group-prepend
+                            //    .input-group-text +
+                            input#i-distance.form-control(value='5' type='number')
+                            .input-group-append
+                                .input-group-text km
+                .row
+                    .col-12
+                        .form-group
+                            label(for='price-range') Price Range
+                            .filter-body
+                                input#price-range.ion-range-slider(type='text')
+                .row
+                    .col-12
+                        label(for='') Cuisine Type
+                        .toggled-buttons.solid
+                            .row
+                                a.btn.btn-toggled.on.all All
+                                a.btn.btn-toggled.off Thai
+                                a.btn.btn-toggled.off Korean
+                            .row
+                                a.btn.btn-toggled.off Indian
+                                a.btn.btn-toggled.off Japanese
+                                a.btn.btn-toggled.off Italian
+
+                            .row
+                                a.btn.btn-toggled.off Fusion
+                                a.btn.btn-toggled.off Chinese
+                                a.btn.btn-toggled.off Vietnamese
+                            .row
+                                a.btn.btn-toggled.off Mexican
+                                a.btn.btn-toggled.off Western
+                                a.btn.btn-toggled.off French
+                            .row
+                                a.btn.btn-toggled.off Mediterranean
+                                a.btn.btn-toggled.off Others
+
+script.
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position){
+                $.ajax({
+                    url: '/api/geo2postcode?lat=' + position.coords.latitude + '&lng='+position.coords.longitude,
+                    cache: false,
+                    processData: false,
+                    type: 'GET',
+                    success: function (data) {
+                        if(data.postcode){
+                            $('#i-postcode').val(data.postcode)
+                            $('#i-lat').val(position.coords.latitude)
+                            $('#i-lng').val(position.coords.longitude)
+                            initialLoad()
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data)
+                    }
+                });
+            });
+        }
+    }
+    function getCuisineType(){
+        var cuisineTypes = []
+        $('.btn-toggled.on').each(function(){
+            cuisineTypes.push($(this).text().trim())
+        })
+        return cuisineTypes
+    }
+    $(function(){
+        getLocation()
+        $('.btn-toggled').click(function(){
+            if($(this).hasClass('off') && $(this).text().trim() !== 'All'){
+                $('.btn-toggled.all').removeClass('on')
+                $('.btn-toggled.all').addClass('off')
+                $(this).toggleClass(['on','off'])
+            }else if($(this).hasClass('off') && $(this).text().trim() === 'All'){
+                $('.btn-toggled.all').toggleClass(['on', 'off'])
+                $('.btn-toggled:not(.all)').removeClass('on')
+                $('.btn-toggled:not(.all)').addClass('off')
+            }else if($(this).hasClass('on') && $(this).text().trim() !== 'All'){
+                $(this).toggleClass(['on', 'off'])
+                if($('.btn-toggled:not(.all).on').length === 0){
+                    $('.btn-toggled.all').removeClass('off')
+                    $('.btn-toggled.all').addClass('on')
+                }
+            }else{
+                // do nothing
+            }
+            initialLoad()
+        })
+        $('#i-distance').keyup(function(){
+            initialLoad()
+        })
+        $('#a-open-hour').hide()
+        $('#i-filter').change(function () {
+            if($(this).val() === 'OPEN'){
+                $('#a-open-hour').show()
+            }else{
+                $('#a-open-hour').hide()
+            }
+            initialLoad()
+        })
+        $('#i-sort').change(function () {
+            initialLoad()
+        })
+        $('#f-search').click(function () {
+            initialLoad()
+        })
+        $('#i-search').keypress(function (e) {
+            if (e.keyCode === 13) {
+                initialLoad()
+            }
+        })
+        $('#i-postcode').keyup(function () {
+            $.ajax({
+                url: '/api/postcode2geo?postcode='+$(this).val(),
+                cache: false,
+                processData: false,
+                type: 'GET',
+                success: function (data) {
+                    console.log(data)
+                    if(data.lat && data.lng){
+                        $('#i-lat').val(data.lat)
+                        $('#i-lng').val(data.lng)
+                        initialLoad()
+                    }else{
+                        $('#i-lat').val('')
+                        $('#i-lng').val('')
+                    }
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            });
+        })
+        $('#price-range').ionRangeSlider({
+            type: "double",
+            min: 0,
+            max: 100,
+            from: 0,
+            to: 100,
+            prefix: "$",
+            step: 1,
+            onFinish: function(){
+                initialLoad()
+            }
+        });
+
+        // time range
+        moment.locale("en-AU");
+        var $range = $("#time-range");
+        var startTime = new Date()
+        startTime.setHours(0)
+        startTime.setMinutes(0)
+        startTime.setSeconds(0)
+        var endTime = new Date(startTime)
+        endTime.setDate(endTime.getDate() + 1)
+        endTime.setSeconds(-1)
+        var start = moment(startTime, "YYYY-MM-DD HH:mm");
+        var end = moment(endTime, "YYYY-MM-DD HH:mm");
+        var currentTimeStart = new Date()
+        currentTimeStart.setMinutes(0)
+        currentTimeStart.setSeconds(0)
+        currentTimeStart.setHours(currentTimeStart.getHours()-1)
+
+        var currentTimeEnd = new Date()
+        currentTimeEnd.setMinutes(0)
+        currentTimeEnd.setSeconds(0)
+        currentTimeEnd.setHours(currentTimeEnd.getHours() + 1)
+
+        $range.ionRangeSlider({
+            type: "double",
+            grid: true,
+            min: start.format("x"),
+            max: end.format("x"),
+            from: moment(currentTimeStart, "YYYY-MM-DD HH:mm").format("x"),
+            to: moment(currentTimeEnd, "YYYY-MM-DD HH:mm").format("x"),
+            step: 1800000,                // 30 minutes in ms
+            prettify: function (num) {
+                return moment(num, 'x').format("h:mm A");
+            },
+            onFinish: function () {
+                initialLoad()
+            }
+        });
+    })

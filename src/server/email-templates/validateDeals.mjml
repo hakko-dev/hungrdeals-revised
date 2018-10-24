@@ -1,0 +1,16 @@
+<mjml>
+  <mj-head>
+    <mj-font name="Montserrat" href="https://fonts.googleapis.com/css?family=Montserrat" />
+  </mj-head>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+        <mj-image width="100px" src="https://s3-ap-southeast-2.amazonaws.com/hungrdeals-assets/logo.png"></mj-image>
+        <mj-divider border-color="#F45E43"></mj-divider>
+        <mj-text font-size="20px" color="#F45E43" font-family="Montserrat">Dear, {name}</mj-text>
+        <mj-text font-size="20px" color="#F45E43" font-family="Montserrat">We are validating your ad. </mj-text>
+        <mj-text font-size="20px" color="#F45E43" font-family="Montserrat">We'll get back to your shortly</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

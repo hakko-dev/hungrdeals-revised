@@ -1,0 +1,153 @@
+.menu-mobile.menu-activated-on-click.color-scheme-light
+    .mm-logo-buttons-w
+        a.mm-logo(href='/')
+            img(src='/assets/img/hungrdeals2.png')
+            span(style='text-transform: uppercase;') Hungrdeals
+        .mm-buttons
+            .content-panel-open
+                .os-icon.os-icon-grid-circles
+            .mobile-menu-trigger
+                .os-icon.os-icon-hamburger-menu-1
+    .menu-and-user
+
+
+        ul.main-menu
+
+            li.has-sub-menu
+                a(href='/Weekday Specials/All Weekday Specials')
+                    .icon-w
+                        | 🎉
+                    span Weekday Specials
+                ul.sub-menu
+                    .row
+                        .col-4
+                            a(href='/Weekday Specials/Monday')
+                                img(src='/assets/img/moon.svg')
+                            span.sub-menu-name.text-grey monday
+                        .col-4
+                            a(href='/Weekday Specials/Tuesday')
+                                img(src='/assets/img/mars.svg')
+                            span.sub-menu-name.text-grey tuesday
+                        .col-4
+                            a(href='/Weekday Specials/Wednesday')
+                                img(src='/assets/img/mercury.svg')
+                            span.sub-menu-name.text-grey wednesday
+                    .row
+                        .col-4
+                            a(href='/Weekday Specials/Thursday')
+                                img(src='/assets/img/jupiter.svg')
+                            span.sub-menu-name.text-grey thursday
+                        .col-4
+                            a(href='/Weekday Specials/Friday')
+                                img(src='/assets/img/venus.svg')
+                            span.sub-menu-name.text-grey friday
+            li.has-sub-menu
+                a(href='/Weekend Deals/All Weekend Deals')
+                    .icon-w
+                        | 😎
+                    span Weekend Deals
+                ul.sub-menu
+                    .row
+                        .col-4
+                            a(href='/Weekend Deals/Saturday')
+                                img(src='/assets/img/saturn.svg')
+                            span.sub-menu-name.text-grey saturday
+                        .col-4
+                            a(href='/Weekend Deals/Sunday')
+                                img(src='/assets/img/sun.svg')
+                            span.sub-menu-name.text-grey sunday
+
+
+            li
+                a(href='/Happy Hour/All Happy Hours')
+                    .icon-w
+                        | ⏰
+                    span Happy Hour
+
+            li
+                a(href='/Combo/All Combos')
+                    .icon-w
+                        | 🍱
+                    span Combo
+
+            li.has-sub-menu
+                a(href='/Miscellaneous/All Miscellaneous')
+                    .icon-w
+                        | 🎁
+                    span Miscellaneous
+                ul.sub-menu
+                    .row
+                        .col-4
+                            a(href='/Miscellaneous/Grand Openings')
+                                img(src='/assets/img/discount.svg')
+                            span.sub-menu-name.text-grey grand openings
+                        .col-4
+                            a(href='/Miscellaneous/Homemade Deals')
+                                img(src='/assets/img/house.svg')
+                            span.sub-menu-name.text-grey homemade deals
+                        .col-4
+                            a(href='/Miscellaneous/Volunteer')
+                                img(src='/assets/img/waiter.svg')
+                            span.sub-menu-name.text-grey volunteer
+                    .row
+                        .col-4
+                            a(href='/Miscellaneous/Giveaway')
+                                img(src='/assets/img/tag.svg')
+                            span.sub-menu-name.text-grey giveaway
+                        .col-4
+                            a(href='/Miscellaneous/Buffet')
+                                img(src='/assets/img/buffet.svg')
+                            span.sub-menu-name.text-grey buffet
+            li.has-sub-menu
+                a(href='/Menus/All Menus')
+                    .icon-w
+                        | 📖
+                    span Menu
+                ul.sub-menu
+                    .row
+                        .col-4
+                            a(href='/Menus/Restaurant')
+                                img(src='/assets/img/breakfast.svg')
+                            span.sub-menu-name.text-grey restaurant
+                        .col-4
+                            a(href='/Menus/Bar')
+                                img(src='/assets/img/wine-bottle.svg')
+                            span.sub-menu-name.text-grey bar
+                        .col-4
+                            a(href='/Menus/Cafe')
+                                img(src='/assets/img/mug.svg')
+                            span.sub-menu-name.text-grey cafe
+            if !user
+                .row.justify-content-center.mt-3
+                    a.btn.btn-primary.mr-2(href='login') Log In
+                    a.btn.btn-success(href='register') Register
+            if user
+                li.has-sub-menu
+                    a(href='/profile')
+                        .icon-w
+                            img(alt='' src=user.profileImage style="object-fit: cover; width: 40px; height: auto; border-radius: 50%")
+                        span Profile
+                    ul.sub-menu
+                        .row
+                            .col-4
+                                a(href='/profile')
+                                    img(src='/assets/img/settings.svg')
+                                span.sub-menu-name.text-grey Settings
+                            .col-4
+                                a(href='/manage')
+                                    img(src='/assets/img/content.svg')
+                                span.sub-menu-name.text-grey My Posts
+                            .col-4
+                                a(href='/logout')
+                                    img(src='/assets/img/exit.svg')
+                                span.sub-menu-name.text-grey Logout
+
+        //
+          ------------------
+          END - Mobile Menu List
+          ------------------
+
+//
+  ------------------
+  END - Mobile Menu
+  ------------------

@@ -1,0 +1,110 @@
+include common/head
+.all-wrapper.solid-bg-all
+    .layout-w
+        include common/mobile-menu
+        include common/main-menu
+        .content-w
+            .content-i
+                .property-single(style='flex: 1')
+                    .property-info-w.row
+                        .col-12.col-lg-8
+                            .property-info-main
+                                .property-content
+                                    .badge.badge-info
+                                        | #{cuisineType}
+                                    .item-features
+                                        each item in category.split('-')
+                                            .feature
+                                                | #{item}
+                                    h1
+                                        | #{title}
+
+                                    .item-reviews
+                                        .reviews-count
+                                            i.os-icon.os-icon-ui-74.mr-2
+                                            | #{address}
+
+                                    .property-description
+                                       | !{description}
+                                if happyHour
+                                    .property-section
+                                        .property-section-header
+                                            | Happy Hour
+                                        .property-section-body
+                                            .row
+                                                .col-12
+                                                   ul #{happyHour.start} to #{happyHour.end}
+                                if items && items.length > 0
+                                    .property-section
+                                        .property-section-header
+                                            | Items
+                                        .property-section-body
+                                            .row
+                                                .col-12
+                                                    ul
+                                                        each item in items
+                                                            li
+                                                                | #{item.itemName}
+                                                                strong(style='text-decoration: line-through') $#{item.prevPrice}
+                                                                strong.text-primary $#{item.nowPrice}
+
+                                            if deleteAuto
+                                                .property-note
+                                                    h6
+                                                        | Availability
+                                                    p
+                                                        | This special offer has been posted on #{new Date(createdAt).toLocaleDateString()}. And it closes on #{new Date(deleteAuto).toLocaleDateString()}. Wish you can benefit from this post until then!
+                                if images.length !== 0
+                                    .property-section
+                                        .property-section-header
+                                            | Images
+                                    #carouselExampleIndicators.carousel.slide(data-ride='carousel')
+                                        .carousel-inner
+                                            .fade
+                                            each img, index in images
+                                                .carousel-item(class=index===0 && 'active')
+                                                    img.d-block.w-100(src=img)
+                                        a.carousel-control-prev(href='#carouselExampleIndicators' role='button' data-slide='prev')
+                                            span.carousel-control-prev-icon(aria-hidden='true')
+                                            span.sr-only Previous
+                                        a.carousel-control-next(href='#carouselExampleIndicators' role='button' data-slide='next')
+                                            span.carousel-control-next-icon(aria-hidden='true')
+                                            span.sr-only Next
+
+                        .col-12.col-lg-4
+                            .property-info-side
+                                .side-section
+                                    .side-section-header
+                                        | Contact
+                                    .side-section-content
+                                        .property-side-features
+                                            .feature
+                                                i.os-icon.os-icon-phone-call
+                                                span(style='fonts-size: 1rem') #{phone}
+
+                                .side-section
+                                    .side-section-header
+                                        | Open Hours
+                                    .side-section-content
+                                        .property-side-features
+                                            .feature
+                                                each day in opening
+                                                    .row.justify-content-between
+                                                        span=day.day.string
+                                                        if day.open
+                                                            span #{day.open} - #{day.close}
+                                                        else
+                                                            span Closed
+
+                                .side-section
+                                    .side-section-header
+                                        | Map
+                                    .side-section-content.p-0
+                                        .property-side-features
+                                            iframe(src='https://maps.google.com/maps?q='+lat+','+lng+'&hl=en;z=14&output=embed&key=AIzaSyCodRdvGqSOhTGmLPjM2Cxvx3b2G4wK68Q' width='100%' height='300' frameborder='0' style='border:0' allowfullscreen='')
+
+
+
+        include common/footer
+    .display-type
+include common/scripts

@@ -1,0 +1,184 @@
+.menu-w.color-scheme-dark.color-style-dark.menu-position-top.menu-layout-compact.sub-menu-style-inside.sub-menu-color-light.selected-menu-color-light.menu-activated-on-hover(class=[mainPage && 'menu-with-image', (mainPage && path!== null) && 'menu-has-selected-link' ])
+    //menu-has-selected-link 추가시 margin-bottom 50px 생성
+    .logo-w
+        a.logo(href='/')
+            img(src='/assets/img/hungrdeals2.png' style='width: 35px')
+            .logo-label
+                | Hungrdeals
+    if !user
+        .logged-user-w.avatar-inline.pr-5
+            a.btn.btn-primary.mr-3(href='/login') Log In
+            a.btn.btn-success(href='/register') Register
+    if user
+        .logged-user-w.avatar-inline.pr-5
+            .logged-user-i
+                .avatar-w(style="width: 35px;height: 35px; padding:0;")
+                    img(alt='' src=user.profileImage style="object-fit: cover; width: inherit; height: inherit;")
+                .logged-user-toggler-arrow
+                    .os-icon.os-icon-chevron-down
+                .logged-user-menu.color-style-dark
+                    .logged-user-avatar-info
+                        .avatar-w(style="width: 35px;height: 35px;")
+                            img(alt='' src=user.profileImage style="object-fit: cover; width: inherit; height: inherit;")
+                        .logged-user-info-w
+                            .logged-user-name
+                                | #{user.userName}
+                            //.logged-user-role
+                            //    | xxchihiro.dev
+                    .bg-icon
+                        i.os-icon.os-icon-wallet-loaded
+                    ul
+                        li
+                            a(href='/profile')
+                                i.os-icon.os-icon-user-male-circle2
+                                span Profile Settings
+                        li
+                            a(href='/manage')
+                                i.os-icon.os-icon-tasks-checked
+                                span Manage Posts
+                        li
+                            a(href='/logout')
+                                i.os-icon.os-icon-signs-11
+                                span Logout
+    h1.menu-page-header
+        if path
+            | #{path.big}
+        else
+            | Taste the Rainbow
+    ul.main-menu(class=(mainPage && path!== null) && 'has-active')
+        li.sub-header
+            span Layouts
+        li.has-sub-menu(class=(mainPage && path && path.big==='Weekday Specials') && 'selected')
+            a(href='/Weekday Specials/All Weekday Specials')
+                span.emoji
+                span Weekday Specials
+            .sub-menu-w
+                .sub-menu-header
+                    |
+                .sub-menu-icon
+                    i.os-icon.os-icon-layout
+                .sub-menu-i
+                    ul.sub-menu
+                        li
+                            a(href='/Weekday Specials/All Weekday Specials') 📅 All Weekday Specials
+                        li
+                            a(href='/Weekday Specials/Monday') 😫 Monday
+                        li
+                            a(href='/Weekday Specials/Tuesday')
+                                | 😓 Tuesday
+                                strong.badge.badge-danger Hot
+                        li
+                            a(href='/Weekday Specials/Wednesday') 🙂 Wednesday
+                        li
+                            a(href='/Weekday Specials/Thursday') 😉️ Thursday
+                        li
+                            a(href='/Weekday Specials/Friday') 😍 Friday
+        li.has-sub-menu(class=(mainPage && path && path.big==='Weekend Deals') && 'selected')
+            a(href='/Weekend Deals/All Weekend Deals')
+                //.icon-w
+                //    .os-icon.os-icon-layers
+                span.emoji
+                span Weekend Deals
+            .sub-menu-w
+                .sub-menu-header
+                    |
+                .sub-menu-icon
+                    i.os-icon.os-icon-layers
+                .sub-menu-i
+                    ul.sub-menu
+                        li
+                            a(href='/Weekend Deals/All Weekend Deals') 📆 All Weekend Deals
+                        li
+                            a(href='/Weekend Deals/Saturday') 😎 Saturday
+                        li
+                            a(href='/Weekend Deals/Sunday') 😶 Sunday
+        li.sub-header
+            span Options
+        li.has-sub-menu(class=(mainPage && path && path.big==='Happy Hour') && 'selected')
+            a(href='/Happy Hour/All Happy Hours')
+                //.icon-w
+                //    .os-icon.os-icon-package
+                span.emoji
+                span Happy Hour
+            .sub-menu-w
+                .sub-menu-header
+                    |
+                .sub-menu-icon
+                    i.os-icon.os-icon-package
+                .sub-menu-i
+                    ul.sub-menu
+                        li
+                            a(href='/Happy Hour/All Happy Hours') ⏰ All Happy Hours
+        li.has-sub-menu(class=(mainPage && path && path.big==='Combo') && 'selected')
+            a(href='/Combo/All Combos')
+                //.icon-w
+                //    .os-icon.os-icon-file-text
+                span.emoji
+                span Combo
+            .sub-menu-w
+                .sub-menu-header
+                    |
+                .sub-menu-icon
+
+                .sub-menu-i
+                    ul.sub-menu
+                        li
+                            a(href='/Combo/All Combos')  🍱 All Combos
+        li.has-sub-menu(class=(mainPage && path && path.big==='Miscellaneous') && 'selected')
+            a(href='/Miscellaneous/All Miscellaneous')
+                //.icon-w
+                //    .os-icon.os-icon-life-buoy
+                span.emoji
+                span Miscellaneous
+            .sub-menu-w
+                .sub-menu-header
+                    |
+                .sub-menu-icon
+                    i.os-icon.os-icon-life-buoy
+                .sub-menu-i
+                    ul.sub-menu
+                        li
+                            a(href='/Miscellaneous/All Miscellaneous') All Miscellaneous
+                        li
+                            a(href='/Miscellaneous/Grand Openings')
+                                | 🎊 Grand Openings
+                                strong.badge.badge-danger New
+                        li
+                            a(href='/Miscellaneous/Homemade Deals') 🏠 Homemade Deals
+                        li
+                            a(href='/Miscellaneous/Volunteer') 💪 Volunteer
+                        li
+                            a(href='/Miscellaneous/Giveaway') 🆓 Giveaway
+                        li
+                            a(href='/Miscellaneous/Buffet') 🍽️ Buffet
+        li.has-sub-menu(class=(mainPage && path && path.big==='Menus') && 'selected')
+            a(href='/Menus/All Menus')
+                //.icon-w
+                //    .os-icon.os-icon-life-buoy
+                span.emoji
+                span Menus
+            .sub-menu-w
+                .sub-menu-header
+                    |
+                .sub-menu-icon
+                    i.os-icon.os-icon-life-buoy
+                .sub-menu-i
+                    ul.sub-menu
+                        li
+                            a(href='/Menus/All Menus') All Menus
+                        li
+                            a(href='/Menus/Restaurant') 🍳 Restaurant
+                        li
+                            a(href='/Menus/Bar')
+                                | 🍷 Bar
+                                strong.badge.badge-danger New
+                        li
+                            a(href='/Menus/Cafe') ☕ Cafe
+
+    .side-menu-magic
+        h4
+            | Light Admin
+        p
+            | Clean Bootstrap 4 Template
+        .btn-w
+            a.btn.btn-white.btn-rounded(href='https://themeforest.net/item/light-admin-clean-bootstrap-dashboard-html-template/19760124?ref=Osetin' target='_blank') Purchase Now

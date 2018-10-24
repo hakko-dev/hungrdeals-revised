@@ -1,0 +1,369 @@
+include common/head
+.all-wrapper.solid-bg-all
+    .layout-w
+        include common/mobile-menu
+        include common/main-menu
+        .content-w
+            .content-i
+                .property-single(style='flex: 1')
+                    form#formValidate(novalidate='true')
+                        .property-info-w.row
+                            .col-12.col-lg-7
+                                .property-info-main
+                                    .property-content
+                                        h1.form-header Let's Edit Your Food
+                                        .form-desc
+                                            | What is your special offer? Please fill in the from below. And start selling your food on Hungrdeals. You can edit your post anytime you want.
+                                        .row
+                                            .col-sm-6
+                                                .form-group
+                                                    label(for='i-category')  Category
+                                                    select#i-category.form-control
+                                                        optgroup(label='Weekday Specials')
+                                                            option(value='Weekday Specials-Monday' selected=deal.category === 'Weekday Specials-Monday') Monday
+                                                            option(value='Weekday Specials-Tuesday' selected=deal.category === 'Weekday Specials-Tuesday') Tuesday
+                                                            option(value='Weekday Specials-Wednesday' selected=deal.category === 'Weekday Specials-Wednesday') Wednesday
+                                                            option(value='Weekday Specials-Thursday' selected=deal.category === 'Weekday Specials-Thursday') Thursday
+                                                            option(value='Weekday Specials-Friday' selected=deal.category === 'Weekday Specials-Friday') Friday
+                                                        optgroup(label='Weekend Deals')
+                                                            option(value='Weekend Deals-Saturday' selected=deal.category === 'Weekend Deals-Saturday') Saturday
+                                                            option(value='Weekend Deals-Sunday' selected=deal.category === 'Weekend Deals-Sunday') Sunday
+                                                        optgroup(label='Happy Hour')
+                                                            option(value='Happy Hour' selected=deal.category === 'Happy Hour') Happy Hour
+                                                        optgroup(label='Combo')
+                                                            option(value='Combo' selected=deal.category === 'Combo') Combo
+                                                        optgroup(label='Miscellaneous')
+                                                            option(value='Miscellaneous-Grand Openings' selected=deal.category === 'Miscellaneous-Grand Openings') Grand Openings
+                                                            option(value='Miscellaneous-Homemade Deals' selected=deal.category === 'Miscellaneous-Homemade Deals') Homemade Deals
+                                                            option(value='Miscellaneous-Volunteer' selected=deal.category === 'Miscellaneous-Volunteer') Volunteer
+                                                            option(value='Miscellaneous-Giveaway' selected=deal.category === 'Miscellaneous-Giveaway') Giveaway
+                                                            option(value='Miscellaneous-Buffet' selected=deal.category === 'Miscellaneous-Buffet') Buffet
+                                                        optgroup(label='Menus')
+                                                            option(value='Menus-Restaurant' selected=deal.category === 'Menus-Restaurant') Restaurant
+                                                            option(value='Menus-Bar' selected=deal.category === 'Menus-Bar') Bar
+                                                            option(value='Menus-Cafe' selected=deal.category === 'Menus-Cafe') Cafe
+                                            .col-sm-6
+                                                .form-group
+                                                    label(for='i-cuisine-type')  Cuisine Type
+                                                    select#i-cuisine-type.form-control
+                                                        option(value='Thai' selected=deal.cuisineType === 'Thai') Thai
+                                                        option(value='Korean' selected=deal.cuisineType === 'Korean') Korean
+                                                        option(value='Indian' selected=deal.cuisineType === 'Indian') Indian
+                                                        option(value='Japanese' selected=deal.cuisineType === 'Japanese') Japanese
+                                                        option(value='Italian' selected=deal.cuisineType === 'Italian') Italian
+                                                        option(value='Fusion' selected=deal.cuisineType === 'Fusion') Fusion
+                                                        option(value='Chinese' selected=deal.cuisineType === 'Chinese') Chinese
+                                                        option(value='Vietnamese' selected=deal.cuisineType === 'Vietnamese') Vietnamese
+                                                        option(value='Mexican' selected=deal.cuisineType === 'Mexican') Mexican
+                                                        option(value='Western' selected=deal.cuisineType === 'Western') Western
+                                                        option(value='French' selected=deal.cuisineType === 'French') French
+                                                        option(value='Mediterranean' selected=deal.cuisineType === 'Mediterranean') Mediterranean
+                                                        option(value='Others' selected=deal.cuisineType === 'Others') Others
+                                        .form-group
+                                            label(for='i-title')  Title
+                                            input#i-title.form-control(data-error='Please write the title' placeholder="Enter post title." required='required' type='text' value=deal.title)
+                                            .help-block.form-text.with-errors.form-control-feedback
+                                        .form-group
+                                            label(for='i-description')  Description
+                                            textarea#i-description.form-control(rows='4')=deal.description
+                                        .form-group#a-happy-hour(style="display: none;")
+                                            label(for='')  Happy Hour Time Range
+                                            .input-group.mb-3
+                                                input#i-happyhour-start-time.form-control(type='time' value="08:30")
+                                                input#i-happyhour-end-time.form-control(type='time' value="22:00")
+                                        .form-group#items-wrapper
+                                            label  Items
+                                            .card
+                                                .card-body
+                                                    #table.table-editable
+                                                        table.table.table-bordered.table-responsive-xs.text-center
+                                                            tr.th
+                                                                th.text-center Item Name
+                                                                th.text-center Price Was ($)
+                                                                th.text-center Price Now ($)
+                                                                th.text-center Remove
+                                                            each item, index in deal.items
+                                                                tr
+                                                                    td.item-name.pt-3-half(contenteditable='true')=item.itemName
+                                                                    td.item-prev-price.pt-3-half(contenteditable='true')=item.prevPrice
+                                                                    td.item-now-price.pt-3-half(contenteditable='true')=item.nowPrice
+                                                                    td
+                                                                        span.table-remove
+                                                                            button.btn.btn-danger.btn-rounded.btn-sm.my-0(type='button' disabled=index===0 class=index===0&& 'disabled') Remove
+                                                            // clonable table line
+                                                            tr.hide
+                                                                td.item-name.pt-3-half(contenteditable='true') Enter Item
+                                                                td.item-prev-price.pt-3-half(contenteditable='true') 0
+                                                                td.item-now-price.pt-3-half(contenteditable='true') 0
+                                                                td
+                                                                    span.table-remove
+                                                                        button.btn.btn-danger.btn-rounded.btn-sm.my-0(type='button') Remove
+                                            .row.justify-content-end
+                                                span.table-add.mb-3.mr-2
+                                                    a.btn.btn-outline-primary.btn-sm.btn-rounded(href='#!')
+                                                        i.fa.fa-plus(aria-hidden='true')
+                                                        span &ensp;Add Item
+                                    .property-section.px-3.px-lg-0
+                                        .property-section-header
+                                            | Images
+                                        #dropzone.dropzone.dz-clickable
+                                            .dz-message
+                                                div
+                                                    h6 Upload images
+                                                    .text-muted Drop Image files here or click to upload.
+                            .col-12.col-lg-5
+                                .property-info-side
+                                    .side-section
+                                        .side-section-header
+                                            | Info
+                                        .side-section-content
+                                            .property-side-features
+                                                .feature
+                                                    .form-group
+                                                        label(for='i-phone') Phone Number
+                                                        input#i-phone.form-control(data-match-error="Please enter valid phone number" placeholder="Please enter without '-'" required='required' type='tel' value=deal.phone)
+                                                        .help-block.form-text.with-errors.form-control-feedback
+                                                    .form-group
+                                                        label(for='i-address') Address
+                                                        input#i-address.form-control(data-match-error="Please enter valid address" placeholder="" required='required' type='text' value=deal.address)
+                                                        .help-block.form-text.with-errors.form-control-feedback
+                                                    .details.d-none
+                                                        input#i-lat(data-geo='lat' type='text' value=deal.lat)
+                                                        input#i-lng(data-geo='lng' type='text' value=deal.lng)
+                                                    .form-group
+                                                        label.form-check-label
+                                                            input#i-delete-auto.form-check-input(type='checkbox' checked=deal.deleteAuto)
+                                                            | Close Automatically
+                                                        if deal.deleteAuto
+                                                            - var deleteAuto = deal.deleteAuto
+                                                            - var date = deleteAuto.getDate()< 10? '0'+deleteAuto.getDate() : deleteAuto.getDate()
+                                                            - var month = deleteAuto.getMonth() < 10? '0'+deleteAuto.getMonth() : deleteAuto.getMonth()
+                                                            - var year = deleteAuto.getFullYear()
+                                                            input#i-delete-date.form-control(placeholder="" type='date' value=year+'-'+month+'-'+date)
+                                                        else
+                                                            input#i-delete-date.form-control(placeholder="" type='date')
+                                                        .help-block.form-text.with-errors.form-control-feedback
+
+                                    .side-section
+                                        .side-section-header
+                                            | Opening Hours
+                                        .side-section-content
+                                            .property-side-features
+                                                .feature
+                                                    each day in deal.opening
+                                                        .input-group.mb-3
+                                                            .input-group-prepend
+                                                                .input-group-text
+                                                                    input(type='checkbox' checked=day.open!==null)
+                                                                .input-group-text.day
+                                                                    | #{day.day}
+                                                            - var openHour = "08"
+                                                            - var openMinute = "30"
+                                                            - var closeHour = "22"
+                                                            - var closeMinute = "00"
+                                                            if day.open
+                                                                - var openHourRaw = day.open.split(':')
+                                                                - openHour = parseInt(openHourRaw[0]) < 10 ? '0'+openHourRaw[0]: openHourRaw[0]
+                                                                - openMinute = parseInt(openHourRaw[1]) < 10 ? '0'+parseInt(openHourRaw[1]).toString(): openHourRaw[1]
+                                                            if day.close
+                                                                - var closeHourRaw = day.close.split(':')
+                                                                - closeHour = parseInt(closeHourRaw[0]) < 10 ? '0'+closeHourRaw[0]: closeHourRaw[0]
+                                                                - closeMinute = parseInt(closeHourRaw[1]) < 10 ? '0'+parseInt(closeHourRaw[1]).toString(): closeHourRaw[1]
+                                                            input.i-start-time.form-control(type='time' value=openHour+':'+openMinute)
+                                                            input.i-end-time.form-control(type='time' value=closeHour+':'+closeMinute)
+
+                                .row.justify-content-center.p-3
+                                    button.btn.btn-lg.btn-primary.w-100(type='submit')  Edit 👍
+        include common/footer
+    .display-type
+include common/scripts
+script.
+    function openingHourSetup() {
+        $('.feature').find('.input-group').each(function (index, value) {
+            var checked = $(this).find('input[type="checkbox"]').is(':checked')
+            if (!checked) {
+                $(this).find('input[type="time"]').attr('disabled', true)
+            } else {
+                $(this).find('input[type="time"]').attr('disabled', false)
+            }
+        })
+    }
+    function deleteAutoSetup() {
+        if ($('#i-delete-auto').is(':checked')) {
+            $('#i-delete-date').show()
+        } else {
+            $('#i-delete-date').hide()
+        }
+    }
+    function uodateFlexbleCategoryAreas() {
+        if (['Menus-Restaurant', 'Menus-Bar', 'Menus-Cafe'].indexOf($('#i-category').val()) !== -1) {
+            $('#items-wrapper').hide()
+        } else {
+            $('#items-wrapper').show()
+        }
+        if ($('#i-category').val() === 'Happy Hour') {
+            $('#a-happy-hour').show()
+        } else {
+            $('#a-happy-hour').hide()
+        }
+    }
+    var uploaded = !{JSON.stringify(deal.images)}
+    function dropzoneSetup() {
+        var dz = new Dropzone("#dropzone", {
+            url: "/api/image",
+            resizeWidth: 1000,
+            acceptedFiles: 'image/*',
+            addRemoveLinks: true
+        });
+        dz.on("complete", function (file, response) {
+            uploaded.push(JSON.parse(file.xhr.response).url)
+        });
+        dz.on('removedfile', function (file) {
+            var url = JSON.parse(file.xhr.response).url
+            uploaded = uploaded.filter(function (item) {
+                return url !== item
+            })
+        })
+        return dz
+    }
+    function getOpeningHours() {
+        var result = []
+        $('.feature').find('.input-group').each(function (index, value) {
+            var checked = $(this).find('input[type="checkbox"]').is(':checked')
+            var day = $(this).find('.day').html().trim().toUpperCase()
+            if (!checked) {
+                $(this).find('input[type="time"]').attr('disabled', true)
+            } else {
+                $(this).find('input[type="time"]').attr('disabled', false)
+                result.push({
+                    day: day,
+                    open: $(this).find('.i-start-time').val(),
+                    close: $(this).find('.i-end-time').val()
+                })
+            }
+        })
+        return result
+    }
+    function getItemsList() {
+        var itemList = []
+        $('#table').find('tr:not(.th):not(.hide)').each(function (index, row) {
+            var itemName = $(this).find('.item-name').html().trim()
+            var prevPrice = $(this).find('.item-prev-price').html().trim()
+            var nowPrice = $(this).find('.item-now-price').html().trim()
+            itemList.push({
+                itemName: itemName,
+                prevPrice: parseFloat(prevPrice),
+                nowPrice: parseFloat(nowPrice)
+            })
+        })
+        for (var i = 0; i < itemList.length; i++) {
+            if (itemList[i].itemName === 'Enter Item' || itemList[i].itemName === '' || (itemList[i].prevPrice !== 0 && !itemList[i].prevPrice) || (itemList[i].nowPrice !== 0 && !itemList[i].nowPrice)) {
+                return false
+            }
+        }
+        return itemList
+    }
+    function prefillDropzone(dz){
+        var preUploadedImages = uploaded
+        preUploadedImages.map(function(url) {
+            var mockFile = {name: "myimage.jpg", size: 12345, type: 'image/jpeg', xhr: {
+                response: JSON.stringify({url: url})
+            }};
+            dz.options.addedfile.call(dz, mockFile);
+            dz.options.thumbnail.call(dz, mockFile, url);
+            mockFile.previewElement.classList.add('dz-success');
+            mockFile.previewElement.classList.add('dz-complete');
+        })
+    }
+    function getHappyHour() {
+        return {
+            start: $('#i-happyhour-start-time').val(),
+            end: $('#i-happyhour-end-time').val()
+        }
+    }
+    $(function () {
+        openingHourSetup()
+        deleteAutoSetup()
+        uodateFlexbleCategoryAreas()
+        var dz = dropzoneSetup()
+        prefillDropzone(dz)
+        $("#i-address").geocomplete({
+            details: ".details",
+            detailsAttribute: "data-geo",
+        });
+        $('.feature').find('.input-group').each(function (index, value) {
+            $(this).find('input[type="checkbox"]').change(function () {
+                openingHourSetup()
+            })
+        })
+        $('#i-delete-auto').change(function () {
+            deleteAutoSetup()
+        })
+        $('#i-category').change(function () {
+            if (['Restaurant', 'Bar', 'Cafe'].indexOf($(this).val()) !== -1) {
+                $('#items-wrapper').hide()
+            } else {
+                $('#items-wrapper').show()
+            }
+        })
+        $('.table-editable td').focus(function () {
+            if (['Enter Item', '$0'].indexOf($(this).html()) !== -1) {
+                $(this).html('')
+            }
+        })
+        $('#formValidate').submit(function (e) {
+            e.preventDefault()
+            var data = {}
+            data.category = $('#i-category').val()
+            data.cuisineType = $('#i-cuisine-type').val()
+            data.title = $('#i-title').val()
+            data.description = $('#i-description').val()
+            if ($('#i-category').val() === 'Happy Hour') {
+                data.happyHour = getHappyHour()
+            }
+            var excludeItems = ['Restaurant', 'Bar', 'Cafe'].indexOf($('#i-category').val()) !== -1
+            if (!excludeItems) {
+                var items = getItemsList()
+                if (!items) {
+                    alert('Please fill in items list')
+                    return;
+                } else {
+                    data.items = items
+                }
+            }
+            data.images = uploaded
+            data.phone = $('#i-phone').val()
+            data.address = $('#i-address').val()
+            data.lat = $('#i-lat').val()
+            data.lng = $('#i-lng').val()
+
+            if ($('#i-delete-auto').is(':checked')) {
+                data.deleteAuto = $('#i-delete-date').val()
+            }
+            data.opening = getOpeningHours()
+
+            $('button[type="submit"]').buttonLoader('start')
+            $.ajax({
+                url: '/sell/edit/#{deal._id}',
+                data: JSON.stringify(data),
+                cache: false,
+                contentType: 'application/json',
+                processData: false,
+                type: 'POST',
+                success: function (data) {
+                    location.href='/deal/'+data._id
+                    $('button[type="submit"]').buttonLoader('stop')
+                },
+                error: function (data) {
+                    console.log(data)
+                    $('button[type="submit"]').buttonLoader('stop')
+                }
+            });
+
+        })
+    })
+style.
+    .dropzone .dz-preview .dz-image img {
+        max-width: 100%;
+        display: block;
+    }

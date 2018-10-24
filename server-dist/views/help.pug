@@ -1,0 +1,121 @@
+include common/head
+.all-wrapper.solid-bg-all
+    .layout-w
+        include common/mobile-menu
+        include common/main-menu
+        .content-w
+            .content-i
+                .content-box
+                    .row
+                        .col-sm-6
+                            .element-wrapper.pb-1
+                                .element-box
+                                    #accordionExample.accordion
+                                        .card
+                                            #headingOne.card-header
+                                                h5.mb-0
+                                                    button.btn.btn-link(type='button' data-toggle='collapse' data-target='#collapseOne' aria-expanded='true' aria-controls='collapseOne')
+                                                        | How can I do this and that?
+                                            #collapseOne.collapse.show(aria-labelledby='headingOne' data-parent='#accordionExample')
+                                                .card-body
+                                                    | Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven&apos;t heard of them accusamus labore sustainable VHS.
+                                        .card
+                                            #headingTwo.card-header
+                                                h5.mb-0
+                                                    button.btn.btn-link.collapsed(type='button' data-toggle='collapse' data-target='#collapseTwo' aria-expanded='false' aria-controls='collapseTwo')
+                                                        | How can I register and log in?
+                                            #collapseTwo.collapse(aria-labelledby='headingTwo' data-parent='#accordionExample')
+                                                .card-body
+                                                    | Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven&apos;t heard of them accusamus labore sustainable VHS.
+                                        .card
+                                            #headingThree.card-header
+                                                h5.mb-0
+                                                    button.btn.btn-link.collapsed(type='button' data-toggle='collapse' data-target='#collapseThree' aria-expanded='false' aria-controls='collapseThree')
+                                                        | How can I sell my food on Hungrdeals?
+                                            #collapseThree.collapse(aria-labelledby='headingThree' data-parent='#accordionExample')
+                                                .card-body
+                                                    | Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven&apos;t heard of them accusamus labore sustainable VHS.
+                                        .card
+                                            #headingFour.card-header
+                                                h5.mb-0
+                                                    button.btn.btn-link.collapsed(type='button' data-toggle='collapse' data-target='#collapseFour' aria-expanded='false' aria-controls='collapseFour')
+                                                        | What can I benefit from Hungrdeals?
+                                            #collapseFour.collapse(aria-labelledby='headingFour' data-parent='#accordionExample')
+                                                .card-body
+                                                    | Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven&apos;t heard of them accusamus labore sustainable VHS.
+
+                        .col-sm-6
+                            .element-wrapper.pb-1
+                                .element-box
+                                    .element-info.mb-3
+                                        .element-info-with-icon
+                                            .element-info-icon
+                                                i.os-icon.os-icon-mail-18
+                                            .element-info-text
+                                                h5.element-inner-header.mb-0
+                                                    | Contact Us
+                                                .element-inner-desc
+                                                    | Any questions or feedback? Please contact us.
+                                    form
+                                        fieldset.form-group
+                                            .row
+                                                .col-sm-6
+                                                    .form-group
+                                                        label(for='')  First Name
+                                                        input#i-firstName.form-control(placeholder='First Name' type='text')
+                                                .col-sm-6
+                                                    .form-group
+                                                        label(for='') Last Name
+                                                        input#i-lastName.form-control(placeholder='Last Name' type='text')
+                                            .row
+                                                .col-12
+                                                    .form-group
+                                                        label(for='') Email
+                                                        .input-group
+                                                            .input-group-prepend
+                                                                .input-group-text
+                                                                    i.os-icon.os-icon-email-2-at2
+                                                            input#i-email.form-control(placeholder='email' type='email')
+
+                                            .form-group
+                                                label  Write a Message
+                                                textarea#i-message.form-control(rows='5')
+                                            .row.justify-content-end
+                                                a#sendBtn.btn.btn-primary
+                                                    i.os-icon.os-icon-mail-18
+                                                    | &ensp;Send
+
+
+        include common/footer
+    .display-type
+include common/scripts
+script.
+    $(function () {
+        $('.accordion').collapse()
+        $('#sendBtn').click(function(){
+            $.ajax({
+                url: '/api/mail',
+                data: JSON.stringify({
+                    email: $('#i-email').val(),
+                    message: $('#i-message').val(),
+                    firstName: $('#i-firstName').val(),
+                    lastName: $('#i-lastName').val(),
+                }),
+                cache: false,
+                contentType: 'application/json',
+                processData: false,
+                type: 'POST',
+                success: function (data) {
+                    alert('Email is sent!')
+                    $('#i-email').val('')
+                    $('#i-message').val('')
+                    $('#i-firstName').val('')
+                    $('#i-lastName').val('')
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            });
+        })
+    })
+
