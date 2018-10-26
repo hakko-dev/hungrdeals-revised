@@ -350,6 +350,10 @@ script.
             data.lat = $('#i-lat').val()
             data.lng = $('#i-lng').val()
 
+            if(data.lat === '' || data.lng === ''){
+                alert('You Should enter proper address')
+                return;
+            }
             if ($('#i-delete-auto').is(':checked')) {
                 data.deleteAuto = $('#i-delete-date').val()
             }
