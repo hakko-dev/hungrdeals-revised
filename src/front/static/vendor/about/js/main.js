@@ -83,10 +83,9 @@ AOS.init({
       }
     }
 
-  }); 
+  });
 
-
-  $('.js-site-nav-toggle').on('click', function(e) {
+  $('.js-site-nav-toggle, .cover_1.overlay.bg-slant-white.bg-light').on('click', function(e) {
 
     var $this = $(this);
     e.preventDefault();
@@ -95,14 +94,14 @@ AOS.init({
       var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     if ( $('body').hasClass('menu-open') ) {
       $this.removeClass('active');
-      if(w < 500){
-          $('.site-logo').show()
-      }
         $('.site-menu .site-menu-inner > ul > li').each(function(i) {
 
           var that = $(this);
           setTimeout(function() {
             that.removeClass('is-show');
+              if(w < 500){
+                  $('.site-logo').show()
+              }
           }, i * 100);
 
           // $(this).removeClass('is-show');
