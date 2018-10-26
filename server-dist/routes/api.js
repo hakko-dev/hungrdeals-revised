@@ -120,12 +120,10 @@ _profile.default.post('/api/admin/verify', _ensure_admin.default, async (req, re
 _profile.default.delete('/api/deal', _ensure_admin.default, async (req, res) => {
   const {
     _id
-  } = req.query;
-  await _Deal.default.update({
+  } = req.body;
+  await _Deal.default.deleteOne({
     _id
-  }, {
-    verified: true
-  });
+  }).exec();
   res.json({
     result: true
   });

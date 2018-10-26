@@ -102,7 +102,7 @@ include common/head
                                     .side-section-content.p-0
                                         .property-side-features
                                             iframe(src='https://maps.google.com/maps?q='+lat+','+lng+'&hl=en;z=14&output=embed&key=AIzaSyCodRdvGqSOhTGmLPjM2Cxvx3b2G4wK68Q' width='100%' height='300' frameborder='0' style='border:0' allowfullscreen='')
-                                if isAdmin && (user.userId.toString() === author.toString())
+                                if isAdmin
                                     .side-section
                                         .side-section-header
                                             | Admin Actions
@@ -152,6 +152,30 @@ script.
             });
         })
         $('#b-delete').click(function () {
-            // location.href = '/sell/edit/' + $(this).data('id')
+            var btn = $(this)
+            btn.buttonLoader('stop')
+            $.ajax({
+                url: '/api/deal',
+                cache: false,
+                contentType: 'application/json',
+                processData: false,
+                data: JSON.stringify({
+                    _id: $(this).data('id')
+                }),
+                type: 'DELETE',
+                success: function (data) {
+                    btn.buttonLoader('stop')
+                    $.iaoAlert({
+                        msg: 'Post deleted',
+                        type: "success"
+                    })
+                    setTimeout(function(){
+                        history.back()
+                    },1000)
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            });
         })
     })
