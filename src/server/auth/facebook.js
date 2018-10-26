@@ -13,7 +13,7 @@ passport.use(new FacebookStrategy({
     },
     async (accessToken, refreshToken, profile, cb) => {
         try {
-            const user = await User.findOneAndUpdate({facebookId: profile.id}, {email: profile.emails !== undefined? profile.emails[0].value: null, userName: profile.displayName}, {upsert: true}).exec()
+            const user = await User.findOneAndUpdate({facebookId: profile.id}, {email: profile.emails !== undefined? profile.emails[0].value: null, userName: profile.name}, {upsert: true}).exec()
             cb(null, user);
         } catch (err) {
             cb(err, {});
