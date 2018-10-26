@@ -35,11 +35,11 @@ head
                     a(href='#section-contact') Contact
     header.site-header
         .row.align-items-center
-            .col-5.col-md-3
-            .col-2.col-md-6.text-center.site-logo-wrap
+            .col-4.col-md-3
+            .col-4.col-md-6.text-center.site-logo-wrap
                 a.site-logo(href='/' style='border: none; background: transparent')
                     img(src='/assets/img/hungrdeals2.png' style='width: 60px;')
-            .col-5.col-md-3.text-right.menu-burger-wrap
+            .col-4.col-md-3.text-right.menu-burger-wrap
                 a.site-nav-toggle.js-site-nav-toggle(href='#')
                     i
     // site-header
@@ -51,9 +51,13 @@ head
                         .col-md-10.mt-3(data-aos='fade-up')
                             h2.heading.mb-5 Welcome to Hungrdeals!
                             p.sub-heading.mb-5
-                                | Probably the best cheap food platform. You can taste the rainbow.
+                                | The ultimate food finder. We bring affordable flavours to you.
                             p
-                                a.smoothscroll.btn.btn-outline-white.px-5.py-3(href='/') Go to Hungrdeals
+                                a.smoothscroll.btn.btn-outline-white.px-5.py-3(href='/')
+                                    i.fa.fa-arrow-right
+                                    | &ensp;Go to Hungrdeals&ensp;
+                                    i.fa.fa-arrow-left
+
         // .cover_1
         #section-service.section(data-aos='fade-up')
             .container
@@ -63,7 +67,7 @@ head
                         p.sub-heading.mb-5
                             | Get all your special deals at&ensp;
                             a(href='/') hungrdeals.com
-                .row
+                .row.d-sm-flex.d-none
                     .ftco-46
                         .ftco-46-row.d-flex.flex-column.flex-lg-row
                             .ftco-46-image(style='background-image: url(/assets/vendor/about/images/img_1.jpg);')
@@ -72,11 +76,16 @@ head
                                 h3.ftco-46-heading Weekly Specials
                                 p.mb-5
                                     | Whether you’re at work or home, find your nearest meals on specials from Monday-Sunday
-                                p
+                                p.mb-0
                                     a.btn-link(href='/Weekday Specials/All Weekday Specials')
-                                        | Let's go
+                                        | Weekday Specials
                                         span.ion-android-arrow-forward
-                            .ftco-46-image(style='background-image: url(/assets/vendor/about/images/img_2.jpg);')
+                                p
+                                    a.btn-link(href='/Weekend Deals/All Weekend Deals')
+                                        | Weekend Specials
+                                        span.ion-android-arrow-forward
+
+                            .ftco-46-image(style='background-image: url(/assets/vendor/about/images/happy.jpg);')
                         .ftco-46-row.d-flex.flex-column.flex-lg-row
                             .ftco-46-text.ftco-46-arrow-right
                                 h4.ftco-46-subheading stay content
@@ -87,7 +96,46 @@ head
                                     a.btn-link(href='/Happy Hour/All Happy Hours')
                                         | Let's go
                                         span.ion-android-arrow-forward
-                            .ftco-46-image(style='background-image: url(/assets/vendor/about/images/img_3.jpg);')
+                            .ftco-46-image(style='background-image: url(/assets/vendor/about/images/happy2.jpg);')
+                            .ftco-46-text.ftco-46-arrow-up
+                                h4.ftco-46-subheading satisfy your day
+                                h3.ftco-46-heading Combo
+                                p.mb-5
+                                    | Instead of enjoying a single dish, order a combined meal for extra treat(s) to make your day.
+                                p
+                                    a.btn-link(href='/Combo/All Combos')
+                                        | Let's go
+                                        span.ion-android-arrow-forward
+                .row.d-flex.d-sm-none
+                    .ftco-46
+                        .ftco-46-row.d-flex.flex-column.flex-lg-row
+                            .ftco-46-image(style='background-image: url(/assets/vendor/about/images/img_1.jpg);')
+                            .ftco-46-text.ftco-46-arrow-left
+                                h4.ftco-46-subheading Daily deals
+                                h3.ftco-46-heading Weekly Specials
+                                p.mb-5
+                                    | Whether you’re at work or home, find your nearest meals on specials from Monday-Sunday
+                                p.mb-0
+                                    a.btn-link(href='/Weekday Specials/All Weekday Specials')
+                                        | Weekday Specials
+                                        span.ion-android-arrow-forward
+                                p
+                                    a.btn-link(href='/Weekend Deals/All Weekend Deals')
+                                        | Weekend Specials
+                                        span.ion-android-arrow-forward
+
+                            .ftco-46-image(style='background-image: url(/assets/vendor/about/images/happy2.jpg);')
+                        .ftco-46-row.d-flex.flex-column.flex-lg-row
+                            .ftco-46-text.ftco-46-arrow-right
+                                h4.ftco-46-subheading stay content
+                                h3.ftco-46-heading Happy Hour
+                                p.mb-5
+                                    | Keep aside these couple of hours during the day to indulge the best deals for food and drinks!
+                                p
+                                    a.btn-link(href='/Happy Hour/All Happy Hours')
+                                        | Let's go
+                                        span.ion-android-arrow-forward
+                            .ftco-46-image(style='background-image: url(/assets/vendor/about/images/happy.jpg);')
                             .ftco-46-text.ftco-46-arrow-up
                                 h4.ftco-46-subheading satisfy your day
                                 h3.ftco-46-heading Combo
@@ -99,12 +147,12 @@ head
                                         span.ion-android-arrow-forward
         .section(data-aos='fade-up')
             .container
-                .row.section-heading.justify-content-center.mb-5
-                    .col-md-8.text-center
-                        h2.heading.mb-3 SHOW THE WORLD
-                        p.sub-heading.mb-5
-                            | Snap a photo of your menu and upload&ensp;
-                            a(href='/') at hungrdeals.com
+                //.row.section-heading.justify-content-center.mb-5
+                //    .col-md-8.text-center
+                //        h2.heading.mb-3 SHOW THE WORLD
+                //        p.sub-heading.mb-5
+                //            | Snap a photo of your menu and upload&ensp;
+                //            a(href='/') at hungrdeals.com
                 .row
                     .ftco-46
                         .ftco-46-row.d-flex.flex-column.flex-lg-row
@@ -136,13 +184,13 @@ head
                         p
                             | Hungrdeals is the one stop for eateries and drinks nearby. Delicacies of all cuisines worldwide. We connect local listings to you through categories that include: Weekday Specials, Weekend Specials, Happy Hour, Combo & Miscellaneous.
                         p
-                            | This platform is a safe exchange of information for eateries and drinks only. Please read terms and conditions & privacy policy below before proceeding.
-                        .row.justify-content-end
-                            p
-                                a.btn-link.mr-5(href='/term')
+                            | This platform is a safe exchange of information for eateries and drinks only. Please read terms and conditions & privacy policy.
+                        .row
+                            .col-12.col-md-6.text-center
+                                a.btn-link(href='/term')
                                     | Terms and Conditions
                                     span.ion-android-arrow-forward
-                            p
+                            .col-12.col-md-6.text-center
                                 a.btn-link(href='/policy')
                                     | Privacy Policy
                                     span.ion-android-arrow-forward
@@ -208,91 +256,98 @@ head
                             .item
                                 blockquote.testimonial
                                     p
-                                        | &ldquo;A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.&rdquo;
+                                        | &ldquo;Hungrdeals helped me with my weekly budget. Not only cheap, but quality food are offered at food places around me!&rdquo;
                                     .author
                                         img.mb-3(src='/assets/vendor/about/images/person_1.jpg' alt='Image placeholder')
-                                        h4 Jisu Lee
-                                        p Auburn, NSW
+                                        h4 Jennifer Underwood
+                                        p Sydney, NSW
                             .item
                                 blockquote.testimonial
                                     p
-                                        | &ldquo;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;
+                                        | &ldquo;Never a disappointment when searching food on specials at a weekly basis.&rdquo;
+                                    .author
+                                        img.mb-3(src='/assets/img/avatar1.jpg' alt='Image placeholder')
+                                        h4 Cameron Liberio
+                                        p Sydney, NSW
+                            .item
+                                blockquote.testimonial
+                                    p
+                                        | &ldquo;Great work. This will be my to-go page for food finder around my location.&rdquo;
+                                    .author
+                                        img.mb-3(src='/assets/img/avatar2.jpg' alt='Image placeholder')
+                                        h4 Nikolaj Lee
+                                        p Concord West, NSW
+                            .item
+                                blockquote.testimonial
+                                    p
+                                        | &ldquo;Without Hungrdeals, I would not know what specials are near me during my lunch hour at work. Excellent platform.&rdquo;
                                     .author
                                         img.mb-3(src='/assets/vendor/about/images/person_2.jpg' alt='Image placeholder')
-                                        h4 Woohyun Kim
-                                        p Seoul, Korea
+                                        h4 Jake Hatmaker
+                                        p Sydney, NSW
                             .item
                                 blockquote.testimonial
                                     p
-                                        | &ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.&rdquo;
+                                        | &ldquo;Ever since a colleague told me about Hungrdeals, my daily finds on food at different times of day has never been this easy and quick.&rdquo;
                                     .author
-                                        img.mb-3(src='/assets/vendor/about/images/person_3.jpg' alt='Image placeholder')
-                                        h4 Dennis Roman
+                                        img.mb-3(src='/assets/img/avatar4.jpg' alt='Image placeholder')
+                                        h4 Lucie Benevise
                                         p Strathfield, NSW
-                            .item
-                                blockquote.testimonial
-                                    p
-                                        | &ldquo;The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text didn&rsquo;t listen. She packed her seven versalia, put her initial into the belt and made herself on the way.&rdquo;
-                                    .author
-                                        img.mb-3(src='/assets/vendor/about/images/person_2.jpg' alt='Image placeholder')
-                                        h4 Geert Green
-                                        p New York, USA
         // .section
         .section.bg-white.services-section(data-aos='fade-up')
             .container
                 .row.section-heading.justify-content-center.mb-5
-                    .col-md-8.text-center
-                        h2.heading.mb-3 Mission & Vision
+
                 .row.section-heading.justify-content-center.mb-2.mt-5
                     .col-md-8.text-center
-                        h4.heading.mb-3 Our Mission
-                .row.px-lg-5
-                    .col-m.mb-5d-6.col-lg-6.px-3.mb-3(data-aos='fade-up')
+                        h2.heading.mb-3 Our Mission
+                .row.px-lg-5.mb-5
+                    .col-12.px-5.col-lg-6.px-lg-3.mb-3(data-aos='fade-up')
                         .media.feature-icon.d-block.text-center
                             .icon
                                 img(src='/assets/img/about/food.svg')
                             .media-body
-                                h3 Affordable Food
+                                h3 Affordability
                                 p
                                     | Hungrdeals brings the world’s community together to enjoy eateries and drinks at affordable prices.
-                    .col-m.mb-5d-6.col-lg-6.px-3.mb-3(data-aos='fade-up' data-aos-delay='100')
+                    .col-12.px-5.col-lg-6.px-lg-3.mb-3(data-aos='fade-up' data-aos-delay='100')
                         .media.feature-icon.d-block.text-center
                             .icon
                                 img(src='/assets/img/about/restaurant.svg')
                             .media-body
                                 h3 Encourage Food Enterprise
                                 p
-                                    | We initiate all food entrepreneurs (individual, corporate and NGOs) to grow their business in the culinary sector.
+                                    | We initiate all food entrepreneurs (individual and corporate) to grow their business in the culinary sector.
                 .row.section-heading.justify-content-center.mb-2.mt-5
                     .col-md-8.text-center
-                        h4.heading.mb-3 Our Vision
-                .row.px-lg-5
-                    .col-m.mb-5d-6.col-lg-6.px-3.mb-3(data-aos='fade-up')
+                        h2.heading.mb-3 Our Vision
+                .row.px-lg-5.mb-5
+                    .col-12.px-5.col-lg-6.px-lg-3.mb-3(data-aos='fade-up')
                         .media.feature-icon.d-block.text-center
                             .icon
                                 img(src='/assets/img/about/menu.svg')
                             .media-body
-                                h3 All in One
+                                h3 Catalogue
                                 p
-                                    | We bring all food deals, offers and menus at one place. It's so easy to sort and browse them on Hungrdeals.
-                    .col-m.mb-5d-6.col-lg-6.px-3.mb-3(data-aos='fade-up' data-aos-delay='100')
+                                    | We bring all food deals, offers and menus at one place. It's easy to sort and browse them on Hungrdeals.
+                    .col-12.px-5.col-lg-6.px-lg-3.mb-3(data-aos='fade-up' data-aos-delay='100')
                         .media.feature-icon.d-block.text-center
                             .icon
                                 img(src='/assets/img/about/plant.svg')
                             .media-body
-                                h3 Keep Environment Clean
+                                h3 Eco-Friendly
                                 p
                                     | Hungrdeals eliminates food waste worldwide by exchanging information via business to customer.
                 .row.section-heading.justify-content-center.mb-2.mt-5
                     .col-md-8.text-center
-                        h4.heading.mb-3 Our Value
+                        h2.heading.mb-3 Our Value
                 .row.px-lg-5
-                    .col-m.mb-5d-6.col-lg-6.mx-auto.mb-3(data-aos='fade-up')
+                    .col-12.px-5.col-lg-6.px-lg-3.mb-3.mx-auto(data-aos='fade-up')
                         .media.feature-icon.d-block.text-center
                             .icon
                                 img(src='/assets/img/about/groceries.svg')
                             .media-body
-                                h3  Hungrdeals Values in
+                                //h3  Hungrdeals Values in
                                 p
                                     | enlightening customers with affordable eateries and drinks around them, subsequently helping food businesses to grow.
                     //.col-md-6.col-lg-4.mb-5(data-aos='fade-up' data-aos-delay='500')
@@ -349,8 +404,7 @@ head
                                     label.label(for='message') Message
                                     textarea#message.form-control(name='message' cols='30' rows='10')
                             .row.justify-content-center
-                                .col-md-4
-                                    input.btn.btn-primary.btn-outline-primary.btn-block(type='submit' value='Send Message')
+                                input.btn.btn-outline-primary(type='submit' value='Send Message')
         // .section
         //#map.map-wrap(data-aos='fade')
         footer.ftco-footer

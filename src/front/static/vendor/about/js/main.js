@@ -91,10 +91,13 @@ AOS.init({
     var $this = $(this);
     e.preventDefault();
 
- 
 
+      var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     if ( $('body').hasClass('menu-open') ) {
       $this.removeClass('active');
+      if(w < 500){
+          $('.site-logo').show()
+      }
         $('.site-menu .site-menu-inner > ul > li').each(function(i) {
 
           var that = $(this);
@@ -112,7 +115,9 @@ AOS.init({
 
       $('body').removeClass('menu-open');
     } else {
-
+        if(w < 500){
+            $('.site-logo').hide()
+        }
       // $('.site-menu').fadeIn(400);
       $('.site-menu').addClass('site-menu-show');
 
