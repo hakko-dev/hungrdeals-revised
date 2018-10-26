@@ -118,6 +118,30 @@ app.post('/api/mail', async (req, res) => {
     }
 });
 
+app.post('/api/mail/about', async (req, res) => {
+    const {email, name, phone, message} = req.body
+    try {
+        await sendEmail({
+            to: 'hungrdeals@outlook.com',
+            subject: 'Customer Inquiry',
+            template: `${email} ${name} ${phone} ${message}`
+        })
+        await sendEmail({
+            to: 'lee.kim.dev.au@gmail.com',
+            subject: 'Customer Inquiry',
+            template: `${email} ${name} ${phone} ${message}`
+        })
+        res.json({
+            result: true
+        })
+    } catch (e) {
+        console.log(e)
+        res.json({
+            result: false
+        })
+    }
+});
+
 
 app.get('/verification', async (req, res) => {
     if(req.isAuthenticated()){

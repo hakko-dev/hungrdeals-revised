@@ -17,8 +17,14 @@ head
     link(rel='stylesheet' href='/assets/vendor/about/fonts/ionicons/css/ionicons.min.css')
     link(rel='stylesheet' href='/assets/vendor/about/fonts/fontawesome/css/font-awesome.min.css')
     link(rel='stylesheet' href='/assets/vendor/about/fonts/flaticon/font/flaticon.css')
+    link(href='/assets/vendor/button-loader/buttonLoader.css' rel='stylesheet')
+    link(href='/assets/vendor/toast/minified/css/iao-alert.min.css' rel='stylesheet')
+
     // Theme Style
     link(rel='stylesheet' href='/assets/vendor/about/css/style.css')
+    script(src='/assets/vendor/about/js/jquery-3.2.1.min.js')
+    script(src='/assets/vendor/toast/minified/js/iao-alert.jquery.min.js')
+    script(src='/assets/vendor/button-loader/jquery.buttonLoader.min.js')
 .site-wrap
     nav#ftco-navbar-spy.site-menu
         #ftco-navbar.site-menu-inner
@@ -383,28 +389,64 @@ head
                         h2.heading.mb-3 Get In Touch
                 .row.justify-content-center
                     .col-md-10.p-5.form-wrap
-                        form(action='#')
+                        form(action='/api/mail/about' method="post")
                             .row.mb-4
                                 .form-group.col-md-4
                                     label.label(for='name') Name
                                     .form-field-icon-wrap
                                         span.icon.ion-android-person
-                                        input#name.form-control(type='text')
+                                        input#name.form-control(type='text' name="name")
                                 .form-group.col-md-4
                                     label.label(for='email') Email
                                     .form-field-icon-wrap
                                         span.icon.ion-email
-                                        input#email.form-control(type='email')
+                                        input#email.form-control(type='email' name="email")
                                 .form-group.col-md-4
                                     label.label(for='phone') Phone
                                     .form-field-icon-wrap
                                         span.icon.ion-android-call
-                                        input#phone.form-control(type='text')
+                                        input#phone.form-control(type='text' name="phone")
                                 .form-group.col-md-12
                                     label.label(for='message') Message
                                     textarea#message.form-control(name='message' cols='30' rows='10')
                             .row.justify-content-center
-                                input.btn.btn-outline-primary(type='submit' value='Send Message')
+                                .col-md-4
+                                    input#b-submit.btn.btn-primary.btn-outline-primary.btn-block(type='button' value='Send Message')
+
+        script.
+            $(function() {
+                $('#b-submit').click(function(event){
+                    var button = $('#b-submit')
+                    $.ajax({
+                        url: '/api/mail/about',
+                        data: JSON.stringify({
+                            name: $('#name').val(),
+                            email: $('#email').val(),
+                            phone: $('#phone').val(),
+                            message: $('#message').val()
+                        }),
+                        cache: false,
+                        contentType: 'application/json',
+                        processData: false,
+                        type: 'POST',
+                        success: function (data) {
+                            button.buttonLoader('stop')
+                            $.iaoAlert({
+                                msg: 'Message Sent',
+                                type: "success"
+                            })
+                            $('#name').val('')
+                            $('#email').val('')
+                            $('#phone').val('')
+                            $('#message').val('')
+                        },
+                        error: function (data) {
+                            console.log(data)
+                        }
+                    });
+                })
+            })
+
         // .section
         //#map.map-wrap(data-aos='fade')
         footer.ftco-footer
@@ -419,7 +461,7 @@ head
         svg.circular(width='48px' height='48px')
             circle.path-bg(cx='24' cy='24' r='22' fill='none' stroke-width='4' stroke='#eeeeee')
             circle.path(cx='24' cy='24' r='22' fill='none' stroke-width='4' stroke-miterlimit='10' stroke='#ff7a5c')
-    script(src='/assets/vendor/about/js/jquery-3.2.1.min.js')
+
     script(src='/assets/vendor/about/js/jquery-migrate-3.0.1.min.js')
     script(src='/assets/vendor/about/js/popper.min.js')
     script(src='/assets/vendor/about/js/bootstrap.min.js')
