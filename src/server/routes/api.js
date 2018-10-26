@@ -97,11 +97,15 @@ import {sendEmail, getTemplate, getHtmlTemplate} from '../util/email'
 app.post('/api/mail', async (req, res) => {
     const {email, firstName, lastName, message} = req.body
     try {
-        const template = await getHtmlTemplate('confirmEmail')
         await sendEmail({
-            to: 'r54r45r54@gmail.com',
-            subject: 'welcome to our site',
-            template: template({name: "Woohyunkim", activationLink: 'http://naver.com'})
+            to: 'hungrdeals@outlook.com',
+            subject: 'Customer Inquiry',
+            template: `${email} ${firstName} ${lastName} ${message}`
+        })
+        await sendEmail({
+            to: 'lee.kim.dev.au@gmail.com',
+            subject: 'Customer Inquiry',
+            template: `${email} ${firstName} ${lastName} ${message}`
         })
         res.json({
             result: true

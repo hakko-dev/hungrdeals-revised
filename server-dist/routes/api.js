@@ -140,14 +140,15 @@ _profile.default.post('/api/mail', async (req, res) => {
   } = req.body;
 
   try {
-    const template = await (0, _email.getHtmlTemplate)('confirmEmail');
     await (0, _email.sendEmail)({
-      to: 'r54r45r54@gmail.com',
-      subject: 'welcome to our site',
-      template: template({
-        name: "Woohyunkim",
-        activationLink: 'http://naver.com'
-      })
+      to: 'hungrdeals@outlook.com',
+      subject: 'Customer Inquiry',
+      template: `${email} ${firstName} ${lastName} ${message}`
+    });
+    await (0, _email.sendEmail)({
+      to: 'lee.kim.dev.au@gmail.com',
+      subject: 'Customer Inquiry',
+      template: `${email} ${firstName} ${lastName} ${message}`
     });
     res.json({
       result: true
