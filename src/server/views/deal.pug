@@ -152,6 +152,30 @@ script.
             });
         })
         $('#b-delete').click(function () {
-            // location.href = '/sell/edit/' + $(this).data('id')
+            var btn = $(this)
+            btn.buttonLoader('stop')
+            $.ajax({
+                url: '/api/deal',
+                cache: false,
+                contentType: 'application/json',
+                processData: false,
+                data: JSON.stringify({
+                    _id: $(this).data('id')
+                }),
+                type: 'DELETE',
+                success: function (data) {
+                    btn.buttonLoader('stop')
+                    $.iaoAlert({
+                        msg: 'Post deleted',
+                        type: "success"
+                    })
+                    setTimeout(function(){
+                        history.back()
+                    },1000)
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            });
         })
     })

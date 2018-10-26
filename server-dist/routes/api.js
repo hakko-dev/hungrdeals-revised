@@ -121,11 +121,9 @@ _profile.default.delete('/api/deal', _ensure_admin.default, async (req, res) => 
   const {
     _id
   } = req.query;
-  await _Deal.default.update({
+  await _Deal.default.deleteOne({
     _id
-  }, {
-    verified: true
-  });
+  }).exec();
   res.json({
     result: true
   });
