@@ -13,10 +13,10 @@ include common/head
                                     .property-content
                                         h1.form-header Post an Ad
                                         .form-desc(style='color: #334152')
-                                            | What are your eateries and/or drinks on offer? Bring more customers in and show the world your culinary business with Hungrdeals. Fill in the form below.
+                                            | What are your eateries and/or drinks on offer? Bring more customers in by advertising for FREE and show the world your culinary business with Hungrdeals. Fill in the form below.
                                             br
                                             br
-                                            .small.text-muted * Note: If offer is inapplicable, select Menus category (Restaurant, Bar, Cafe). Take a photo of your store’s menu and upload. Leave the Name of Food, description and items section blank. You can edit your post anytime.
+                                            .small.text-muted * Note: If offer is inapplicable, select Menus category (Restaurant, Bar, Cafe). Take a photo of your store’s menu and upload. And leave the description blank. You can edit your post anytime.
                                         .row
                                             .col-sm-6
                                                 .form-group
@@ -87,7 +87,7 @@ include common/head
                                                                 th.text-center Price Now ($)
                                                                 th.text-center Remove
                                                             tr
-                                                                td.item-name.pt-3-half(contenteditable='true') Enter Item
+                                                                td.item-name.pt-3-half(contenteditable='true') Enter Item Name
                                                                 td.item-prev-price.pt-3-half(contenteditable='true') 0
                                                                 td.item-now-price.pt-3-half(contenteditable='true') 0
                                                                 td
@@ -320,7 +320,7 @@ script.
             uodateFlexbleCategoryAreas()
         })
         $('.table-editable td').focus(function () {
-            if (['Enter Item', '$0'].indexOf($(this).html()) !== -1) {
+            if (['Enter Item Name', '$0'].indexOf($(this).html()) !== -1) {
                 $(this).html('')
             }
         })
