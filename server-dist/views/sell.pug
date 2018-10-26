@@ -11,9 +11,12 @@ include common/head
                             .col-12.col-lg-7
                                 .property-info-main
                                     .property-content
-                                        h1.form-header Let's Sell Food
-                                        .form-desc
-                                            | What is your special offer? Please fill in the from below. And start selling your food on Hungrdeals. You can edit your post anytime you want.
+                                        h1.form-header Post an Ad
+                                        .form-desc(style='color: #334152')
+                                            | What are your eateries and/or drinks on offer? Bring more customers in and show the world your culinary business with Hungrdeals. Fill in the form below.
+                                            br
+                                            br
+                                            .small.text-muted * Note: If offer is inapplicable, select Menus category (Restaurant, Bar, Cafe). Take a photo of your store’s menu and upload. Leave the Name of Food, description and items section blank. You can edit your post anytime.
                                         .row
                                             .col-sm-6
                                                 .form-group
@@ -60,12 +63,12 @@ include common/head
                                                         option(value='Mediterranean') Mediterranean
                                                         option(value='Others') Others
                                         .form-group
-                                            label(for='i-title')  Title
-                                            input#i-title.form-control(data-error='Please write the title' placeholder="Enter post title." required='required' type='text')
+                                            label(for='i-title')  Name of Business / Store
+                                            input#i-title.form-control(data-error='Please write name of business / store' placeholder="Enter post title." required='required' type='text')
                                             .help-block.form-text.with-errors.form-control-feedback
                                         .form-group
                                             label(for='i-description')  Description
-                                            textarea#i-description.form-control(rows='4' required='required')
+                                            textarea#i-description.form-control(rows='4')
                                             .help-block.form-text.with-errors.form-control-feedback
                                         .form-group#a-happy-hour(style="display: none;")
                                             label(for='')  Happy Hour Time Range
@@ -115,7 +118,7 @@ include common/head
                                 .property-info-side
                                     .side-section
                                         .side-section-header
-                                            | Info
+                                            | Business Info
                                         .side-section-content
                                             .property-side-features
                                                 .feature
@@ -133,13 +136,13 @@ include common/head
                                                     .form-group
                                                         label.form-check-label
                                                             input#i-delete-auto.form-check-input(type='checkbox')
-                                                            | Close Automatically
+                                                            | Delete Ad Automatically
 
                                                         input#i-delete-date.form-control(placeholder="" type='date')
                                                         .help-block.form-text.with-errors.form-control-feedback
                                     .side-section
                                         .side-section-header
-                                            | Opening Hours
+                                            | BUSINESS OPENING HOURS
                                         .side-section-content
                                             .property-side-features
                                                 .feature
@@ -280,6 +283,7 @@ script.
     function uodateFlexbleCategoryAreas(){
         if (['Menus-Restaurant', 'Menus-Bar', 'Menus-Cafe'].indexOf($('#i-category').val()) !== -1) {
             $('#items-wrapper').hide()
+
         } else {
             $('#items-wrapper').show()
         }

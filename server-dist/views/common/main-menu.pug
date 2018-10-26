@@ -3,7 +3,7 @@
     .logo-w
         a.logo(href='/')
             img(src='/assets/img/hungrdeals2.png' style='width: 35px')
-            .logo-label
+            .logo-label(class=[mainPage && 'text-dark' ] style='font-size: 1rem')
                 | Hungrdeals
     if !user
         .logged-user-w.avatar-inline.pr-5
@@ -30,7 +30,7 @@
                     ul
                         li
                             a(href='/sell')
-                                i.os-icon.os-icon-user-male-circle2
+                                i.os-icon.os-icon-check
                                 span Post Ad
                         li
                             a(href='/profile')
@@ -39,7 +39,7 @@
                         li
                             a(href='/manage')
                                 i.os-icon.os-icon-tasks-checked
-                                span Manage Posts
+                                span Manage Ads
                         li
                             a(href='/logout')
                                 i.os-icon.os-icon-signs-11
@@ -48,7 +48,7 @@
         if path
             | #{path.big}
         else
-            | Taste the Rainbow
+            | What's on
     ul.main-menu(class=(mainPage && path!== null) && 'has-active')
         li.sub-header
             span Layouts

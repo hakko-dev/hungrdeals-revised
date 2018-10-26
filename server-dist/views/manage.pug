@@ -11,16 +11,20 @@ include common/head
                         .col-sm-7.mt-3.mt-lg-0.mx-auto.my-lg-5
                             .element-wrapper
                                 .element-box
+                                    if dealList.length !== 0
+                                        .element-actions
+                                            a.btn.btn.btn-primary.btn-rounded(href='/sell') Post an Ad
                                     h6.element-header
-                                        | Manage Your Posts
+                                        | Manage Your Ads
+
                                     if dealList.length === 0
                                         .row.justify-content-center
                                             img.my-5(style="max-width: 50%;" src='/assets/img/salad.svg')
 
                                             .col-12.text-center.my-3
-                                                h6 No posts yet! Sell food for the first time.
+                                                h6 No Ads Yet! Sell food for the first time.
                                             .col-12.text-center.mb-5
-                                                a.btn.btn.btn-primary.btn-rounded(href='/sell') Let's sell food
+                                                a.btn.btn.btn-primary.btn-rounded(href='/sell') Post an Ad
                                     if dealList.length !== 0
                                         .timed-activities.compact
                                             - var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
