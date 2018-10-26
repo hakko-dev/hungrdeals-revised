@@ -778,6 +778,10 @@ textarea.form-control {
   margin-bottom: 30px;
 }
 
+.feature-icon .icon img{
+  max-width: 100px;
+}
+
 .feature-icon .icon > span {
   color: #000;
   font-size: 80px;
