@@ -1,0 +1,30 @@
+include common/head
+.all-wrapper.solid-bg-all
+    .layout-w
+        include common/mobile-menu
+        include common/main-menu
+        .content-w
+            .content-i
+                .auth-box-w.wider.my-5
+                    .logo-w(style='padding: 10%')
+                        a(href='/')
+                            //img(alt='' src='/assets/img/logo-big.png')
+                    h4.auth-header
+                        | Verification Done
+                    form
+                        .row.justify-content-center
+                            |Welcome to Hungrdeals!
+                        .row.justify-content-center.my-4
+                            button#facebookLogin.btn.btn-primary.d-flex.justify-content-center(type='button')
+                                span Go To Hungrdeals
+
+
+        include common/footer
+    .display-type
+include common/scripts
+script.
+    $(function(){
+        $("#facebookLogin").click(function(){
+            location.href='/'
+        })
+    })

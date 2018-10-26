@@ -19,6 +19,16 @@ export const getTemplate = async (templateName)=>{
         return new Error(`NO TEMPLATE WITH NAME: ${templateName}`)
     }
 }
+export const getHtmlTemplate = async (templateName)=>{
+    try{
+        const html = await readFile(path.join(__dirname, `../email-templates/${templateName}.html`))
+        const template = compile(html.toString())
+        return template
+    }catch (e) {
+        console.log(e)
+        return new Error(`NO TEMPLATE WITH NAME: ${templateName}`)
+    }
+}
 
 const api_key = process.env.MAILGUN_KEY;
 const mailDomain = process.env.MAILGUN_URL;

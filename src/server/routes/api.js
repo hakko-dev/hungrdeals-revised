@@ -77,17 +77,31 @@ app.post('/api/admin/verify', ensureAdmin, async (req, res) => {
     })
 });
 
+app.delete('/api/deal', ensureAdmin, async (req, res) => {
+    const {_id} = req.query
+    await Deal.update(
+        {
+            _id
+        }, {
+            verified: true
+        })
+    res.json({
+        result: true
+    })
+});
 
-import {sendEmail, getTemplate} from '../util/email'
+
+
+import {sendEmail, getTemplate, getHtmlTemplate} from '../util/email'
 
 app.post('/api/mail', async (req, res) => {
     const {email, firstName, lastName, message} = req.body
     try {
-        const template = await getTemplate('validateDeals')
+        const template = await getHtmlTemplate('confirmEmail')
         await sendEmail({
             to: 'r54r45r54@gmail.com',
             subject: 'welcome to our site',
-            template: template({name: "Woohyunkim"})
+            template: template({name: "Woohyunkim", activationLink: 'http://naver.com'})
         })
         res.json({
             result: true
@@ -99,5 +113,24 @@ app.post('/api/mail', async (req, res) => {
         })
     }
 });
+
+
+app.get('/verification', async (req, res) => {
+    if(req.isAuthenticated()){
+        res.renderLogined('verification')
+    }else{
+        res.render('verification')
+    }
+});
+
+app.get('/verification/done', async (req, res) => {
+    if(req.isAuthenticated()){
+        res.renderLogined('verification-done')
+    }else{
+        res.render('verification-done')
+    }
+
+});
+
 
 export default app

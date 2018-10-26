@@ -1,6 +1,7 @@
 import express from "express";
 import ensureLogined from "../util/ensure_logined";
 import Deal from "../models/Deal";
+import {getHtmlTemplate, sendEmail} from "../util/email";
 
 const app = express.Router();
 
@@ -12,9 +13,22 @@ app.get('/sell', ensureLogined, (req, res) => {
 
 app.post('/sell', ensureLogined, async (req, res) => {
     const deal = await Deal.addNewDeal({...req.body, authorId: req.user._id})
-    res.json({
-        _id: deal._id
-    })
+    try {
+        const template = await getHtmlTemplate('verifyingStatus')
+        await sendEmail({
+            to: req.user.email,
+            subject: 'We are verifying your Ad',
+            template: template({name: req.user.userName})
+        })
+        res.json({
+            _id: deal._id
+        })
+    } catch (e) {
+        console.log(e)
+        res.json({
+            _id: deal._id
+        })
+    }
 });
 
 app.post('/sell/edit/:dealId', ensureLogined, async (req, res) => {

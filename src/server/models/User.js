@@ -13,7 +13,7 @@ const userSchema = new Schema({
     gender: String,
     emailVerified: {
         type: Boolean,
-        default: false
+        default: true
     },
     isAdmin: Boolean,
     createdAt: {type: Date, default: Date.now},

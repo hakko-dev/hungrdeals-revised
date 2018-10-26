@@ -1,0 +1,19 @@
+include common/head
+.all-wrapper.solid-bg-all
+    .layout-w
+        include common/mobile-menu
+        include common/main-menu
+        .content-w
+            .content-i
+                .auth-box-w.wider.my-5
+                    .logo-w(style='padding: 10%')
+                        a(href='index.html')
+                    h4.auth-header
+                        | Email Verification
+                    form(action='/auth/email' method='post')
+                        .row.justify-content-center
+                            | We sent you the verification link to your email.
+
+        include common/footer
+    .display-type
+include common/scripts

@@ -35,6 +35,8 @@ include common/head
                             button#googleLogin.btn.btn-danger.d-flex.justify-content-start(type='button' style='width: 235px')
                                 i.fab.fa-google.mr-1
                                 span.ml-4 Sign In with Google
+                        .row.justify-content-end.my-4
+                            button#findPassword.btn.btn-secondary(type="button") Find Password
         include common/footer
     .display-type
 include common/scripts
@@ -45,5 +47,8 @@ script.
         })
         $("#googleLogin").click(function () {
             location.href = '/auth/google'
+        })
+        $('#findPassword').click(function(){
+            location.href = '/auth/password'
         })
     })

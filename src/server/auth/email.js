@@ -33,6 +33,8 @@ passport.use(new LocalStrategy({
     }
 ));
 import validator from 'validator'
+import {getHtmlTemplate, sendEmail} from "../util/email";
+import jwt from 'jsonwebtoken';
 app.post('/register/email', async (req, res, next) => {
     const {email, password, username:userName} = req.body
     const v_email = validator.isEmail(email)
@@ -49,20 +51,47 @@ app.post('/register/email', async (req, res, next) => {
         req.flash('error', "This email is taken")
         return res.redirect('/register')
     }
-    const newUser = await User.create({email, password, userName})
-    req.login(newUser, function (err) {
+    const newUser = await User.create({email, password, userName, emailVerified: false})
+    req.login(newUser, async function (err) {
         if (err) {
             return next(err);
         }
-        return res.redirect('/');
+        const template = await getHtmlTemplate('confirmEmail')
+        const token = jwt.sign({ id: newUser._id }, 'hungrdeals');
+        await sendEmail({
+            to: email,
+            subject: 'Hungrdeals email verification',
+            template: template({name: userName,
+                activationLink: `${process.env.DOMAIN}/auth/email/confirm?token=${token}`})
+        })
+        res.redirect('/verification');
     });
 })
+app.get('/auth/email/confirm',
+    async (req, res, next) => {
+        const { token } = req.query
+        try {
+            const decoded = jwt.verify(token, 'hungrdeals');
+            await User.update({_id: decoded.id}, {emailVerified: true})
+            req.login({
+                _id: decoded.id
+            }, async function (err) {
+                if (err) {
+                    return next(err);
+                }
+                res.redirect('/verification/done')
+            });
+        } catch(err) {
+            res.text("Sth wrong happened")
+        }
+    })
 app.post('/auth/email', getReferer(),
     (req, res, next) => {
         passport.authenticate('local', (err, user, info) => {
             if (err) {
                 // 비밀번호 일치하지 않을 때
-                req.flash('error', err.message)
+                console.log("Password not match")
+                req.flash('error', "Password not match")
                 return res.redirect(req.refererPath);
             }
             req.login(user, function (err) {

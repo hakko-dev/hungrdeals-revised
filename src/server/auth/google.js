@@ -22,7 +22,7 @@ passport.use(new GoogleStrategy({
             if(photos.length !== 0){
                 profileImage = photos[0].value
             }
-            const user = await User.findOneAndUpdate({googleId}, {userName, profileImage, gender}, {upsert: true}).exec()
+            const user = await User.findOneAndUpdate({googleId}, {email: profile.emails[0].value, userName, profileImage, gender}, {upsert: true}).exec()
             cb(null, user);
         } catch (err) {
             cb(err, {});
@@ -31,7 +31,7 @@ passport.use(new GoogleStrategy({
 ));
 
 app.get('/auth/google',
-    passport.authenticate('google', { scope: ['profile'] }));
+    passport.authenticate('google', { scope: ['profile','email'] }));
 
 app.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/login' }),

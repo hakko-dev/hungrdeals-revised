@@ -1,12 +1,19 @@
 doctype html
 head
-    title Hungrdeals
-    meta(charset='utf-8')
+    title=meta.title
     meta(content='ie=edge' http-equiv='x-ua-compatible')
-    meta(content='template language' name='keywords')
-    meta(content='Tamerlan Soziev' name='author')
-    meta(content='Admin dashboard html template' name='description')
-    meta(content='width=device-width, initial-scale=1' name='viewport')
+    meta(http-equiv="Content-Type" content="text/html; charset=utf-8")
+    meta(content=meta.description name='description')
+    meta(content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' name='viewport')
+    meta(name='google-site-verification' content='4h1Np1qk6XLIGoWG53rZMHlE8QzEf5kLO6YBPQfYlSk')
+
+    // Open Graph data
+    meta(property='og:title' content=meta.title)
+    meta(property='og:type' content='article')
+    meta(property='og:url' content=meta.url)
+    meta(property='og:image' content=meta.image)
+    meta(property='og:description' content=meta.description)
+
 
     link(href='/favicon.png' rel='shortcut icon')
     link(href='/apple-touch-icon.png' rel='apple-touch-icon')

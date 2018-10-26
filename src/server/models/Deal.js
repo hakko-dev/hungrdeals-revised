@@ -92,6 +92,7 @@ dealSchema.methods.getDealInfo = function () {
         category: this.category,
         cuisineType: this.cuisineType,
         title: this.title,
+        description_raw: this.description,
         description: this.description.split('\n').map(line => `<p>${line}</p>`).join(''),
         items: this.items,
         images: this.images,
@@ -233,7 +234,7 @@ dealSchema.statics.updateDeal = async function ({happyHour, dealId, category, cu
         _id: dealId
     }
 };
-dealSchema.statics.search = async function ({search = '', sort = 'RECENT', filter = 'ALL', category = null, openHourStart = 0, openHourEnd = 2400, currentLocationLat = null, currentLocationLng = null, distance = 5, priceRangeStart = 0, priceRangeEnd = 100, cuisineType = ['ALL']}) {
+dealSchema.statics.search = async function ({search = '', sort = 'Nearest', filter = 'OPEN', category = null, openHourStart = 0, openHourEnd = 2400, currentLocationLat = null, currentLocationLng = null, distance = 5, priceRangeStart = 0, priceRangeEnd = 100, cuisineType = ['ALL']}) {
     // for open hour
     const todayDay = week[new Date().getDay()]
 
