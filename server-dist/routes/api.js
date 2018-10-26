@@ -161,6 +161,36 @@ _profile.default.post('/api/mail', async (req, res) => {
   }
 });
 
+_profile.default.post('/api/mail/about', async (req, res) => {
+  const {
+    email,
+    name,
+    phone,
+    message
+  } = req.body;
+
+  try {
+    await (0, _email.sendEmail)({
+      to: 'hungrdeals@outlook.com',
+      subject: 'Customer Inquiry',
+      template: `${email} ${name} ${phone} ${message}`
+    });
+    await (0, _email.sendEmail)({
+      to: 'lee.kim.dev.au@gmail.com',
+      subject: 'Customer Inquiry',
+      template: `${email} ${name} ${phone} ${message}`
+    });
+    res.json({
+      result: true
+    });
+  } catch (e) {
+    console.log(e);
+    res.json({
+      result: false
+    });
+  }
+});
+
 _profile.default.get('/verification', async (req, res) => {
   if (req.isAuthenticated()) {
     res.renderLogined('verification');

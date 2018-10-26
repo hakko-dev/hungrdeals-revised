@@ -179,6 +179,7 @@ script.
             formData.append('profileImage', event.blob);
         });
         $('#b-delete-account').click(function(){
+            if(confirm('Do you really want to withdraw your account? This action cannot be undone.'))
             location.href='/auth/withdraw'
         })
     })

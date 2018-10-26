@@ -16,45 +16,45 @@
             li.has-sub-menu
                 a(href='/Weekday Specials/All Weekday Specials')
                     .icon-w
-                        | 🎉
+                        | 🌈
                     span Weekday Specials
                 ul.sub-menu
                     .row
                         .col-4
                             a(href='/Weekday Specials/Monday')
-                                img(src='/assets/img/moon.svg')
+                                img(src='/assets/img/monday.svg')
                             span.sub-menu-name.text-grey monday
                         .col-4
                             a(href='/Weekday Specials/Tuesday')
-                                img(src='/assets/img/mars.svg')
+                                img(src='/assets/img/tuesday.svg')
                             span.sub-menu-name.text-grey tuesday
                         .col-4
                             a(href='/Weekday Specials/Wednesday')
-                                img(src='/assets/img/mercury.svg')
+                                img(src='/assets/img/wednesday.svg')
                             span.sub-menu-name.text-grey wednesday
                     .row
                         .col-4
                             a(href='/Weekday Specials/Thursday')
-                                img(src='/assets/img/jupiter.svg')
+                                img(src='/assets/img/thursday.svg')
                             span.sub-menu-name.text-grey thursday
                         .col-4
                             a(href='/Weekday Specials/Friday')
-                                img(src='/assets/img/venus.svg')
+                                img(src='/assets/img/friday.svg')
                             span.sub-menu-name.text-grey friday
             li.has-sub-menu
                 a(href='/Weekend Deals/All Weekend Deals')
                     .icon-w
-                        | 😎
+                        | 🎉
                     span Weekend Deals
                 ul.sub-menu
                     .row
                         .col-4
                             a(href='/Weekend Deals/Saturday')
-                                img(src='/assets/img/saturn.svg')
+                                img(src='/assets/img/saturday.svg')
                             span.sub-menu-name.text-grey saturday
                         .col-4
                             a(href='/Weekend Deals/Sunday')
-                                img(src='/assets/img/sun.svg')
+                                img(src='/assets/img/sunday.svg')
                             span.sub-menu-name.text-grey sunday
 
 
@@ -119,28 +119,34 @@
                             span.sub-menu-name.text-grey cafe
             if !user
                 .row.justify-content-center.mt-3
-                    a.btn.btn-primary.mr-2(href='login') Log In
-                    a.btn.btn-success(href='register') Register
+                    a.btn.btn-primary.mr-2(href='/login') Log In
+                    a.btn.btn-success(href='/register') Register
             if user
                 li.has-sub-menu
                     a(href='/profile')
                         .icon-w
-                            img(alt='' src=user.profileImage style="object-fit: cover; width: 40px; height: auto; border-radius: 50%")
+                            img(alt='' src=user.profileImage style="object-fit: cover; width: 40px; height: 40px; border-radius: 50%")
                         span Profile
                     ul.sub-menu
                         .row
                             .col-4
+                                a(href='/sell')
+                                    img(src='/assets/img/blog.svg')
+                                span.sub-menu-name.text-grey Post Ad
+                            .col-4
+                                a(href='/manage')
+                                    img(src='/assets/img/list.svg')
+                                span.sub-menu-name.text-grey My Ads
+                            .col-4
                                 a(href='/profile')
                                     img(src='/assets/img/settings.svg')
                                 span.sub-menu-name.text-grey Settings
-                            .col-4
-                                a(href='/manage')
-                                    img(src='/assets/img/content.svg')
-                                span.sub-menu-name.text-grey My Posts
+                        .row
                             .col-4
                                 a(href='/logout')
                                     img(src='/assets/img/exit.svg')
                                 span.sub-menu-name.text-grey Logout
+
 
         //
           ------------------

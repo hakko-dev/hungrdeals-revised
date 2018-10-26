@@ -90,7 +90,7 @@ include common/head
                                                 label  Write a Message
                                                 textarea#i-message.form-control(rows='5')
                                             .row.justify-content-end
-                                                a#sendBtn.btn.btn-primary(href='')
+                                                a#sendBtn.btn.btn-primary
                                                     i.os-icon.os-icon-mail-18
                                                     | &ensp;Send
 
@@ -101,7 +101,8 @@ include common/scripts
 script.
     $(function () {
         $('.accordion').collapse()
-        $('#sendBtn').click(function(){
+        $('#sendBtn').click(function(e){
+            e.preventDefault()
             $.ajax({
                 url: '/api/mail',
                 data: JSON.stringify({
@@ -115,7 +116,7 @@ script.
                 processData: false,
                 type: 'POST',
                 success: function (data) {
-                    alert('Email is sent!')
+                    alert('Your feedback is safely sent to the admin')
                     $('#i-email').val('')
                     $('#i-message').val('')
                     $('#i-firstName').val('')

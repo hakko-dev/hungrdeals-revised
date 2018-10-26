@@ -1,4 +1,4 @@
-.content-panel
+.content-panel.preload
     .content-panel-close
         i.os-icon.os-icon-close
     .element-wrapper.pb-3
@@ -242,3 +242,6 @@ script.
             }
         });
     })
+    $(window).load(function () {
+        $("content-panel").removeClass("preload");
+    });

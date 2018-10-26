@@ -5,8 +5,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
     entry: {
       vendor: './src/front/components/vendor.js',
-      profile: './src/front/components/profile/index.js',
-      page2: './src/front/components/page2/index.js'
+      // profile: './src/front/components/profile/index.js',
+      // page2: './src/front/components/page2/index.js'
     },
     module:{
       rules: [
