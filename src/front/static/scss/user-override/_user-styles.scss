@@ -27,12 +27,19 @@
   margin-top: 40px !important;
 }
 
+.footer-w .os-container{
+  background-color: #293145;
+  color: white;
+}
 .footer-w .footer-i ul.social-links.more-links li{
   display: block !important;
   margin-top: 10px !important;
   a{
-    color: grey !important;
+    color: white !important;
   }
+}
+.footer-i .heading-big{
+  color: white !important;
 }
 .support-ticket .avatar{
   font-size: 2.4rem;
@@ -200,4 +207,9 @@ tr{
 // logo
 .menu-mobile .mm-logo-buttons-w .mm-logo img{
   width: 30px !important;
+}
+
+//range-picker
+.irs-bar{
+  background-color: #fcd3c9 !important;
 }
