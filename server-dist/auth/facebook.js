@@ -30,7 +30,7 @@ _passport.default.use(new _passportFacebook.default({
       facebookId: profile.id
     }, {
       email: profile.emails !== undefined ? profile.emails[0].value : null,
-      userName: profile.displayName
+      userName: `${profile.name.givenName} ${profile.name.familyName}`
     }, {
       upsert: true
     }).exec();
