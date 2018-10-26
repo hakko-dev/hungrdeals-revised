@@ -78,7 +78,7 @@ app.post('/api/admin/verify', ensureAdmin, async (req, res) => {
 });
 
 app.delete('/api/deal', ensureAdmin, async (req, res) => {
-    const {_id} = req.query
+    const {_id} = req.body
     await Deal.deleteOne({_id}).exec()
     res.json({
         result: true
