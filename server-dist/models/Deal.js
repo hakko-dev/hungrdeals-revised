@@ -122,6 +122,7 @@ dealSchema.methods.getDealInfo = function () {
     category: this.category,
     cuisineType: this.cuisineType,
     title: this.title,
+    description_raw: this.description,
     description: this.description.split('\n').map(line => `<p>${line}</p>`).join(''),
     items: this.items,
     images: this.images,
@@ -329,8 +330,8 @@ dealSchema.statics.updateDeal = async function ({
 
 dealSchema.statics.search = async function ({
   search = '',
-  sort = 'RECENT',
-  filter = 'ALL',
+  sort = 'Nearest',
+  filter = 'OPEN',
   category = null,
   openHourStart = 0,
   openHourEnd = 2400,

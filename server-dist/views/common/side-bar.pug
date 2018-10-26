@@ -27,18 +27,18 @@
                         .form-group
                             label(for='i-sort') Sort
                             select#i-sort.form-control
-                                option(value="Recent") Recent
+                                option(value="Nearest") Nearest
                                 option(value="Lowest") Lowest Price
                                 option(value="Highest") Highest Price
                                 option(value="High Discount") High Discount
-                                option(value="Nearest") Nearest
+                                option(value="Recent") Recent
                                 option(value="Many Items") Many Items
                     .col-6
                         .form-group
                             label(for='i-filter') Filter
                             select#i-filter.form-control
-                                option(value='ALL') All
                                 option(value='OPEN') Only Open
+                                option(value='ALL') All
                 .row#a-open-hour
                     .col-12
                         .form-group
@@ -149,7 +149,7 @@ script.
         $('#i-distance').keyup(function(){
             initialLoad()
         })
-        $('#a-open-hour').hide()
+        // $('#a-open-hour').hide()
         $('#i-filter').change(function () {
             if($(this).val() === 'OPEN'){
                 $('#a-open-hour').show()

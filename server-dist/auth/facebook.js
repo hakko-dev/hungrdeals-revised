@@ -20,12 +20,14 @@ const app = _express.default.Router();
 _passport.default.use(new _passportFacebook.default({
   clientID: process.env.FACEBOOK_CLIENT_ID,
   clientSecret: process.env.FACEOOK_CLIENT_KEY,
-  callbackURL: process.env.FACEBOOK_CALLBACK
+  callbackURL: process.env.FACEBOOK_CALLBACK,
+  profileFields: ['id', 'emails', 'name']
 }, async (accessToken, refreshToken, profile, cb) => {
   try {
     const user = await _User.default.findOneAndUpdate({
       facebookId: profile.id
     }, {
+      email: profile.emails !== undefined ? profile.emails[0].value : null,
       userName: profile.displayName
     }, {
       upsert: true
@@ -36,7 +38,9 @@ _passport.default.use(new _passportFacebook.default({
   }
 }));
 
-app.get('/auth/facebook', _passport.default.authenticate('facebook'));
+app.get('/auth/facebook', _passport.default.authenticate('facebook', {
+  scope: ['email']
+}));
 app.get('/auth/facebook/callback', _passport.default.authenticate('facebook', {
   failureRedirect: '/login'
 }), function (req, res) {

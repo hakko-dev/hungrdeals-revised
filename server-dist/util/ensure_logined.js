@@ -10,6 +10,10 @@ function ensureLogined(req, res, next) {
     return res.redirect("/login");
   }
 
+  if (req.user.emailVerified === false) {
+    return res.redirect("/verification");
+  }
+
   next();
 }
 

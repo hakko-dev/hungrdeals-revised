@@ -11,6 +11,8 @@ var _ensure_logined = _interopRequireDefault(require("../util/ensure_logined"));
 
 var _Deal = _interopRequireDefault(require("../models/Deal"));
 
+var _email = require("../util/email");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const app = _express.default.Router();
@@ -22,9 +24,25 @@ app.post('/sell', _ensure_logined.default, async (req, res) => {
   const deal = await _Deal.default.addNewDeal({ ...req.body,
     authorId: req.user._id
   });
-  res.json({
-    _id: deal._id
-  });
+
+  try {
+    const template = await (0, _email.getHtmlTemplate)('verifyingStatus');
+    await (0, _email.sendEmail)({
+      to: req.user.email,
+      subject: 'We are verifying your Ad',
+      template: template({
+        name: req.user.userName
+      })
+    });
+    res.json({
+      _id: deal._id
+    });
+  } catch (e) {
+    console.log(e);
+    res.json({
+      _id: deal._id
+    });
+  }
 });
 app.post('/sell/edit/:dealId', _ensure_logined.default, async (req, res) => {
   const {

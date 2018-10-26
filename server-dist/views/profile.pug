@@ -64,70 +64,9 @@ include common/head
                                                         label(for='') New Password
                                                         input#i-password-new.form-control(data-match-error="Passwords don't match" placeholder='Confirm Password' type='password')
                                                         .help-block.form-text.with-errors.form-control-feedback
-                                        .row.justify-content-end
+                                        .row.justify-content-between
+                                            button#b-delete-account.btn.btn-danger(type='button')  Membership Withdrawal
                                             button#saveButton.btn.btn-primary.has-spinner(type='submit' data-loading-text="Saving...")  Save
-                            //.element-wrapper
-                            //    .element-box
-                            //        h6.element-header
-                            //            | Manage Your Posts
-                            //        .timed-activities.compact
-                            //            .timed-activity
-                            //                .ta-date
-                            //                    span October, 2018
-                            //                .ta-record-w
-                            //                    .ta-record
-                            //                        .ta-timestamp
-                            //                            strong 10th
-                            //                            |  11:55 am
-                            //                            strong.badge.badge-success.text-white.ml-1 live
-                            //                        .ta-activity.d-flex.justify-content-between
-                            //                            span Indian Diwali sweets and snacks
-                            //                            div
-                            //                                a(href='#') Edit
-                            //
-                            //                    .ta-record
-                            //                        .ta-timestamp
-                            //                            strong 8th
-                            //                            |  2:34 pm
-                            //                            strong.badge.badge-light.ml-1 closed
-                            //                        .ta-activity.d-flex.justify-content-between
-                            //                            span YOGI Rice Cake and Dumpling Soup
-                            //                            div
-                            //                                a(href='#') Edit
-                            //                    .ta-record
-                            //                        .ta-timestamp
-                            //                            strong 8th
-                            //                            |  2:34 pm
-                            //                            strong.badge.badge-light.ml-1 closed
-                            //                        .ta-activity.d-flex.justify-content-between
-                            //                            span YOGI Rice Cake and Dumpling Soup
-                            //                            div
-                            //                                a(href='#') Edit
-                            //
-                            //            .timed-activity
-                            //                .ta-date
-                            //                    span September, 2018
-                            //                .ta-record-w
-                            //                    .ta-record
-                            //                        .ta-timestamp
-                            //                            strong 8th
-                            //                            |  2:34 pm
-                            //                            strong.badge.badge-light.ml-1 closed
-                            //                        .ta-activity.d-flex.justify-content-between
-                            //                            span YOGI Rice Cake and Dumpling Soup
-                            //                            div
-                            //                                a(href='#') Edit
-                            //                    .ta-record
-                            //                        .ta-timestamp
-                            //                            strong 10th
-                            //                            |  11:55 am
-                            //                            strong.badge.badge-success.text-white.ml-1 live
-                            //                        .ta-activity.d-flex.justify-content-between
-                            //                            span Indian Diwali sweets and snacks
-                            //                            div
-                            //                                a(href='#') Edit
-                            //            .row
-                            //                a.mx-auto(href='#' style='border-bottom: 1px solid #047bf8') Load More
 
         include common/footer
     .display-type
@@ -239,4 +178,7 @@ script.
             formData.delete('profileImage')
             formData.append('profileImage', event.blob);
         });
+        $('#b-delete-account').click(function(){
+            location.href='/auth/withdraw'
+        })
     })

@@ -25,13 +25,21 @@ app.get('/deal/:dealId', async (req, res) => {
     }
 
     const dealInfo = deal.getDealInfo();
-    console.log(dealInfo);
+    const meta = {
+      meta: {
+        title: 'Hungrdeals - ' + dealInfo.title,
+        description: `[${dealInfo.category} / ${dealInfo.cuisineType}] ${dealInfo.description_raw}`,
+        image: dealInfo.images && dealInfo.images.length !== 0 ? dealInfo.images[0] : process.env.DOMAIN + '/assets/5cae799e09ba9df684d89c32e9780ada.jpg'
+      }
+    };
 
     if (req.isAuthenticated()) {
-      res.renderLogined('deal', { ...dealInfo
+      res.renderLogined('deal', { ...dealInfo,
+        ...meta
       });
     } else {
-      res.render('deal', { ...dealInfo
+      res.render('deal', { ...dealInfo,
+        ...meta
       });
     }
   } catch (e) {

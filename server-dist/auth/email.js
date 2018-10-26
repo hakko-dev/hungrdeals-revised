@@ -17,6 +17,10 @@ var _referer_path = require("../util/referer_path");
 
 var _validator = _interopRequireDefault(require("validator"));
 
+var _email = require("../util/email");
+
+var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const app = _express.default.Router();
@@ -80,21 +84,63 @@ app.post('/register/email', async (req, res, next) => {
   const newUser = await _User.default.create({
     email,
     password,
-    userName
+    userName,
+    emailVerified: false
   });
-  req.login(newUser, function (err) {
+  req.login(newUser, async function (err) {
     if (err) {
       return next(err);
     }
 
-    return res.redirect('/');
+    const template = await (0, _email.getHtmlTemplate)('confirmEmail');
+
+    const token = _jsonwebtoken.default.sign({
+      id: newUser._id
+    }, 'hungrdeals');
+
+    await (0, _email.sendEmail)({
+      to: email,
+      subject: 'Hungrdeals email verification',
+      template: template({
+        name: userName,
+        activationLink: `${process.env.DOMAIN}/auth/email/confirm?token=${token}`
+      })
+    });
+    res.redirect('/verification');
   });
+});
+app.get('/auth/email/confirm', async (req, res, next) => {
+  const {
+    token
+  } = req.query;
+
+  try {
+    const decoded = _jsonwebtoken.default.verify(token, 'hungrdeals');
+
+    await _User.default.update({
+      _id: decoded.id
+    }, {
+      emailVerified: true
+    });
+    req.login({
+      _id: decoded.id
+    }, async function (err) {
+      if (err) {
+        return next(err);
+      }
+
+      res.redirect('/verification/done');
+    });
+  } catch (err) {
+    res.text("Sth wrong happened");
+  }
 });
 app.post('/auth/email', (0, _referer_path.getReferer)(), (req, res, next) => {
   _passport.default.authenticate('local', (err, user, info) => {
     if (err) {
       // 비밀번호 일치하지 않을 때
-      req.flash('error', err.message);
+      console.log("Password not match");
+      req.flash('error', "Password not match");
       return res.redirect(req.refererPath);
     }
 

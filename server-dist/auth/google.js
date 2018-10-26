@@ -38,6 +38,7 @@ _passport.default.use(new _passportGoogleOauth.default({
     const user = await _User.default.findOneAndUpdate({
       googleId
     }, {
+      email: profile.emails[0].value,
       userName,
       profileImage,
       gender
@@ -51,7 +52,7 @@ _passport.default.use(new _passportGoogleOauth.default({
 }));
 
 app.get('/auth/google', _passport.default.authenticate('google', {
-  scope: ['profile']
+  scope: ['profile', 'email']
 }));
 app.get('/auth/google/callback', _passport.default.authenticate('google', {
   failureRedirect: '/login'

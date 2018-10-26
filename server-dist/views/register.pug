@@ -38,7 +38,7 @@ include common/head
                                 br
                                 a(href='/term') Terms and Conditions
                                 | &ensp;and&ensp;
-                                a(href='/term') Privacy Policy
+                                a(href='/policy') Privacy Policy
                         .buttons-w.d-flex.justify-content-end
                             button.btn.btn-success(type='submit') Register Now
                         .row.justify-content-center.my-4
@@ -62,16 +62,21 @@ script.
         })
         $('#f-email').submit(function(event){
             var password = $("#i-password").val()
-            var reg = /^(?=.*[a-z])[a-z]{8,}$/;
+            var reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/;
 
             if (password.match(reg)) {
             }
             else {
+                event.preventDefault();
                 alert('Please enter stronger password.');
+                $("#i-password").val('')
+                $("#i-password-check").val('')
+                return
             }
             if($('#i-password').val() !== $('#i-password-check').val()){
                 event.preventDefault();
                 alert('please check password again')
+                return;
             }
         })
     })

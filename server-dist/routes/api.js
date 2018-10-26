@@ -117,6 +117,20 @@ _profile.default.post('/api/admin/verify', _ensure_admin.default, async (req, re
   });
 });
 
+_profile.default.delete('/api/deal', _ensure_admin.default, async (req, res) => {
+  const {
+    _id
+  } = req.query;
+  await _Deal.default.update({
+    _id
+  }, {
+    verified: true
+  });
+  res.json({
+    result: true
+  });
+});
+
 _profile.default.post('/api/mail', async (req, res) => {
   const {
     email,
@@ -126,12 +140,13 @@ _profile.default.post('/api/mail', async (req, res) => {
   } = req.body;
 
   try {
-    const template = await (0, _email.getTemplate)('validateDeals');
+    const template = await (0, _email.getHtmlTemplate)('confirmEmail');
     await (0, _email.sendEmail)({
       to: 'r54r45r54@gmail.com',
       subject: 'welcome to our site',
       template: template({
-        name: "Woohyunkim"
+        name: "Woohyunkim",
+        activationLink: 'http://naver.com'
       })
     });
     res.json({
@@ -142,6 +157,22 @@ _profile.default.post('/api/mail', async (req, res) => {
     res.json({
       result: false
     });
+  }
+});
+
+_profile.default.get('/verification', async (req, res) => {
+  if (req.isAuthenticated()) {
+    res.renderLogined('verification');
+  } else {
+    res.render('verification');
+  }
+});
+
+_profile.default.get('/verification/done', async (req, res) => {
+  if (req.isAuthenticated()) {
+    res.renderLogined('verification-done');
+  } else {
+    res.render('verification-done');
   }
 });
 

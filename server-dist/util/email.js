@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.sendEmail = exports.getTemplate = void 0;
+exports.sendEmail = exports.getHtmlTemplate = exports.getTemplate = void 0;
 
 var _mjml = _interopRequireDefault(require("mjml"));
 
@@ -34,6 +34,19 @@ const getTemplate = async templateName => {
 };
 
 exports.getTemplate = getTemplate;
+
+const getHtmlTemplate = async templateName => {
+  try {
+    const html = await readFile(_path.default.join(__dirname, `../email-templates/${templateName}.html`));
+    const template = compile(html.toString());
+    return template;
+  } catch (e) {
+    console.log(e);
+    return new Error(`NO TEMPLATE WITH NAME: ${templateName}`);
+  }
+};
+
+exports.getHtmlTemplate = getHtmlTemplate;
 const api_key = process.env.MAILGUN_KEY;
 const mailDomain = process.env.MAILGUN_URL;
 const mailgun = (0, _mailgunJs.default)({
