@@ -23,12 +23,14 @@ _passport.default.use(new _passportFacebook.default({
   callbackURL: process.env.FACEBOOK_CALLBACK,
   profileFields: ['id', 'emails', 'name']
 }, async (accessToken, refreshToken, profile, cb) => {
+  console.log(profile);
+
   try {
     const user = await _User.default.findOneAndUpdate({
       facebookId: profile.id
     }, {
       email: profile.emails !== undefined ? profile.emails[0].value : null,
-      userName: profile.name
+      userName: profile.displayName
     }, {
       upsert: true
     }).exec();

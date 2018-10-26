@@ -12,8 +12,12 @@ passport.use(new FacebookStrategy({
         profileFields: ['id', 'emails', 'name']
     },
     async (accessToken, refreshToken, profile, cb) => {
+        console.log(profile)
         try {
-            const user = await User.findOneAndUpdate({facebookId: profile.id}, {email: profile.emails !== undefined? profile.emails[0].value: null, userName: profile.name}, {upsert: true}).exec()
+            const user = await User.findOneAndUpdate({facebookId: profile.id}, {
+                email: profile.emails !== undefined ? profile.emails[0].value : null,
+                userName: profile.displayName
+            }, {upsert: true}).exec()
             cb(null, user);
         } catch (err) {
             cb(err, {});
@@ -22,7 +26,7 @@ passport.use(new FacebookStrategy({
 ));
 
 app.get('/auth/facebook',
-    passport.authenticate('facebook', { scope : ['email'] }));
+    passport.authenticate('facebook', {scope: ['email']}));
 
 app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {failureRedirect: '/login'}),
