@@ -60,7 +60,8 @@ const dealSchema = new Schema({
   happyHour: {
     start: Number,
     end: Number
-  }
+  },
+  itemSearchString: String
 });
 dealSchema.plugin(_mongooseCreatedatUpdatedat.default);
 
@@ -263,7 +264,10 @@ dealSchema.statics.addNewDeal = async function ({
       start: parseInt(happyHour.start.split(':').join('')),
       end: parseInt(happyHour.end.split(':').join(''))
     } : null,
-    itemsCount: items ? items.length : null
+    itemsCount: items ? items.length : null,
+    itemSearchString: items ? items.reduce((acc, current) => {
+      return acc + current.itemName;
+    }, '') + category + cuisineType : ''
   });
   return result;
 };
@@ -321,7 +325,10 @@ dealSchema.statics.updateDeal = async function ({
       start: parseInt(happyHour.start.split(':').join('')),
       end: parseInt(happyHour.end.split(':').join(''))
     } : null,
-    itemsCount: items ? items.length : null
+    itemsCount: items ? items.length : null,
+    itemSearchString: items ? items.reduce((acc, current) => {
+      return acc + current.itemName;
+    }, '') + category + cuisineType : ''
   });
   return {
     _id: dealId
@@ -381,6 +388,11 @@ dealSchema.statics.search = async function ({
             '$regex': search,
             '$options': 'i'
           }
+        }, {
+          'itemSearchString': {
+            '$regex': search,
+            '$options': 'i'
+          }
         }]
       }]
     }
@@ -410,10 +422,16 @@ dealSchema.statics.search = async function ({
   if (!category || category.indexOf('Menus') === -1) {
     aggData.push({
       $match: {
-        'cheapestItem.nowPrice': {
-          $gt: parseInt(priceRangeStart) - 1,
-          $lt: parseInt(priceRangeEnd) + 1
-        }
+        $or: [{
+          'cheapestItem.nowPrice': {
+            $gte: parseInt(priceRangeStart) - 1,
+            $lte: parseInt(priceRangeEnd) + 1
+          }
+        }, {
+          cheapestItem: {
+            $eq: null
+          }
+        }]
       }
     });
   }

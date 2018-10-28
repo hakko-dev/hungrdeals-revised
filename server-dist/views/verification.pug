@@ -13,7 +13,27 @@ include common/head
                     form(action='/auth/email' method='post')
                         .row.justify-content-center
                             | We sent you the verification link to your email.
+                            button#b-resend.mt-3.btn.btn-primary(type="button") Resend Email
 
         include common/footer
     .display-type
 include common/scripts
+script.
+    $(function() {
+        $('#b-resend').click(function(){
+            $.ajax({
+                url: '/verification/resend',
+                cache: false,
+                contentType: 'application/json',
+                processData: false,
+                type: 'POST',
+                success: function (data) {
+                    if(data.err){
+                        alert(data.err)
+                    }else{
+                        alert('Email sent.')
+                    }
+                }})
+        })
+    })
+

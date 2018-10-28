@@ -138,22 +138,5 @@ app.post('/api/mail/about', async (req, res) => {
 });
 
 
-app.get('/verification', async (req, res) => {
-    if(req.isAuthenticated()){
-        res.renderLogined('verification')
-    }else{
-        res.render('verification')
-    }
-});
-
-app.get('/verification/done', async (req, res) => {
-    if(req.isAuthenticated()){
-        res.renderLogined('verification-done')
-    }else{
-        res.render('verification-done')
-    }
-
-});
-
 
 export default app

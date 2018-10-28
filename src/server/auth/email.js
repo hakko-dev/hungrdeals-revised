@@ -35,6 +35,7 @@ passport.use(new LocalStrategy({
 import validator from 'validator'
 import {getHtmlTemplate, sendEmail} from "../util/email";
 import jwt from 'jsonwebtoken';
+import ensureLogined from "../util/ensure_logined";
 app.post('/register/email', async (req, res, next) => {
     const {email, password, username:userName} = req.body
     const v_email = validator.isEmail(email)
@@ -48,8 +49,13 @@ app.post('/register/email', async (req, res, next) => {
     }
     const user = await User.findOne({email}).exec()
     if (user) {
-        req.flash('error', "This email is taken")
-        return res.redirect('/register')
+        if(user.verified){
+            req.flash('error', "This email is taken")
+            return res.redirect('/register')
+        }else{
+            req.flash('error', "Email verification needed. Please check your mailbox. Or login with this email and resend verification email.")
+            return res.redirect('/register')
+        }
     }
     const newUser = await User.create({email, password, userName, emailVerified: false})
     req.login(newUser, async function (err) {
@@ -103,5 +109,41 @@ app.post('/auth/email', getReferer(),
         })(req, res, next)
     }
 )
+
+app.get('/verification', async (req, res) => {
+    if(req.isAuthenticated()){
+        res.renderLogined('verification')
+    }else{
+        res.redirect('/login')
+    }
+});
+
+app.get('/verification/done', async (req, res) => {
+    if(req.isAuthenticated()){
+        res.renderLogined('verification-done')
+    }else{
+        res.render('verification-done')
+    }
+});
+
+app.post('/verification/resend', async (req, res) => {
+    if(req.isAuthenticated()){
+        const template = await getHtmlTemplate('confirmEmail')
+        const token = jwt.sign({ id: req.user._id }, 'hungrdeals');
+        await sendEmail({
+            to: req.user.email,
+            subject: 'Hungrdeals email verification',
+            template: template({name: req.user.userName,
+                activationLink: `${process.env.DOMAIN}/auth/email/confirm?token=${token}`})
+        })
+        res.json({
+            result: true
+        })
+    }else{
+        res.json({
+            err: "You should be logined to resend verification email"
+        })
+    }
+})
 
 export default app;

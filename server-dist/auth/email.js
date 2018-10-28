@@ -21,6 +21,8 @@ var _email = require("../util/email");
 
 var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
+var _ensure_logined = _interopRequireDefault(require("../util/ensure_logined"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const app = _express.default.Router();
@@ -77,8 +79,13 @@ app.post('/register/email', async (req, res, next) => {
   }).exec();
 
   if (user) {
-    req.flash('error', "This email is taken");
-    return res.redirect('/register');
+    if (user.verified) {
+      req.flash('error', "This email is taken");
+      return res.redirect('/register');
+    } else {
+      req.flash('error', "Email verification needed. Please check your mailbox. Or login with this email and resend verification email.");
+      return res.redirect('/register');
+    }
   }
 
   const newUser = await _User.default.create({
@@ -152,6 +159,45 @@ app.post('/auth/email', (0, _referer_path.getReferer)(), (req, res, next) => {
       return res.redirect('/');
     });
   })(req, res, next);
+});
+app.get('/verification', async (req, res) => {
+  if (req.isAuthenticated()) {
+    res.renderLogined('verification');
+  } else {
+    res.redirect('/login');
+  }
+});
+app.get('/verification/done', async (req, res) => {
+  if (req.isAuthenticated()) {
+    res.renderLogined('verification-done');
+  } else {
+    res.render('verification-done');
+  }
+});
+app.post('/verification/resend', async (req, res) => {
+  if (req.isAuthenticated()) {
+    const template = await (0, _email.getHtmlTemplate)('confirmEmail');
+
+    const token = _jsonwebtoken.default.sign({
+      id: req.user._id
+    }, 'hungrdeals');
+
+    await (0, _email.sendEmail)({
+      to: req.user.email,
+      subject: 'Hungrdeals email verification',
+      template: template({
+        name: req.user.userName,
+        activationLink: `${process.env.DOMAIN}/auth/email/confirm?token=${token}`
+      })
+    });
+    res.json({
+      result: true
+    });
+  } else {
+    res.json({
+      err: "You should be logined to resend verification email"
+    });
+  }
 });
 var _default = app;
 exports.default = _default;

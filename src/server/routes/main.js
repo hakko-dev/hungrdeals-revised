@@ -37,7 +37,7 @@ const SUB_CATEGORY = [
     'All Combos',
     'All Miscellaneous',
     'Grand Openings',
-    'Homemade Deals',
+    'Homemade Meals',
     'Volunteer',
     'Giveaway',
     'Buffet',

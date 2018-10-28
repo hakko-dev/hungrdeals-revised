@@ -20,7 +20,7 @@ const dealSchema = new Schema({
     opening: [{day: String, open: Number, close: Number}],
     deleteAuto: Date,
     createdAt: {type: Date, default: Date.now},
-    verified:{
+    verified: {
         type: Boolean,
         default: false
     },
@@ -34,7 +34,8 @@ const dealSchema = new Schema({
     happyHour: {
         start: Number,
         end: Number,
-    }
+    },
+    itemSearchString: String
 });
 dealSchema.plugin(plugin)
 
@@ -84,10 +85,10 @@ dealSchema.methods.getDealInfo = function () {
         newRow.close = `${row.close.toString().slice(0, -2)}:${row.close.toString().slice(-2)}`
         return newRow
     })
-    const happyHour = this.happyHour.start? {
+    const happyHour = this.happyHour.start ? {
         start: `${this.happyHour.start.toString().slice(0, -2)}:${this.happyHour.start.toString().slice(-2)}`,
         end: `${this.happyHour.end.toString().slice(0, -2)}:${this.happyHour.end.toString().slice(-2)}`
-    }:null
+    } : null
     return {
         category: this.category,
         cuisineType: this.cuisineType,
@@ -134,16 +135,18 @@ dealSchema.methods.getDealEditInfo = function () {
         newRow.close = `${row.close.toString().slice(0, -2)}:${row.close.toString().slice(-2)}`
         return newRow
     })
-    const happyHour = this.happyHour.start? {
+    const happyHour = this.happyHour.start ? {
         start: `${this.happyHour.start.toString().slice(0, -2)}:${this.happyHour.start.toString().slice(-2)}`,
         end: `${this.happyHour.end.toString().slice(0, -2)}:${this.happyHour.end.toString().slice(-2)}`
-    }:null
+    } : null
     const weekRaw = week.map(day => {
         const filtered = openingHours.filter(i => i.day.enum === day)
         if (filtered.length !== 0) {
-            return {...filtered[0], ...{
+            return {
+                ...filtered[0], ...{
                     day: filtered[0].day.enum
-                }}
+                }
+            }
         } else {
             return {
                 day,
@@ -196,16 +199,19 @@ dealSchema.statics.addNewDeal = async function ({happyHour, authorId, category, 
             }
             return discount
         }).sort((a, b) => b - a)[0] : null,
-        happyHour: happyHour? {
+        happyHour: happyHour ? {
             start: parseInt(happyHour.start.split(':').join('')),
             end: parseInt(happyHour.end.split(':').join(''))
-        }:null,
-        itemsCount: items ? items.length: null,
+        } : null,
+        itemsCount: items ? items.length : null,
+        itemSearchString: items ? items.reduce((acc, current) =>{
+            return acc + current.itemName
+        }, '')+category+cuisineType : ''
     })
     return result
 };
 dealSchema.statics.updateDeal = async function ({happyHour, dealId, category, cuisineType, title, description, items, images, phone, address, lat, lng, deleteAuto, opening}) {
-    const result = await this.update({_id: dealId},{
+    const result = await this.update({_id: dealId}, {
         category, cuisineType, title, description, items, images, phone, address,
         deleteAuto,
         opening: opening.map(item => {
@@ -224,11 +230,14 @@ dealSchema.statics.updateDeal = async function ({happyHour, dealId, category, cu
             }
             return discount
         }).sort((a, b) => b - a)[0] : null,
-        happyHour: happyHour? {
+        happyHour: happyHour ? {
             start: parseInt(happyHour.start.split(':').join('')),
             end: parseInt(happyHour.end.split(':').join(''))
-        }:null,
-        itemsCount: items ? items.length: null,
+        } : null,
+        itemsCount: items ? items.length : null,
+        itemSearchString: items ? items.reduce((acc, current) =>{
+            return acc + current.itemName
+        }, '')+category+cuisineType : ''
     })
     return {
         _id: dealId
@@ -258,16 +267,26 @@ dealSchema.statics.search = async function ({search = '', sort = 'Nearest', filt
             $and: [
                 {deletedAt: {$exists: false}},
                 {verified: {$eq: true}},
-                {$or: [{'title': {'$regex': search, '$options': 'i'}}, {
-                    'description': {
-                        '$regex': search,
-                        '$options': 'i'
-                    }
-                }]}
+                {
+                    $or: [
+                        {'title': {'$regex': search, '$options': 'i'}},
+                        {
+                            'description': {
+                                '$regex': search,
+                                '$options': 'i'
+                            },
+                        },{
+
+                            'itemSearchString': {
+                                '$regex': search,
+                                '$options': 'i'
+                            },
+                        }]
+                }
             ]
         }
     })
-    if(category){
+    if (category) {
         aggData.push({
             $match: {'category': {'$regex': category, '$options': 'i'}}
         })
@@ -279,10 +298,17 @@ dealSchema.statics.search = async function ({search = '', sort = 'Nearest', filt
             }
         })
     }
-    if(!category || category.indexOf('Menus') === -1){
+    if (!category || category.indexOf('Menus') === -1) {
         aggData.push({
             $match: {
-                'cheapestItem.nowPrice': {$gt: parseInt(priceRangeStart) - 1, $lt: parseInt(priceRangeEnd) + 1},
+                $or: [
+                    {
+                        'cheapestItem.nowPrice': {$gte: parseInt(priceRangeStart) - 1, $lte: parseInt(priceRangeEnd) + 1},
+                    },
+                    {
+                        cheapestItem: {$eq: null}
+                    }
+                ]
             }
         })
     }

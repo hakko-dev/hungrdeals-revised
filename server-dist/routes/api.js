@@ -189,21 +189,5 @@ _profile.default.post('/api/mail/about', async (req, res) => {
   }
 });
 
-_profile.default.get('/verification', async (req, res) => {
-  if (req.isAuthenticated()) {
-    res.renderLogined('verification');
-  } else {
-    res.render('verification');
-  }
-});
-
-_profile.default.get('/verification/done', async (req, res) => {
-  if (req.isAuthenticated()) {
-    res.renderLogined('verification-done');
-  } else {
-    res.render('verification-done');
-  }
-});
-
 var _default = _profile.default;
 exports.default = _default;
