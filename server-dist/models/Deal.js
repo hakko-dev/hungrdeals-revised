@@ -477,6 +477,13 @@ dealSchema.statics.search = async function ({
 
     case 'Lowest':
       aggData.push({
+        $match: {
+          'cheapestItem.nowPrice': {
+            $exists: true
+          }
+        }
+      });
+      aggData.push({
         $sort: {
           'cheapestItem.nowPrice': 1
         }
@@ -485,6 +492,13 @@ dealSchema.statics.search = async function ({
 
     case 'Highest':
       aggData.push({
+        $match: {
+          'cheapestItem.nowPrice': {
+            $exists: true
+          }
+        }
+      });
+      aggData.push({
         $sort: {
           'cheapestItem.nowPrice': -1
         }
@@ -492,6 +506,13 @@ dealSchema.statics.search = async function ({
       break;
 
     case 'High Discount':
+      aggData.push({
+        $match: {
+          'cheapestItem.nowPrice': {
+            $exists: true
+          }
+        }
+      });
       aggData.push({
         $sort: {
           'maxDiscount': -1
@@ -508,6 +529,13 @@ dealSchema.statics.search = async function ({
       break;
 
     case 'Many Items':
+      aggData.push({
+        $match: {
+          'cheapestItem.nowPrice': {
+            $exists: true
+          }
+        }
+      });
       aggData.push({
         $sort: {
           score: {

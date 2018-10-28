@@ -341,15 +341,24 @@ dealSchema.statics.search = async function ({search = '', sort = 'Nearest', filt
             break;
         case 'Lowest':
             aggData.push({
+                $match: {'cheapestItem.nowPrice': {$exists: true}}
+            })
+            aggData.push({
                 $sort: {'cheapestItem.nowPrice': 1}
             })
             break;
         case 'Highest':
             aggData.push({
+                $match: {'cheapestItem.nowPrice': {$exists: true}}
+            })
+            aggData.push({
                 $sort: {'cheapestItem.nowPrice': -1}
             })
             break;
         case 'High Discount':
+            aggData.push({
+                $match: {'cheapestItem.nowPrice': {$exists: true}}
+            })
             aggData.push({
                 $sort: {'maxDiscount': -1}
             })
@@ -360,6 +369,9 @@ dealSchema.statics.search = async function ({search = '', sort = 'Nearest', filt
             })
             break;
         case 'Many Items':
+            aggData.push({
+                $match: {'cheapestItem.nowPrice': {$exists: true}}
+            })
             aggData.push({
                 $sort: {score: {$meta: "textScore"}, 'itemsCount': -1}
             })
