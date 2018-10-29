@@ -13,6 +13,8 @@ include common/head
                     form(action='/auth/email' method='post')
                         .row.justify-content-center
                             | We sent you the verification link to your email.
+                            br
+                            | Please check your spam folder if you didn't get one.
                             button#b-resend.mt-3.btn.btn-primary(type="button") Resend Email
 
         include common/footer
