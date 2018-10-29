@@ -64,13 +64,18 @@ app.post('/register/email', async (req, res, next) => {
         }
         const template = await getHtmlTemplate('confirmEmail')
         const token = jwt.sign({ id: newUser._id }, 'hungrdeals');
-        await sendEmail({
-            to: email,
-            subject: 'Hungrdeals email verification',
-            template: template({name: userName,
-                activationLink: `${process.env.DOMAIN}/auth/email/confirm?token=${token}`})
-        })
-        res.redirect('/verification');
+        try{
+            await sendEmail({
+                to: email,
+                subject: 'Hungrdeals email verification',
+                template: template({name: userName,
+                    activationLink: `${process.env.DOMAIN}/auth/email/confirm?token=${token}`})
+            })
+            res.redirect('/verification');
+        }catch (e) {
+            console.log(e)
+            res.redirect('/verification');
+        }
     });
 })
 app.get('/auth/email/confirm',

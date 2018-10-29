@@ -105,15 +105,20 @@ app.post('/register/email', async (req, res, next) => {
       id: newUser._id
     }, 'hungrdeals');
 
-    await (0, _email.sendEmail)({
-      to: email,
-      subject: 'Hungrdeals email verification',
-      template: template({
-        name: userName,
-        activationLink: `${process.env.DOMAIN}/auth/email/confirm?token=${token}`
-      })
-    });
-    res.redirect('/verification');
+    try {
+      await (0, _email.sendEmail)({
+        to: email,
+        subject: 'Hungrdeals email verification',
+        template: template({
+          name: userName,
+          activationLink: `${process.env.DOMAIN}/auth/email/confirm?token=${token}`
+        })
+      });
+      res.redirect('/verification');
+    } catch (e) {
+      console.log(e);
+      res.redirect('/verification');
+    }
   });
 });
 app.get('/auth/email/confirm', async (req, res, next) => {
