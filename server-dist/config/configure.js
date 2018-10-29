@@ -46,7 +46,8 @@ function configureRedisSession(app) {
     resave: false,
     saveUninitialized: true,
     cookie: {
-      secure: false
+      secure: false,
+      maxAge: 315360000000
     }
   }));
   app.use(function (req, res, next) {

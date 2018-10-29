@@ -4,6 +4,8 @@ import {upload} from "../util/s3";
 import app from "./profile";
 import {instance} from "../config/mongoose";
 import Deal from "../models/Deal";
+import {sendEmail, getTemplate, getHtmlTemplate} from '../util/email'
+import User from "../models/User";
 
 app.post('/api/image', ensureLogined, upload.single('file'), async (req, res) => {
     const file = req.file
@@ -72,6 +74,15 @@ app.post('/api/admin/verify', ensureAdmin, async (req, res) => {
         }, {
             verified: true
         })
+    const deal = await Deal.findById(_id)
+    const user = await User.findById(deal.author)
+    const template = await getHtmlTemplate('verificationEnd')
+    await sendEmail({
+        to: user.email,
+        subject: 'Hungrdeals email verification',
+        template: template({name: user.userName,
+            adLink: `${process.env.DOMAIN}/deal/${_id}`})
+    })
     res.json({
         result: true
     })
@@ -86,8 +97,6 @@ app.delete('/api/deal', ensureAdmin, async (req, res) => {
 });
 
 
-
-import {sendEmail, getTemplate, getHtmlTemplate} from '../util/email'
 
 app.post('/api/mail', async (req, res) => {
     const {email, firstName, lastName, message} = req.body

@@ -29,7 +29,7 @@ app.get('/', async (req, res) => {
   }
 });
 const BIG_CATEGORY = ['Weekday Specials', 'Weekend Deals', 'Happy Hour', 'Combo', 'Miscellaneous', 'Menus'];
-const SUB_CATEGORY = ['All Weekday Specials', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'All Weekend Deals', 'Saturday', 'Sunday', 'All Happy Hours', 'All Combos', 'All Miscellaneous', 'Grand Openings', 'Homemade Meals', 'Volunteer', 'Giveaway', 'Buffet', 'All Menus', 'Restaurant', 'Bar', 'Cafe'];
+const SUB_CATEGORY = ['All Weekday Specials', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'All Weekdays', 'All Weekend Deals', 'Saturday', 'Sunday', 'All Weekends', 'All Happy Hours', 'All Combos', 'All Miscellaneous', 'Grand Openings', 'Homemade Meals', 'Volunteer', 'Giveaway', 'Buffet', 'All Menus', 'Restaurant', 'Bar', 'Cafe'];
 app.get('/:bigCategory/:subCategory', async (req, res, next) => {
   const {
     bigCategory,

@@ -15,7 +15,8 @@ export function configureRedisSession(app) {
             secret: REDIS_SECRET,
             resave: false,
             saveUninitialized: true,
-            cookie: {secure: false}
+            cookie: {secure: false,
+                maxAge: 315360000000}
         })
     );
     app.use(function (req, res, next) {

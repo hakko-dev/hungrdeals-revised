@@ -19,6 +19,8 @@ var _Deal = _interopRequireDefault(require("../models/Deal"));
 
 var _email = require("../util/email");
 
+var _User = _interopRequireDefault(require("../models/User"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _profile.default.post('/api/image', _ensure_logined.default, _s.upload.single('file'), async (req, res) => {
@@ -111,6 +113,17 @@ _profile.default.post('/api/admin/verify', _ensure_admin.default, async (req, re
     _id
   }, {
     verified: true
+  });
+  const deal = await _Deal.default.findById(_id);
+  const user = await _User.default.findById(deal.author);
+  const template = await (0, _email.getHtmlTemplate)('verificationEnd');
+  await (0, _email.sendEmail)({
+    to: user.email,
+    subject: 'Hungrdeals email verification',
+    template: template({
+      name: user.userName,
+      adLink: `${process.env.DOMAIN}/deal/${_id}`
+    })
   });
   res.json({
     result: true
