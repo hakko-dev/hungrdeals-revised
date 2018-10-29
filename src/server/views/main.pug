@@ -30,7 +30,7 @@ include common/head
                                             span#search-query
                                             | )
                     .support-index
-                        .support-tickets
+                        .support-tickets(style="width: 100%;")
 
 
 
@@ -168,8 +168,8 @@ script.
                                 '<div class="st-body">' +
                                 '<div class="avatar">' + emojiList[item.cuisineType] + '</div>' +
                                 '<div class="ticket-content">' +
+                                '<span class="text-primary" style="font-size: 0.7rem;">'+item.category.split('-')[0].trim()+'</span>'+
                                 '<h6 class="ticket-title">' + item.title +
-                                '<span class="ml-2 text-primary">'+item.category.split('-')[0].trim()+'</span>'+
                                 '</h6>' +
                                 '<div class="ticket-description">' + item.description + '</div>' +
                                 '</div>';
