@@ -389,7 +389,8 @@ dealSchema.statics.search = async function ({search = '', sort = 'Nearest', filt
             cheapestItem: item.cheapestItem,
             address: item.address,
             dist: item.dist,
-            opening: item.opening
+            opening: item.opening,
+            category: item.category
         }
     })
 }
