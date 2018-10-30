@@ -6,7 +6,7 @@
             | Quick Links
         .element-box-tp
             .el-buttons-list.full-width
-                a.btn.btn-primary(href='/sell')
+                a.btn.btn-success(href='/sell')
                     i.fas.fa-clipboard
                     span &ensp;Post an Ad
                 a.btn.btn-warning(href='/manage')
@@ -36,7 +36,8 @@
                             label(for='i-filter') Filter
                             select#i-filter.form-control
                                 option(value='OPEN') Only Open
-                                option(value='ALL') All
+                                option(value='ALL') All Deals
+                                option(value='TIME') Select by time
                 .row#a-open-hour
                     .col-12
                         .form-group
@@ -147,12 +148,52 @@ script.
         $('#i-distance').keyup(function(){
             initialLoad()
         })
-        // $('#a-open-hour').hide()
+        $('#a-open-hour').hide()
+        $('.switch > input').change(function(){
+            var checked = $(this).is(":checked")
+            var target = $(this).data('value')
+            if(!checked){
+                if (target === 'all') {
+                    $(this).prop("checked", true)
+                }else{
+                    $('#s-all').prop("checked", true)
+                    $('#i-filter').val('ALL')
+                }
+            }else{
+                if(target == 'all'){
+                    $('#s-open').prop("checked", false)
+                    $('#s-time').prop("checked", false)
+                    $('#i-filter').val('ALL')
+                }else if(target == 'open'){
+                    $('#s-all').prop("checked", false)
+                    $('#s-time').prop("checked", false)
+                    $('#i-filter').val('OPEN')
+                }else{
+                    $('#s-all').prop("checked", false)
+                    $('#s-open').prop("checked", false)
+                    $('#i-filter').val('TIME')
+                }
+            }
+            $('#i-filter').trigger( "change" );
+        })
         $('#i-filter').change(function () {
-            if($(this).val() === 'OPEN'){
+            if($(this).val() === 'TIME'){
                 $('#a-open-hour').show()
             }else{
                 $('#a-open-hour').hide()
+            }
+            if ($(this).val() == 'ALL') {
+                $('#s-all').prop("checked", true)
+                $('#s-open').prop("checked", false)
+                $('#s-time').prop("checked", false)
+            } else if ($(this).val() == 'OPEN') {
+                $('#s-all').prop("checked", false)
+                $('#s-open').prop("checked", true)
+                $('#s-time').prop("checked", false)
+            } else {
+                $('#s-all').prop("checked", false)
+                $('#s-open').prop("checked", false)
+                $('#s-time').prop("checked", true)
             }
             initialLoad()
         })

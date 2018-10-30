@@ -62,20 +62,21 @@ app.post('/register/email', async (req, res, next) => {
         if (err) {
             return next(err);
         }
-        const template = await getHtmlTemplate('confirmEmail')
-        const token = jwt.sign({ id: newUser._id }, 'hungrdeals');
-        try{
-            await sendEmail({
-                to: email,
-                subject: 'Hungrdeals email verification',
-                template: template({name: userName,
-                    activationLink: `${process.env.DOMAIN}/auth/email/confirm?token=${token}`})
-            })
-            res.redirect('/verification');
-        }catch (e) {
-            console.log(e)
-            res.redirect('/verification');
-        }
+        // const template = await getHtmlTemplate('confirmEmail')
+        // const token = jwt.sign({ id: newUser._id }, 'hungrdeals');
+        // try{
+        //     await sendEmail({
+        //         to: email,
+        //         subject: 'Hungrdeals email verification',
+        //         template: template({name: userName,
+        //             activationLink: `${process.env.DOMAIN}/auth/email/confirm?token=${token}`})
+        //     })
+        //     res.redirect('/verification');
+        // }catch (e) {
+        //     console.log(e)
+        //     res.redirect('/verification');
+        // }
+        res.redirect('/');
     });
 })
 app.get('/auth/email/confirm',

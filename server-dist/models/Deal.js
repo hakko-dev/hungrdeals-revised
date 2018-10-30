@@ -11,6 +11,8 @@ var _mongooseCreatedatUpdatedat = _interopRequireDefault(require("mongoose-creat
 
 var _pointSchema = _interopRequireDefault(require("./pointSchema"));
 
+var _moment = _interopRequireDefault(require("moment"));
+
 var _libphonenumberJs = require("libphonenumber-js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -336,6 +338,7 @@ dealSchema.statics.updateDeal = async function ({
 };
 
 dealSchema.statics.search = async function ({
+  currentTime,
   search = '',
   sort = 'Nearest',
   filter = 'OPEN',
@@ -450,7 +453,7 @@ dealSchema.statics.search = async function ({
     }
   });
 
-  if (filter === 'OPEN') {
+  if (filter === 'TIME') {
     aggData.push({
       $match: {
         'opening.0': {
@@ -461,6 +464,22 @@ dealSchema.statics.search = async function ({
         },
         'opening.0.close': {
           $gt: openHourEnd - 1
+        }
+      }
+    });
+  }
+
+  if (filter === 'OPEN') {
+    aggData.push({
+      $match: {
+        'opening.0': {
+          $exists: true
+        },
+        'opening.0.open': {
+          $lt: currentTime + 1
+        },
+        'opening.0.close': {
+          $gt: currentTime - 1
         }
       }
     });

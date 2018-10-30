@@ -6,16 +6,40 @@ include common/head
         .content-w
             .content-i
                 .content-box
-                    .row.pb-5
-                        .col-12
+                    .row.pb-4
+                        .col-sm-9
                             .input-group
                                 input#i-search.form-control.search-bar(type='text' placeholder="I'm looking for ..." )
                                 .input-group-append
                                     button#f-search.btn.btn-grey.px-3.px-lg-5(type='button' style="color: #495057;z-index: 1;")
                                         i.fas.fa-search
+                        .col-sm-3.align-items-center.d-flex.justify-content-center.mt-4.mt-sm-0
+                            a.btn.btn-block.full-width.btn-success.px-4(href='/sell')
+                                i.fas.fa-clipboard
+                                span &ensp;Post an Ad
+
+
+
                     .row
                         .col-12
                             .element-wrapper.pb-1
+                                .element-actions.d-flex.justify-content-end(style="margin-top: 0;")
+                                    div.text-center.mr-sm-3
+                                        span.pr-1 Only Open
+                                        label.switch.m-0
+                                            input#s-open(type="checkbox" data-value="open" checked)
+                                            span.slider.round
+                                    div.text-center.mr-sm-3
+                                        span.pr-1 All Deals
+                                        label.switch.m-0
+                                            input#s-all(type="checkbox" data-value="all")
+                                            span.slider.round
+                                    div.text-center.mr-sm-3
+                                        span.pr-1 Select by Time
+                                        label.switch.m-0
+                                            input#s-time(type="checkbox" data-value="time")
+                                            span.slider.round
+
                                 h5.element-header
                                     if path
                                         | #{path.sub}
@@ -85,7 +109,7 @@ script.
         '</div>'
     var noPost = '<div class="row justify-content-center"><img style="width: 150px;height: 150px;" src="/assets/img/salad.svg" />\n' +
         '    <div class="col-12 text-center my-3">\n' +
-        '        <h6>No Ads yet!</h6>\n' +
+        '        <h6>Nothing open yet!</h6>\n' +
         '    </div>\n' +
         '</div>'
     $('.support-tickets').append([placeholder, placeholder, placeholder])
@@ -135,7 +159,8 @@ script.
                 priceRangeStart,
                 priceRangeEnd,
                 cuisineType,
-                category: category
+                category: category,
+                currentTime: parseInt(moment().format('HHmm'))
             }),
             cache: false,
             contentType: 'application/json',
@@ -174,16 +199,21 @@ script.
                                 '<div class="ticket-description">' + item.description + '</div>' +
                                 '</div>';
                             if (item.cheapestItem) {
-                                html = html + '<div class="price">' +
-                                    '<div class="was">$' + item.cheapestItem.prevPrice + '</div>' +
-                                    '<strong>$' + item.cheapestItem.nowPrice + '</strong>' +
+                                html = html + '<div class="price">' ;
+                                if(item.cheapestItem.prevPrice !== item.cheapestItem.nowPrice){
+                                    html = html + '<div class="was">$' + item.cheapestItem.prevPrice + '</div>' ;
+                                }
+                                html = html + '<strong>$' + item.cheapestItem.nowPrice + '</strong>' +
                                     '</div>';
                             }
                             html = html + '</div>' +
                                 '<div class="st-foot"><span class="label"><div class="os-icon os-icon-ui-74"></div></span>' +
-                                '<span class="value text-truncate" style="max-width: 80%">' + item.address + '</span>' +
-                                '<span class="label"><div class="os-icon os-icon-box"></div></span>' +
-                                '<span class="value">' + item.itemSize + ' items</span></div></div>'
+                                '<span class="value text-truncate" style="max-width: 80%">' + item.address + '</span>';
+                            if(item.itemSize !== 0){
+                                html = html + '<span class="label"><div class="os-icon os-icon-box"></div></span>' + '<span class="value">' + item.itemSize + ' items</span>';
+                            }
+                            html = html +
+                                '</div></div>'
 
                             $('.support-tickets').append(
                                 html

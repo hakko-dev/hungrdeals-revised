@@ -1,7 +1,7 @@
 import mongoose from '../config/mongoose'
 import plugin from 'mongoose-createdat-updatedat'
 import pointSchema from './pointSchema'
-
+import moment from 'moment'
 const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
 const dealSchema = new Schema({
@@ -243,7 +243,7 @@ dealSchema.statics.updateDeal = async function ({happyHour, dealId, category, cu
         _id: dealId
     }
 };
-dealSchema.statics.search = async function ({search = '', sort = 'Nearest', filter = 'OPEN', category = null, openHourStart = 0, openHourEnd = 2400, currentLocationLat = null, currentLocationLng = null, distance = 5, priceRangeStart = 0, priceRangeEnd = 100, cuisineType = ['ALL']}) {
+dealSchema.statics.search = async function ({currentTime, search = '', sort = 'Nearest', filter = 'OPEN', category = null, openHourStart = 0, openHourEnd = 2400, currentLocationLat = null, currentLocationLng = null, distance = 5, priceRangeStart = 0, priceRangeEnd = 100, cuisineType = ['ALL']}) {
     // for open hour
     const todayDay = week[new Date().getDay()]
 
@@ -324,12 +324,21 @@ dealSchema.statics.search = async function ({search = '', sort = 'Nearest', filt
             }
         }
     })
-    if (filter === 'OPEN') {
+    if (filter === 'TIME') {
         aggData.push({
             $match: {
                 'opening.0': {$exists: true},
                 'opening.0.open': {$lt: openHourStart + 1},
                 'opening.0.close': {$gt: openHourEnd - 1}
+            }
+        })
+    }
+    if (filter === 'OPEN') {
+        aggData.push({
+            $match: {
+                'opening.0': {$exists: true},
+                'opening.0.open': {$lt: currentTime + 1},
+                'opening.0.close': {$gt: currentTime - 1}
             }
         })
     }
