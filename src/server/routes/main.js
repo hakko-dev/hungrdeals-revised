@@ -58,7 +58,7 @@ app.get('/:bigCategory/:subCategory', async (req, res, next) => {
                 path: {
                     big: bigCategory,
                     sub: subCategory
-                }
+                },
             }
         )
     } else {

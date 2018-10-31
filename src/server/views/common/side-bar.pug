@@ -23,7 +23,7 @@
         .element-box-tp(style='')
             form(action='')
                 .row
-                    .col-6
+                    .col-6.col-sm-6-menu-not-shown
                         .form-group
                             label(for='i-sort') Sort
                             select#i-sort.form-control
@@ -31,19 +31,21 @@
                                 option(value="Recent") Recent
                                 option(value="Lowest") Lowest Price
                                 option(value="Highest") Highest Price
-                    .col-6
+                    .col-6.d-menu-shown-block
                         .form-group
                             label(for='i-filter') Filter
                             select#i-filter.form-control
                                 option(value='OPEN') Only Open
                                 option(value='ALL') All Deals
                                 option(value='TIME') Select by time
-                .row#a-open-hour
+                .row.a-open-hour.d-menu-hidden-flex(style="display: none")
                     .col-12
                         .form-group
-                            label(for='time-range') Open Hour
+                            label Open Hour
                             .filter-body
-                                input#time-range.ion-range-slider(type='text')
+                                .input-group
+                                    input.i-start-time.form-control(type='time' value="10:00")
+                                    input.i-end-time.form-control(type='time' value="20:00")
                 .row.mb-4
                     .col-6
                         label(for='i-postcode') Location
@@ -178,9 +180,9 @@ script.
         })
         $('#i-filter').change(function () {
             if($(this).val() === 'TIME'){
-                $('#a-open-hour').show()
+                $('.a-open-hour').show()
             }else{
-                $('#a-open-hour').hide()
+                $('.a-open-hour').hide()
             }
             if ($(this).val() == 'ALL') {
                 $('#s-all').prop("checked", true)
@@ -242,42 +244,50 @@ script.
                 initialLoad()
             }
         });
+        $('.i-start-time').change(function(){
+            $('.i-start-time').val($(this).val())
+            initialLoad()
+        })
+        $('.i-end-time').change(function () {
+            $('.i-end-time').val($(this).val())
+            initialLoad()
+        })
 
-        // time range
-        moment.locale("en-AU");
-        var $range = $("#time-range");
-        var startTime = new Date()
-        startTime.setHours(0)
-        startTime.setMinutes(0)
-        startTime.setSeconds(0)
-        var endTime = new Date(startTime)
-        endTime.setDate(endTime.getDate() + 1)
-        endTime.setSeconds(-1)
-        var start = moment(startTime, "YYYY-MM-DD HH:mm");
-        var end = moment(endTime, "YYYY-MM-DD HH:mm");
-        var currentTimeStart = new Date()
-        currentTimeStart.setMinutes(0)
-        currentTimeStart.setSeconds(0)
-        currentTimeStart.setHours(currentTimeStart.getHours()-1)
-
-        var currentTimeEnd = new Date()
-        currentTimeEnd.setMinutes(0)
-        currentTimeEnd.setSeconds(0)
-        currentTimeEnd.setHours(currentTimeEnd.getHours() + 1)
-
-        $range.ionRangeSlider({
-            type: "double",
-            grid: true,
-            min: start.format("x"),
-            max: end.format("x"),
-            from: moment(currentTimeStart, "YYYY-MM-DD HH:mm").format("x"),
-            to: moment(currentTimeEnd, "YYYY-MM-DD HH:mm").format("x"),
-            step: 1800000,                // 30 minutes in ms
-            prettify: function (num) {
-                return moment(num, 'x').format("h:mm A");
-            },
-            onFinish: function () {
-                initialLoad()
-            }
-        });
+        // // time range
+        // moment.locale("en-AU");
+        // var $range = $("#time-range");
+        // var startTime = new Date()
+        // startTime.setHours(0)
+        // startTime.setMinutes(0)
+        // startTime.setSeconds(0)
+        // var endTime = new Date(startTime)
+        // endTime.setDate(endTime.getDate() + 1)
+        // endTime.setSeconds(-1)
+        // var start = moment(startTime, "YYYY-MM-DD HH:mm");
+        // var end = moment(endTime, "YYYY-MM-DD HH:mm");
+        // var currentTimeStart = new Date()
+        // currentTimeStart.setMinutes(0)
+        // currentTimeStart.setSeconds(0)
+        // currentTimeStart.setHours(currentTimeStart.getHours()-1)
+        //
+        // var currentTimeEnd = new Date()
+        // currentTimeEnd.setMinutes(0)
+        // currentTimeEnd.setSeconds(0)
+        // currentTimeEnd.setHours(currentTimeEnd.getHours() + 1)
+        //
+        // $range.ionRangeSlider({
+        //     type: "double",
+        //     grid: true,
+        //     min: start.format("x"),
+        //     max: end.format("x"),
+        //     from: moment(currentTimeStart, "YYYY-MM-DD HH:mm").format("x"),
+        //     to: moment(currentTimeEnd, "YYYY-MM-DD HH:mm").format("x"),
+        //     step: 1800000,                // 30 minutes in ms
+        //     prettify: function (num) {
+        //         return moment(num, 'x').format("h:mm A");
+        //     },
+        //     onFinish: function () {
+        //         initialLoad()
+        //     }
+        // });
     })

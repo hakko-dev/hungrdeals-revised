@@ -92,7 +92,7 @@ _profile.default.get('/api/postcode2geo', async (req, res) => {
 _profile.default.post('/api/search', async (req, res) => {
   const result = await _Deal.default.search(req.body);
   res.json({
-    list: result
+    result
   });
 });
 

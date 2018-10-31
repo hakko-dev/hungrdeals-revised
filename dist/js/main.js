@@ -17,7 +17,7 @@ Main javascript functions to init most of the elements
 #13. EMAIL APP
 #14. FULL CHAT APP
 #15. CRM PIPELINE
-#16. OUR OWN CUSTOM DROPDOWNS 
+#16. OUR OWN CUSTOM DROPDOWNS
 #17. BOOTSTRAP RELATED JS ACTIVATIONS
 #18. TODO Application
 #19. Fancy Selector
@@ -58,7 +58,7 @@ function os_init_sub_menus(){
     menu_timer = setTimeout(function(){
       $elem.removeClass('active').closest('ul').removeClass('has-active');
     }, 30);
-  });  
+  });
 
   // INIT MENU TO ACTIVATE ON CLICK
   $('.menu-activated-on-click').on('click', 'li.has-sub-menu > a', function(event){
@@ -71,7 +71,7 @@ function os_init_sub_menus(){
     }
     return false;
   });
-  
+
 }
 
 $(function(){
@@ -595,7 +595,7 @@ $(function(){
                 data: [300, 50, 100, 30, 70],
                 backgroundColor: [ "#5797fc", "#7e6fff", "#4ecc48", "#ffcc29", "#f37070" ],
                 hoverBackgroundColor: [ "#5797fc", "#7e6fff", "#4ecc48", "#ffcc29", "#f37070" ],
-                borderWidth: 0 
+                borderWidth: 0
             }]
       };
 
@@ -639,7 +639,7 @@ $(function(){
                 data: [300, 50, 100, 30, 70],
                 backgroundColor: [ "#5797fc", "#7e6fff", "#4ecc48", "#ffcc29", "#f37070" ],
                 hoverBackgroundColor: [ "#5797fc", "#7e6fff", "#4ecc48", "#ffcc29", "#f37070" ],
-                borderWidth: 0 
+                borderWidth: 0
             }]
       };
 
@@ -726,7 +726,7 @@ $(function(){
 
 
 
-  // #13. EMAIL APP 
+  // #13. EMAIL APP
 
   $('.more-messages').on('click', function(){
     $(this).hide();
@@ -815,7 +815,7 @@ $(function(){
 
 
 
-  // #16. OUR OWN CUSTOM DROPDOWNS 
+  // #16. OUR OWN CUSTOM DROPDOWNS
   $('.os-dropdown-trigger').on('mouseenter', function(){
     $(this).addClass('over');
   });
@@ -861,7 +861,7 @@ $(function(){
   // Drag init
   if($('.tasks-list').length){
     // INIT DRAG AND DROP FOR Todo Tasks
-    var dragulaTasksObj = dragula($('.tasks-list').toArray(), { 
+    var dragulaTasksObj = dragula($('.tasks-list').toArray(), {
       moves: function (el, container, handle) {
         return handle.classList.contains('drag-handle');
       }
@@ -1053,13 +1053,28 @@ var $TABLE = $('#table');
 var $BTN = $('#export-btn');
 var $EXPORT = $('#export');
 
+$('.only-number').keyup(function (e) {
+    if (/\D/g.test($(this).text())) {
+        $(this).text($(this).text().replace(/\D/g, ''))
+    }
+});
 $('.table-add').click(function () {
     var $clone = $TABLE.find('tr.hide').clone(true).removeClass('hide table-line');
     $TABLE.find('table').append($clone);
+    $('.only-number').keyup(function (e) {
+        if (/\D/g.test($(this).text())) {
+            $(this).text($(this).text().replace(/\D/g, ''))
+        }
+    });
 });
 
 $('.table-remove').click(function () {
     $(this).parents('tr').detach();
+    if($('#table').find('tr:not(.th):not(.hide)').length === 0){
+        $('#u-show-item-list-button').css('display', 'flex')
+        $('#a-item-list-button').hide()
+        $('#a-item-list').hide()
+    }
 });
 
 $('.table-up').click(function () {

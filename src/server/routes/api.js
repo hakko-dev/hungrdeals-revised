@@ -53,7 +53,7 @@ app.get('/api/postcode2geo', async (req, res) => {
 app.post('/api/search', async (req, res) => {
     const result = await Deal.search(req.body)
     res.json({
-        list: result
+        result
     })
 });
 

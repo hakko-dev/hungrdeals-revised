@@ -19105,11 +19105,29 @@ input:checked + .slider:before {
 @media (max-width: 1024px) {
   .d-menu-shown-flex {
     display: flex; }
+  .d-menu-hidden-flex {
+    display: none !important; }
+  .d-menu-hidden-flex-oppo {
+    display: flex; }
   .menu-shown-element-actions-right-align {
     display: flex;
-    justify-content: flex-end; } }
+    justify-content: flex-end; }
+  .d-menu-shown-block {
+    display: none; }
+  .col-sm-6-menu-not-shown {
+    flex: 0 0 100% !important;
+    max-width: 100% !important; } }
 
 @media (min-width: 1025px) {
+  .d-menu-hidden-flex {
+    display: flex; }
+  .d-menu-hidden-flex-oppo {
+    display: none !important; }
   .d-menu-shown-flex {
-    display: none; } }
+    display: none; }
+  .d-menu-shown-block {
+    display: block; }
+  .col-sm-9-menu-not-shown {
+    flex: 0 0 100% !important;
+    max-width: 100% !important; } }
 

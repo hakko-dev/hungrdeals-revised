@@ -7,13 +7,13 @@ include common/head
             .content-i
                 .content-box
                     .row.pb-4
-                        .col-sm-9
+                        .col-sm-9.col-sm-9-menu-not-shown
                             .input-group
                                 input#i-search.form-control.search-bar(type='text' placeholder="I'm looking for ..." )
                                 .input-group-append
                                     button#f-search.btn.btn-grey.px-3.px-lg-5(type='button' style="color: #495057;z-index: 1;")
                                         i.fas.fa-search
-                        .col-sm-3.align-items-center.d-flex.justify-content-center.mt-4.mt-sm-0
+                        .col-sm-3.align-items-center.d-menu-shown-flex.justify-content-center.mt-4.mt-sm-0
                             a.btn.btn-block.full-width.btn-success.px-4(href='/sell')
                                 i.fas.fa-clipboard
                                 span &ensp;Post an Ad
@@ -23,7 +23,7 @@ include common/head
                     .row
                         .col-12
                             .element-wrapper.pb-1
-                                .element-actions.d-flex.justify-content-end(style="margin-top: 0;")
+                                .element-actions.d-menu-shown-flex.justify-content-end(style="margin-top: 0;")
                                     div.text-center.mr-sm-3
                                         span.pr-1 Only Open
                                         label.switch.m-0
@@ -53,6 +53,9 @@ include common/head
                                             | &nbsp
                                             span#search-query
                                             | )
+                                    .input-group.a-open-hour.d-menu-hidden-flex-oppo(style="display: none")
+                                        input.i-start-time.form-control(type='time' value="10:00")
+                                        input.i-end-time.form-control(type='time' value="20:00")
                     .support-index
                         .support-tickets(style="width: 100%;")
 
@@ -65,6 +68,16 @@ include common/head
                             //.load-more-tickets
                             //    a(href='#')
                             //        span Load More Items...
+                    nav#pagination.mt-5(style="display: none;")
+                        ul.pagination.justify-content-center
+                            //li.page-item.disabled
+                            //    a.page-link(href='#' tabindex='-1') Previous
+
+                        li.page-item(style="display: none;")
+                            a.page-link
+                    //li.page-item
+                            //    a.page-link(href='#') Next
+
                 include common/side-bar
         include common/footer
     .display-type
@@ -114,7 +127,15 @@ script.
         '</div>'
     $('.support-tickets').append([placeholder, placeholder, placeholder])
     var path = !{JSON.stringify(path)}
-    var initialLoad = $.debounce(function () {
+
+    var currentPage = 1
+
+    var initialLoad = $.debounce(function (page) {
+        if(page){
+            currentPage = page
+        }else{
+            currentPage = 1
+        }
         $('.support-tickets').html([placeholder, placeholder, placeholder])
         var sort = $('#i-sort').val()
         var search = $('#i-search').val()
@@ -125,11 +146,12 @@ script.
         var cuisineType = getCuisineType()
         var priceRangeStart = $('#price-range').val().split(';')[0]
         var priceRangeEnd = $('#price-range').val().split(';')[1]
-        var timeRangeStart = parseInt($('#time-range').val().split(';')[0])
-        timeRangeStart = parseInt(new Date(timeRangeStart).getHours() + '' + new Date(timeRangeStart).getMinutes().toString().padStart(2, 0))
-        var timeRangeEnd = parseInt($('#time-range').val().split(';')[1])
-        timeRangeEnd = parseInt(new Date(timeRangeEnd).getHours() + '' + new Date(timeRangeEnd).getMinutes().toString().padStart(2, 0))
-
+        // var timeRangeStart = parseInt($('#time-range').val().split(';')[0])
+        // timeRangeStart = parseInt(new Date(timeRangeStart).getHours() + '' + new Date(timeRangeStart).getMinutes().toString().padStart(2, 0))
+        // var timeRangeEnd = parseInt($('#time-range').val().split(';')[1])
+        // timeRangeEnd = parseInt(new Date(timeRangeEnd).getHours() + '' + new Date(timeRangeEnd).getMinutes().toString().padStart(2, 0))
+        var timeRangeStart = parseInt($('.i-start-time').val().split(':').join(''))
+        var timeRangeEnd = parseInt($('.i-end-time').val().split(':').join(''))
         var category = null
         if (path) {
             if (path.sub.indexOf('All') !== -1) {
@@ -159,6 +181,7 @@ script.
                 priceRangeStart,
                 priceRangeEnd,
                 cuisineType,
+                skipPages: currentPage-1,
                 category: category,
                 currentTime: parseInt(moment().format('HHmm'))
             }),
@@ -169,19 +192,19 @@ script.
             success: function (data) {
                 console.log(data)
                 var serverCallEndTime = new Date().getTime()
-
                 function modifySearchReslts() {
                     $('.support-tickets').html('')
                     var currentTime = new Date()
                     currentTime = parseInt(currentTime.getHours().toString().padStart(2, 0) + currentTime.getMinutes().toString().padStart(2, 0))
-                    if (data.list.length !== 0) {
-                        data.list.forEach(function (item) {
+                    if (data.result.paginatedResults.length !== 0) {
+                        data.result.paginatedResults.forEach(function (item) {
                             var opened = true
                             if (item.opening.length === 0) {
                                 opened = false
                             } else if (item.opening[0].open > currentTime || item.opening[0].close < currentTime) {
                                 opened = false
                             }
+                            var category = item.category.indexOf('-') === -1 ? item.category.trim() : item.category.split('-')[1].trim()
                             var html = '<div class="support-ticket" data-id="' + item._id + '">' +
                                 '<div class="st-meta">' +
                                 '<div class="status-pill ' + (opened ? "green" : "red") + '">' +
@@ -193,14 +216,14 @@ script.
                                 '<div class="st-body">' +
                                 '<div class="avatar">' + emojiList[item.cuisineType] + '</div>' +
                                 '<div class="ticket-content">' +
-                                '<span class="text-primary" style="font-size: 0.7rem;">'+item.category.split('-')[0].trim()+'</span>'+
+                                '<span class="text-primary" style="font-size: 0.7rem;">'+category+'</span>'+
                                 '<h6 class="ticket-title">' + item.title +
                                 '</h6>' +
                                 '<div class="ticket-description">' + item.description + '</div>' +
                                 '</div>';
                             if (item.cheapestItem) {
                                 html = html + '<div class="price">' ;
-                                if(item.cheapestItem.prevPrice !== item.cheapestItem.nowPrice){
+                                if(item.cheapestItem.prevPrice !== item.cheapestItem.nowPrice && item.cheapestItem.prevPrice !== 0){
                                     html = html + '<div class="was">$' + item.cheapestItem.prevPrice + '</div>' ;
                                 }
                                 html = html + '<strong>$' + item.cheapestItem.nowPrice + '</strong>' +
@@ -228,13 +251,39 @@ script.
                         location.href = '/deal/' + $(this).data('id')
                     })
                 }
+                function modifyPagination(){
+                    $('#pagination>ul').html('')
+                    var totalPages;
+                    if(data.result.totalCount % 10 == 0){
+                        totalPages = data.result.totalCount / 10
+                    }else{
+                        totalPages = data.result.totalCount / 10+1
+                    }
+                    for(var i = 1; i<= totalPages; i++){
+                        var clone = $('#pagination>.page-item').clone()
+                        if(i == currentPage){
+                            clone.addClass('active')
+                        }
+                        $(clone).find('a').text(i)
+                        $(clone).find('a').data('page', i)
+                        $(clone).show()
+                        $('#pagination>ul').append(clone)
+                    }
+                    $('#pagination').show()
+                    $('#pagination a').click(function(){
+                        $("html, body").animate({scrollTop: 0}, "fast");
+                        initialLoad($(this).data('page'))
+                    })
+                }
 
                 if (serverCallEndTime - serverCallStartTime < 500) {
                     setTimeout(function () {
                         modifySearchReslts()
+                        modifyPagination()
                     }, 500 - (serverCallEndTime - serverCallEndTime))
                 } else {
                     modifySearchReslts()
+                    modifyPagination()
                 }
             },
             error: function (data) {

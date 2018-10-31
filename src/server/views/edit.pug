@@ -13,7 +13,11 @@ include common/head
                                     .property-content
                                         h1.form-header Let's Edit Your Food
                                         .form-desc
-                                            | What is your special offer? Please fill in the from below. And start selling your food on Hungrdeals. You can edit your post anytime you want.
+                                            | What are your eateries and/or drinks on offer? Bring more customers in by advertising for FREE and show the world your culinary business with Hungrdeals. Fill in the form below.
+                                            br
+                                            br
+                                            .small.text-muted * Note: If offer is inapplicable, under Category select Menus (Restaurant, Bar or Cafe). Take a photo of your store’s menu and upload. And leave the description blank. You can edit your post anytime.
+
                                         .row
                                             .col-sm-6
                                                 .form-group
@@ -26,10 +30,10 @@ include common/head
                                                             option(value='Weekday Specials-Thursday' selected=deal.category === 'Weekday Specials-Thursday') Thursday
                                                             option(value='Weekday Specials-Friday' selected=deal.category === 'Weekday Specials-Friday') Friday
                                                             option(value='Weekday Specials-All Weekdays' selected=deal.category === 'Weekday Specials-All Weekdays') All Weekdays
-                                                        optgroup(label='Weekend Deals')
-                                                            option(value='Weekend Deals-Saturday' selected=deal.category === 'Weekend Deals-Saturday') Saturday
-                                                            option(value='Weekend Deals-Sunday' selected=deal.category === 'Weekend Deals-Sunday') Sunday
-                                                            option(value='Weekend Deals-All Weekends' selected=deal.category === 'Weekend Deals-All Weekends') All Weekends
+                                                        optgroup(label='Weekend Specials')
+                                                            option(value='Weekend Specials-Saturday' selected=deal.category === 'Weekend Specials-Saturday') Saturday
+                                                            option(value='Weekend Specials-Sunday' selected=deal.category === 'Weekend Specials-Sunday') Sunday
+                                                            option(value='Weekend Specials-All Weekends' selected=deal.category === 'Weekend Specials-All Weekends') All Weekends
                                                         optgroup(label='Happy Hour')
                                                             option(value='Happy Hour' selected=deal.category === 'Happy Hour') Happy Hour
                                                         optgroup(label='Combo')
@@ -75,32 +79,41 @@ include common/head
                                                 input#i-happyhour-end-time.form-control(type='time' value="22:00")
                                         .form-group#items-wrapper
                                             label  Items
-                                            .card
-                                                .card-body
+                                            - var buttonStyle2 = deal.items.length === 0?'flex':'none'
+                                            - var buttonStyle = deal.items.length === 0?'none':'block'
+                                            - var buttonStyle3 = deal.items.length === 0?'none':'flex'
+                                            .justify-content-center#u-show-item-list-button(style={display: buttonStyle2})
+                                                button#b-show-item-list.btn.btn-primary.btn-block(type="button")
+                                                    | Add items
+                                            .card#a-item-list(style={border: 'none', display: buttonStyle})
+                                                .card-body.p-0
                                                     #table.table-editable
                                                         table.table.table-bordered.table-responsive-xs.text-center
                                                             tr.th
-                                                                th.text-center Item Name
+                                                                th.text-center(rowspan=2) Item Name
+                                                                th.text-center(colspan=2) Please enter numeric only
+                                                                th.text-center(rowspan=2) Remove
+                                                            tr.th
                                                                 th.text-center Price Was ($)
+                                                                    span(style='font-size: 0.5rem; display: block;') (optional)
                                                                 th.text-center Price Now ($)
-                                                                th.text-center Remove
                                                             each item, index in deal.items
                                                                 tr
                                                                     td.item-name.pt-3-half(contenteditable='true')=item.itemName
-                                                                    td.item-prev-price.pt-3-half(contenteditable='true')=item.prevPrice
-                                                                    td.item-now-price.pt-3-half(contenteditable='true')=item.nowPrice
+                                                                    td.item-prev-price.pt-3-half.only-number(contenteditable='true')=item.prevPrice
+                                                                    td.item-now-price.pt-3-half.only-number(contenteditable='true')=item.nowPrice
                                                                     td
                                                                         span.table-remove
-                                                                            button.btn.btn-danger.btn-rounded.btn-sm.my-0(type='button' disabled=index===0 class=index===0&& 'disabled') Remove
+                                                                            button.btn.btn-danger.btn-rounded.btn-sm.my-0(type='button') Remove
                                                             // clonable table line
                                                             tr.hide
-                                                                td.item-name.pt-3-half(contenteditable='true') Enter Item
-                                                                td.item-prev-price.pt-3-half(contenteditable='true') 0
-                                                                td.item-now-price.pt-3-half(contenteditable='true') 0
+                                                                td.item-name.pt-3-half(contenteditable='true') Enter Item Name
+                                                                td.item-prev-price.pt-3-half.only-number(contenteditable='true') 0
+                                                                td.item-now-price.pt-3-half.only-number(contenteditable='true') 0
                                                                 td
                                                                     span.table-remove
                                                                         button.btn.btn-danger.btn-rounded.btn-sm.my-0(type='button') Remove
-                                            .row.justify-content-end
+                                            .row.justify-content-end#a-item-list-button(style={display: buttonStyle3})
                                                 span.table-add.mb-3.mr-2
                                                     a.btn.btn-outline-primary.btn-sm.btn-rounded(href='#!')
                                                         i.fa.fa-plus(aria-hidden='true')
@@ -249,9 +262,9 @@ script.
     function getItemsList() {
         var itemList = []
         $('#table').find('tr:not(.th):not(.hide)').each(function (index, row) {
-            var itemName = $(this).find('.item-name').html().trim()
-            var prevPrice = $(this).find('.item-prev-price').html().trim()
-            var nowPrice = $(this).find('.item-now-price').html().trim()
+            var itemName = $(this).find('.item-name').text().trim()
+            var prevPrice = $(this).find('.item-prev-price').text().trim()
+            var nowPrice = $(this).find('.item-now-price').text().trim()
             itemList.push({
                 itemName: itemName,
                 prevPrice: parseFloat(prevPrice),
@@ -259,7 +272,8 @@ script.
             })
         })
         for (var i = 0; i < itemList.length; i++) {
-            if (itemList[i].itemName === 'Enter Item' || itemList[i].itemName === '' || (itemList[i].prevPrice !== 0 && !itemList[i].prevPrice) || (itemList[i].nowPrice !== 0 && !itemList[i].nowPrice)) {
+            if (itemList[i].itemName === 'Enter Item Name' || itemList[i].itemName === '' || (itemList[i].nowPrice !== 0 && !itemList[i].nowPrice)) {
+                alert('Please check Items if you missed something!')
                 return false
             }
         }
@@ -289,6 +303,14 @@ script.
         uodateFlexbleCategoryAreas()
         var dz = dropzoneSetup()
         prefillDropzone(dz)
+        $('#b-show-item-list').click(function () {
+            $('#a-item-list-button').show()
+            $('#a-item-list').show()
+            $('#u-show-item-list-button').hide()
+            if ($('#table').find('tr:not(.th):not(.hide)').length === 0) {
+                $('.table-add').trigger('click')
+            }
+        })
         $("#i-address").geocomplete({
             details: ".details",
             detailsAttribute: "data-geo",
@@ -302,15 +324,20 @@ script.
             deleteAutoSetup()
         })
         $('#i-category').change(function () {
-            if (['Restaurant', 'Bar', 'Cafe'].indexOf($(this).val()) !== -1) {
+            if (['Menus-Restaurant', 'Menus-Bar', 'Menus-Cafe'].indexOf($(this).val()) !== -1) {
                 $('#items-wrapper').hide()
             } else {
                 $('#items-wrapper').show()
             }
+            if ($('#i-category').val() === 'Happy Hour') {
+                $('#a-happy-hour').show()
+            } else {
+                $('#a-happy-hour').hide()
+            }
         })
         $('.table-editable td').focus(function () {
-            if (['Enter Item', '$0'].indexOf($(this).html()) !== -1) {
-                $(this).html('')
+            if (['Enter Item Name', '0'].indexOf($(this).text()) !== -1) {
+                $(this).text('')
             }
         })
         $('#formValidate').submit(function (e) {
@@ -327,11 +354,10 @@ script.
             if (!excludeItems) {
                 var items = getItemsList()
                 if (!items) {
-                    alert('Please fill in items list')
+                    $('#table').focus()
                     return;
-                } else {
-                    data.items = items
                 }
+                data.items = items
             }
             data.images = uploaded
             data.phone = $('#i-phone').val()

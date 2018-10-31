@@ -45,7 +45,8 @@ include common/head
                                                         each item in items
                                                             li
                                                                 | #{item.itemName}
-                                                                strong(style='text-decoration: line-through') $#{item.prevPrice}
+                                                                if item.prevPrice !== 0 && item.prevPrice
+                                                                    strong(style='text-decoration: line-through') $#{item.prevPrice}
                                                                 strong.text-primary $#{item.nowPrice}
 
                                             if deleteAuto

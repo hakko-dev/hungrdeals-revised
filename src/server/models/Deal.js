@@ -243,10 +243,9 @@ dealSchema.statics.updateDeal = async function ({happyHour, dealId, category, cu
         _id: dealId
     }
 };
-dealSchema.statics.search = async function ({currentTime, search = '', sort = 'Nearest', filter = 'OPEN', category = null, openHourStart = 0, openHourEnd = 2400, currentLocationLat = null, currentLocationLng = null, distance = 5, priceRangeStart = 0, priceRangeEnd = 100, cuisineType = ['ALL']}) {
+dealSchema.statics.search = async function ({skipPages=0, currentTime, search = '', sort = 'Nearest', filter = 'OPEN', category = null, openHourStart = 0, openHourEnd = 2400, currentLocationLat = null, currentLocationLng = null, distance = 5, priceRangeStart = 0, priceRangeEnd = 100, cuisineType = ['ALL']}) {
     // for open hour
     const todayDay = week[new Date().getDay()]
-
     const aggData = []
     if (currentLocationLat && currentLocationLng) {
         aggData.push({
@@ -386,9 +385,19 @@ dealSchema.statics.search = async function ({currentTime, search = '', sort = 'N
             })
             break;
     }
-
-    const result = await this.aggregate(aggData).exec()
-    return result.map(item => {
+    aggData.push({
+        $facet: {
+            paginatedResults: [{ $skip: skipPages }, { $limit: 10 }],
+            totalCount: [
+                {
+                    $count: 'count'
+                }
+            ]
+        }
+    })
+    const raw = await this.aggregate(aggData).exec()
+    const result = raw[0]
+    result.paginatedResults = result.paginatedResults.map(item => {
         return {
             _id: item._id,
             cuisineType: item.cuisineType,
@@ -402,6 +411,12 @@ dealSchema.statics.search = async function ({currentTime, search = '', sort = 'N
             category: item.category
         }
     })
+    if(result.totalCount.length === 0){
+        result.totalCount = 0
+    }else{
+        result.totalCount = result.totalCount[0].count
+    }
+    return result
 }
 
 const Deal = mongoose.model('Deal', dealSchema);

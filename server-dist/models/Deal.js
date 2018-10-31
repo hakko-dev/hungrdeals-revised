@@ -338,6 +338,7 @@ dealSchema.statics.updateDeal = async function ({
 };
 
 dealSchema.statics.search = async function ({
+  skipPages = 0,
   currentTime,
   search = '',
   sort = 'Nearest',
@@ -566,8 +567,21 @@ dealSchema.statics.search = async function ({
       break;
   }
 
-  const result = await this.aggregate(aggData).exec();
-  return result.map(item => {
+  aggData.push({
+    $facet: {
+      paginatedResults: [{
+        $skip: skipPages
+      }, {
+        $limit: 10
+      }],
+      totalCount: [{
+        $count: 'count'
+      }]
+    }
+  });
+  const raw = await this.aggregate(aggData).exec();
+  const result = raw[0];
+  result.paginatedResults = result.paginatedResults.map(item => {
     return {
       _id: item._id,
       cuisineType: item.cuisineType,
@@ -581,6 +595,14 @@ dealSchema.statics.search = async function ({
       category: item.category
     };
   });
+
+  if (result.totalCount.length === 0) {
+    result.totalCount = 0;
+  } else {
+    result.totalCount = result.totalCount[0].count;
+  }
+
+  return result;
 };
 
 const Deal = _mongoose.default.model('Deal', dealSchema);

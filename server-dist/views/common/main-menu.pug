@@ -31,7 +31,7 @@
                         li
                             a(href='/sell')
                                 i.os-icon.os-icon-check
-                                span Post Ad
+                                span Post an Ad
                         li
                             a(href='/profile')
                                 i.os-icon.os-icon-user-male-circle2
@@ -52,6 +52,29 @@
     ul.main-menu(class=(mainPage && path!== null) && 'has-active')
         li.sub-header
             span Layouts
+        li.has-sub-menu(class=(mainPage && path && path.big === 'Menus') && 'selected')
+            a(href='/Menus/All Menus')
+                //.icon-w
+                //    .os-icon.os-icon-life-buoy
+                span.emoji
+                span Menus
+            .sub-menu-w
+                .sub-menu-header
+                    |
+                .sub-menu-icon
+                    i.os-icon.os-icon-life-buoy
+                .sub-menu-i
+                    ul.sub-menu
+                        li
+                            a(href='/Menus/All Menus') All Menus
+                        li
+                            a(href='/Menus/Restaurant') 🍳 Restaurant
+                        li
+                            a(href='/Menus/Bar')
+                                | 🍷 Bar
+                                //strong.badge.badge-danger New
+                        li
+                            a(href='/Menus/Cafe') ☕ Cafe
         li.has-sub-menu(class=(mainPage && path && path.big==='Weekday Specials') && 'selected')
             a(href='/Weekday Specials/All Weekday Specials')
                 span.emoji
@@ -64,7 +87,7 @@
                 .sub-menu-i
                     ul.sub-menu
                         li
-                            a(href='/Weekday Specials/All Weekday Specials') 🌈 All Weekday Specials
+                            a(href='/Weekday Specials/All Weekdays') 🌈 All Weekdays
                         li
                             a(href='/Weekday Specials/Monday') 😫 Monday
                         li
@@ -76,8 +99,6 @@
                             a(href='/Weekday Specials/Thursday') 😉️ Thursday
                         li
                             a(href='/Weekday Specials/Friday') 😍 Friday
-                        li
-                            a(href='/Weekday Specials/All Weekdays') All Weekdays
         li.has-sub-menu(class=(mainPage && path && path.big==='Weekend Deals') && 'selected')
             a(href='/Weekend Deals/All Weekend Deals')
                 //.icon-w
@@ -92,13 +113,11 @@
                 .sub-menu-i
                     ul.sub-menu
                         li
-                            a(href='/Weekend Deals/All Weekend Deals') 🎉 All Weekend Specials
+                            a(href='/Weekend Deals/All Weekends') 🎉 All Weekends
                         li
                             a(href='/Weekend Deals/Saturday') 😎 Saturday
                         li
                             a(href='/Weekend Deals/Sunday') 😶 Sunday
-                        li
-                            a(href='/Weekend Deals/All Weekends') All Weekends
         li.sub-header
             span Options
         li.has-sub-menu(class=(mainPage && path && path.big==='Happy Hour') && 'selected')
@@ -158,29 +177,6 @@
                             a(href='/Miscellaneous/Giveaway') 🆓 Giveaway
                         li
                             a(href='/Miscellaneous/Buffet') 🍽️ Buffet
-        li.has-sub-menu(class=(mainPage && path && path.big==='Menus') && 'selected')
-            a(href='/Menus/All Menus')
-                //.icon-w
-                //    .os-icon.os-icon-life-buoy
-                span.emoji
-                span Menus
-            .sub-menu-w
-                .sub-menu-header
-                    |
-                .sub-menu-icon
-                    i.os-icon.os-icon-life-buoy
-                .sub-menu-i
-                    ul.sub-menu
-                        li
-                            a(href='/Menus/All Menus') All Menus
-                        li
-                            a(href='/Menus/Restaurant') 🍳 Restaurant
-                        li
-                            a(href='/Menus/Bar')
-                                | 🍷 Bar
-                                //strong.badge.badge-danger New
-                        li
-                            a(href='/Menus/Cafe') ☕ Cafe
 
         if isAdmin
             li.has-sub-menu
