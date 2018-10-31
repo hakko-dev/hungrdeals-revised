@@ -90,13 +90,14 @@ include common/head
                                                     #table.table-editable
                                                         table.table.table-bordered.table-responsive-xs.text-center
                                                             tr.th
-                                                                th.text-center(rowspan=2) Item Name
-                                                                th.text-center(colspan=2) Please enter numeric only
-                                                                th.text-center(rowspan=2) Remove
+                                                                th.text-center(rowspan=2 style="padding: 0 6px;") Item Name
+                                                                th.text-center(colspan=2 style="padding: 0px; font-size: 0.6rem; color: #e65252;") Please enter numeric only
+                                                                th.text-center(rowspan=2 style="padding: 0 6px;") Remove
                                                             tr.th
-                                                                th.text-center Price Was ($)
-                                                                    span(style='font-size: 0.5rem; display: block;') (optional)
-                                                                th.text-center Price Now ($)
+                                                                th.text-center(style="padding: 0 6px;") Price Was ($)
+                                                                    span(style='font-size: 0.5rem; display: block; color: #ff7a5c;') (optional)
+                                                                th.text-center(style="padding: 0 6px;") Price Now ($)
+                                                            // clonable table line
                                                             each item, index in deal.items
                                                                 tr
                                                                     td.item-name.pt-3-half(contenteditable='true')=item.itemName
