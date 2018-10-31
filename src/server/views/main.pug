@@ -39,6 +39,9 @@ include common/head
                                         label.switch.m-0
                                             input#s-time(type="checkbox" data-value="time")
                                             span.slider.round
+                                .input-group.a-open-hour.d-menu-hidden-flex-oppo(style="display: none")
+                                    input.i-start-time.form-control(type='time' value="10:00")
+                                    input.i-end-time.form-control(type='time' value="20:00")
 
                                 h5.element-header
                                     if path
@@ -53,9 +56,6 @@ include common/head
                                             | &nbsp
                                             span#search-query
                                             | )
-                                    .input-group.a-open-hour.d-menu-hidden-flex-oppo(style="display: none")
-                                        input.i-start-time.form-control(type='time' value="10:00")
-                                        input.i-end-time.form-control(type='time' value="20:00")
                     .support-index
                         .support-tickets(style="width: 100%;")
 
