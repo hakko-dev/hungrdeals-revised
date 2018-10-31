@@ -570,7 +570,7 @@ dealSchema.statics.search = async function ({
   aggData.push({
     $facet: {
       paginatedResults: [{
-        $skip: skipPages
+        $skip: skipPages * 10
       }, {
         $limit: 10
       }],

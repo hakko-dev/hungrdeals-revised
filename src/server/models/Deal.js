@@ -387,7 +387,7 @@ dealSchema.statics.search = async function ({skipPages=0, currentTime, search = 
     }
     aggData.push({
         $facet: {
-            paginatedResults: [{ $skip: skipPages }, { $limit: 10 }],
+            paginatedResults: [{ $skip: skipPages*10 }, { $limit: 10 }],
             totalCount: [
                 {
                     $count: 'count'
