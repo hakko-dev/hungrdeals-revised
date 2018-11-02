@@ -273,7 +273,7 @@ script.
             })
         })
         for (var i = 0; i < itemList.length; i++) {
-            if (itemList[i].itemName === 'Enter Item Name' || itemList[i].itemName === '' || (itemList[i].nowPrice !== 0 && !itemList[i].nowPrice)) {
+            if (itemList[i].itemName === 'Enter Item Name' || itemList[i].itemName === '' || (itemList[i].nowPrice !== 0 && !itemList[i].nowPrice)|| !parseFloat(itemList[i].nowPrice)) {
                 alert('Please check Items if you missed something!')
                 return false
             }

@@ -248,7 +248,8 @@ script.
                         )
                     }
                     $('.support-ticket').click(function () {
-                        location.href = '/deal/' + $(this).data('id')
+                        window.open('/deal/' + $(this).data('id'), "_blank")
+                        // location.href = '
                     })
                 }
                 function modifyPagination(){

@@ -1054,16 +1054,16 @@ var $BTN = $('#export-btn');
 var $EXPORT = $('#export');
 
 $('.only-number').keyup(function (e) {
-    if (/\D/g.test($(this).text())) {
-        $(this).text($(this).text().replace(/\D/g, ''))
+    if (/[^\d\.]/g.test($(this).text())) {
+        $(this).text($(this).text().replace(/[^\d\.]/g, ''))
     }
 });
 $('.table-add').click(function () {
     var $clone = $TABLE.find('tr.hide').clone(true).removeClass('hide table-line');
     $TABLE.find('table').append($clone);
     $('.only-number').keyup(function (e) {
-        if (/\D/g.test($(this).text())) {
-            $(this).text($(this).text().replace(/\D/g, ''))
+        if (/[^\d\.]/g.test($(this).text())) {
+            $(this).text($(this).text().replace(/[^\d\.]/g, ''))
         }
     });
 });

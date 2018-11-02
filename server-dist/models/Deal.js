@@ -113,13 +113,13 @@ dealSchema.methods.getDealInfo = function () {
       string: convertDayEnumToString(row.day),
       enum: row.day
     };
-    newRow.open = `${row.open.toString().slice(0, -2)}:${row.open.toString().slice(-2)}`;
-    newRow.close = `${row.close.toString().slice(0, -2)}:${row.close.toString().slice(-2)}`;
+    newRow.open = row.open.toString().length <= 2 ? `00:${row.open.toString().slice(-2).padStart(2, '0')}` : `${row.open.toString().slice(0, -2)}:${row.open.toString().slice(-2)}`;
+    newRow.close = row.close.toString().length <= 2 ? `00:${row.close.toString().slice(-2).padStart(2, '0')}` : `${row.close.toString().slice(0, -2)}:${row.close.toString().slice(-2)}`;
     return newRow;
   });
   const happyHour = this.happyHour.start ? {
-    start: `${this.happyHour.start.toString().slice(0, -2)}:${this.happyHour.start.toString().slice(-2)}`,
-    end: `${this.happyHour.end.toString().slice(0, -2)}:${this.happyHour.end.toString().slice(-2)}`
+    start: this.happyHour.start.toString().length <= 2 ? `00:${this.happyHour.start.toString().slice(-2)}` : `${this.happyHour.start.toString().slice(0, -2)}:${this.happyHour.start.toString().slice(-2)}`,
+    end: this.happyHour.end.toString().length <= 2 ? `00:${this.happyHour.end.toString().slice(-2)}` : `${this.happyHour.end.toString().slice(0, -2)}:${this.happyHour.end.toString().slice(-2)}`
   } : null;
   return {
     category: this.category,
@@ -163,10 +163,12 @@ dealSchema.methods.getDealEditInfo = function () {
     const newRow = {};
     newRow.day = {
       string: convertDayEnumToString(row.day),
-      enum: row.day
+      enum: row.day // newRow.open = `${row.open.toString().slice(0, -2)}:${row.open.toString().slice(-2)}`
+      // newRow.close = `${row.close.toString().slice(0, -2)}:${row.close.toString().slice(-2)}`
+
     };
-    newRow.open = `${row.open.toString().slice(0, -2)}:${row.open.toString().slice(-2)}`;
-    newRow.close = `${row.close.toString().slice(0, -2)}:${row.close.toString().slice(-2)}`;
+    newRow.open = row.open.toString().length <= 2 ? `0:${row.open.toString().slice(-2).padStart(2, '0')}` : `${row.open.toString().slice(0, -2)}:${row.open.toString().slice(-2)}`;
+    newRow.close = row.close.toString().length <= 2 ? `0:${row.close.toString().slice(-2).padStart(2, '0')}` : `${row.close.toString().slice(0, -2)}:${row.close.toString().slice(-2)}`;
     return newRow;
   });
   const happyHour = this.happyHour.start ? {
