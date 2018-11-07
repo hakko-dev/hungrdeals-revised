@@ -70,13 +70,16 @@ include common/head
                             //        span Load More Items...
                     nav#pagination.mt-5(style="display: none;")
                         ul.pagination.justify-content-center
-                            //li.page-item.disabled
-                            //    a.page-link(href='#' tabindex='-1') Previous
-
                         li.page-item(style="display: none;")
                             a.page-link
-                    //li.page-item
-                            //    a.page-link(href='#') Next
+                        li.page-item.prev-pagination(style="display: none;")
+                            a.page-link
+                                span(aria-hidden='true') «
+                                span.sr-only Previous
+                        li.page-item.next-pagination(style="display: none;")
+                            a.page-link
+                                span(aria-hidden='true') »
+                                span.sr-only Next
 
                 include common/side-bar
         include common/footer
@@ -260,18 +263,42 @@ script.
                     }else{
                         totalPages = data.result.totalCount / 10+1
                     }
-                    for(var i = 1; i<= totalPages; i++){
-                        var clone = $('#pagination>.page-item').clone()
-                        if(i == currentPage){
+
+                    var prevClone = $('#pagination>.page-item.prev-pagination').clone()
+                    var nextClone = $('#pagination>.page-item.next-pagination').clone()
+
+                    var currentBigPage = Math.floor((currentPage-1) / 5)
+                    var currentPageStart = currentBigPage * 5 + 1
+                    var currentPageEnd = (currentBigPage+1) * 5
+                    if(totalPages < currentPageEnd){
+                        currentPageEnd = totalPages
+                    }
+                    console.log(currentPageStart, currentPageEnd)
+
+                    for(var i = currentPageStart; i<= currentPageEnd; i++){
+                        var clone = $('#pagination>.page-item:not(.prev-pagination):not(.next-pagination)').clone()
+                        if(i === currentPage){
+                            console.log(i, currentPage)
                             clone.addClass('active')
                         }
                         $(clone).find('a').text(i)
                         $(clone).find('a').data('page', i)
                         $(clone).show()
                         $('#pagination>ul').append(clone)
+                        console.log(i)
+                    }
+                    if(currentBigPage !== 0) {
+                        $(prevClone).show()
+                        $(prevClone).find('a').data('page', currentPageStart -1)
+                        $('#pagination>ul').prepend(prevClone)
+                    }
+                    if(currentBigPage !== Math.floor((totalPages-1) / 5) && totalPages !== 0){
+                        $(nextClone).show()
+                        $(nextClone).find('a').data('page', currentPageEnd +1)
+                        $('#pagination>ul').append(nextClone)
                     }
                     $('#pagination').show()
-                    $('#pagination a').click(function(){
+                    $('#pagination .page-item a').click(function(){
                         $("html, body").animate({scrollTop: 0}, "fast");
                         initialLoad($(this).data('page'))
                     })

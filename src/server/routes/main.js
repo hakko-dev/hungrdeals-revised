@@ -17,7 +17,7 @@ app.get('/', async (req, res) => {
 
 const BIG_CATEGORY = [
     'Weekday Specials',
-    'Weekend Deals',
+    'Weekend Specials',
     'Happy Hour',
     'Combo',
     'Miscellaneous',
@@ -31,7 +31,7 @@ const SUB_CATEGORY = [
     'Thursday',
     'Friday',
     'All Weekdays',
-    'All Weekend Deals',
+    'All Weekend Specials',
     'Saturday',
     'Sunday',
     'All Weekends',

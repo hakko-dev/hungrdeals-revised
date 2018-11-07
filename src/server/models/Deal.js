@@ -84,6 +84,9 @@ dealSchema.methods.getDealInfo = function () {
         newRow.open = row.open.toString().length <= 2
             ? `00:${row.open.toString().slice(-2).padStart(2,'0')}`
             :`${row.open.toString().slice(0, -2)}:${row.open.toString().slice(-2)}`
+        if(row.close > 2400){
+            row.close -= 2400
+        }
         newRow.close = row.close.toString().length <= 2 ? `00:${row.close.toString().slice(-2).padStart(2,'0')}`:`${row.close.toString().slice(0, -2)}:${row.close.toString().slice(-2)}`
         return newRow
     })
@@ -194,6 +197,9 @@ dealSchema.statics.addNewDeal = async function ({happyHour, authorId, category, 
         opening: opening.map(item => {
             item.open = parseInt(item.open.split(':').join(''))
             item.close = parseInt(item.close.split(':').join(''))
+            if(item.close < item.open){
+                item.close += 2359
+            }
             return item
         }),
         location: {type: 'Point', coordinates: [parseFloat(lng), parseFloat(lat)]},
@@ -225,6 +231,9 @@ dealSchema.statics.updateDeal = async function ({happyHour, dealId, category, cu
         opening: opening.map(item => {
             item.open = parseInt(item.open.split(':').join(''))
             item.close = parseInt(item.close.split(':').join(''))
+            if(item.close < item.open){
+                item.close += 2400
+            }
             return item
         }),
         location: {type: 'Point', coordinates: [parseFloat(lng), parseFloat(lat)]},
@@ -336,7 +345,7 @@ dealSchema.statics.search = async function ({skipPages=0, currentTime, search = 
             $match: {
                 'opening.0': {$exists: true},
                 'opening.0.open': {$lt: openHourStart + 1},
-                'opening.0.close': {$gt: openHourEnd - 1}
+                'opening.0.close': {$gt: openHourStart > openHourEnd ? openHourEnd+2359:openHourEnd - 1}
             }
         })
     }

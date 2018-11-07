@@ -114,6 +114,11 @@ dealSchema.methods.getDealInfo = function () {
       enum: row.day
     };
     newRow.open = row.open.toString().length <= 2 ? `00:${row.open.toString().slice(-2).padStart(2, '0')}` : `${row.open.toString().slice(0, -2)}:${row.open.toString().slice(-2)}`;
+
+    if (row.close > 2400) {
+      row.close -= 2400;
+    }
+
     newRow.close = row.close.toString().length <= 2 ? `00:${row.close.toString().slice(-2).padStart(2, '0')}` : `${row.close.toString().slice(0, -2)}:${row.close.toString().slice(-2)}`;
     return newRow;
   });
@@ -246,6 +251,11 @@ dealSchema.statics.addNewDeal = async function ({
     opening: opening.map(item => {
       item.open = parseInt(item.open.split(':').join(''));
       item.close = parseInt(item.close.split(':').join(''));
+
+      if (item.close < item.open) {
+        item.close += 2359;
+      }
+
       return item;
     }),
     location: {
@@ -307,6 +317,11 @@ dealSchema.statics.updateDeal = async function ({
     opening: opening.map(item => {
       item.open = parseInt(item.open.split(':').join(''));
       item.close = parseInt(item.close.split(':').join(''));
+
+      if (item.close < item.open) {
+        item.close += 2400;
+      }
+
       return item;
     }),
     location: {
@@ -466,7 +481,7 @@ dealSchema.statics.search = async function ({
           $lt: openHourStart + 1
         },
         'opening.0.close': {
-          $gt: openHourEnd - 1
+          $gt: openHourStart > openHourEnd ? openHourEnd + 2359 : openHourEnd - 1
         }
       }
     });

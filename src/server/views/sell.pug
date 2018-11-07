@@ -253,10 +253,12 @@ script.
                 $(this).find('input[type="time"]').attr('disabled', true)
             } else {
                 $(this).find('input[type="time"]').attr('disabled', false)
+                var start = $(this).find('.i-start-time').val()
+                var end = $(this).find('.i-end-time').val()
                 result.push({
                     day: day,
-                    open: $(this).find('.i-start-time').val(),
-                    close: $(this).find('.i-end-time').val()
+                    open: start,
+                    close: end
                 })
             }
         })
